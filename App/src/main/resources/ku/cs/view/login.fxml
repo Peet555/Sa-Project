@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../theme/theme.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.loginController">
+   <children>
+      <ImageView fx:id="bgLogin" fitHeight="892.0" fitWidth="678.0" layoutX="-125.0" layoutY="-45.0" pickOnBounds="true" preserveRatio="true" rotate="6.3" />
+      <Button layoutX="1033.0" layoutY="522.0" mnemonicParsing="false" styleClass="button-green" text="Button" />
+   </children>
+</AnchorPane>
