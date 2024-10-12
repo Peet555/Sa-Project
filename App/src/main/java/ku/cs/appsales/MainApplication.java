@@ -25,13 +25,15 @@ public class MainApplication extends Application {
         configRoute();
 
         FXRouter.bind(this, stage);
-        FXRouter.goTo("login");
+        FXRouter.goTo("Homepage");
         setTheme("theme.css");
     }
 
     private static void configRoute() {
         String resourcesPath = "ku/cs/view/";
         FXRouter.when("login", resourcesPath + "login.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("Homepage", resourcesPath + "Home_page_product_type.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("ProductModel", resourcesPath + "productModel.fxml", "SA Project", MIN_WIGHT, 760);
     }
 
     /**
