@@ -1,12 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../theme/theme.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.loginController">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../theme/theme.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.loginController">
    <children>
-      <ImageView fx:id="bgLogin" fitHeight="892.0" fitWidth="678.0" layoutX="-125.0" layoutY="-45.0" pickOnBounds="true" preserveRatio="true" rotate="6.3" />
-      <Button layoutX="1033.0" layoutY="522.0" mnemonicParsing="false" styleClass="button-green" text="Button" />
+      <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../theme/theme.css">
+               <children>
+                  <ImageView fx:id="logo" fitHeight="285.0" fitWidth="241.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <StackPane>
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <TextField fx:id="username" prefWidth="500.0" promptText="Username" styleClass="my-text-field">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </TextField>
+                                    <Label fx:id="usernameLabel" layoutX="20.0" layoutY="-19.0" text="Username">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-font-bold" />
+                                          <String fx:value="label-popup" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                                 <styleClass>
+                                    <String fx:value="label-popup" />
+                                    <String fx:value="label-font-bold" />
+                                 </styleClass>
+                              </AnchorPane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <StackPane>
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <PasswordField fx:id="password" prefWidth="500.0" promptText="Passwoed" styleClass="my-text-field">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </PasswordField>
+                                    <Label fx:id="passwordLabel" layoutX="20.0" layoutY="-19.0" text="Password">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-popup" />
+                                          <String fx:value="label-font-bold" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                                 <styleClass>
+                                    <String fx:value="label-popup" />
+                                    <String fx:value="label-font-bold" />
+                                 </styleClass>
+                              </AnchorPane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </HBox>
+                  <Label fx:id="errorLabel" text="Incorrect Username or Password" textFill="#ff0303" underline="true">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onLoginButton" prefWidth="500.0" styleClass="button-green" text="Login">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" onAction="#onRegisterButton" styleClass="button-link" text="don't have an account? register now">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
    </children>
-</AnchorPane>
+</VBox>

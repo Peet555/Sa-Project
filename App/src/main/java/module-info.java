@@ -1,7 +1,7 @@
 module ku.cs {
     requires javafx.controls;
     requires javafx.fxml;
-
+    requires AnimateFX;
 
     opens ku.cs to javafx.fxml;
     exports ku.cs;
