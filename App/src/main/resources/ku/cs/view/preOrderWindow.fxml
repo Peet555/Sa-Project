@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.preOrderProductController"
+      style="-fx-border-color: black; -fx-border-width: 3; -fx-border-radius: 10; -fx-padding: 20;">
+    <children>
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="สั่งจองสินค้า" />
+        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ราคาสินค้า :" />
+        <TextField promptText="จำนวน" />
+        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="ราคารวม :" />
+        <HBox spacing="10">
+            <children>
+                <Button text="ยืนยัน" />
+                <Button fx:id="cancelButton" onAction="#closeWindow" text="ยกเลิก" />
+            </children>
+        </HBox>
+    </children>
+</VBox>

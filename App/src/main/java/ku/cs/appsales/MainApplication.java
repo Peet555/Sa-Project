@@ -40,6 +40,8 @@ public class MainApplication extends Application {
         FXRouter.when("root", resourcesPath + "root.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("Product", resourcesPath + "product.fxml", "SA Project", MIN_WIGHT, 760);
 
+
+
     }
 
     /**
