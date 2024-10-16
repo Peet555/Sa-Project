@@ -26,7 +26,7 @@ public class MainApplication extends Application {
 
         FXRouter.bind(this, stage);
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
-        FXRouter.goTo("Homepage");
+        FXRouter.goTo("Product");
         setTheme("theme.css");
     }
 
@@ -38,6 +38,8 @@ public class MainApplication extends Application {
         FXRouter.when("Homepage", resourcesPath + "Home_page_product_type.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("ProductModel", resourcesPath + "productModel.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("root", resourcesPath + "root.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("Product", resourcesPath + "product.fxml", "SA Project", MIN_WIGHT, 760);
+
     }
 
     /**

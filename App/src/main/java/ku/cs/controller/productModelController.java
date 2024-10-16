@@ -60,6 +60,21 @@ public class productModelController {
             currentSelectedProduct = p;  // เก็บ item ที่ถูกเลือก
         });
 
+        // เมื่อ Double Click ที่ item จะเปลี่ยนไปหน้า ProductModel
+        p.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                System.out.println("Double clicked on item at row " + row + ", column " + col);
+
+                // เปลี่ยนไปที่หน้า ProductModel
+                try {
+                    FXRouter.goTo("Product");
+                } catch (IOException e) {
+                    System.err.println("ไปที่หน้า Product ไม่ได้");
+
+                }
+            }
+        });
+
         // เพิ่ม item ลงใน gridPane ที่ตำแหน่ง row, col
         gridPane.add(p, col, row);
     }

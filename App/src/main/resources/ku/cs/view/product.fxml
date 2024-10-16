@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productController">
+   <children>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="106.0" prefWidth="667.0">
+         <children>
+            <Pane prefHeight="100.0" prefWidth="306.0" HBox.hgrow="ALWAYS" />
+            <ImageView fitHeight="153.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="150.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
+            <Button mnemonicParsing="false" style="-fx-background-radius: 80; -fx-background-color: #a3e9a4;" text="1">
+               <HBox.margin>
+                  <Insets right="30.0" top="60.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" style="-fx-background-radius: 80; -fx-background-color: #a3e9a4;" text="2">
+               <HBox.margin>
+                  <Insets right="50.0" top="60.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <HBox prefHeight="56.0" prefWidth="667.0" style="-fx-background-color: #a3e9a4;">
+         <children>
+            <ButtonBar prefHeight="56.0" prefWidth="105.0">
+               <buttons>
+                  <Button fx:id="homeButton" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Home" />
+               </buttons>
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+            </ButtonBar>
+         </children>
+      </HBox>
+      <ScrollPane>
+         <content>
+            <VBox fx:id="vBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+         </content></ScrollPane>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="buttonOrder" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="สั่งซื้อ" textFill="#0bab00" />
+              </buttons>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ButtonBar>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button fx:id="buttonPreOrder" mnemonicParsing="false" text="สั่งจอง" textFill="#0464ff" />
+              </buttons>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ButtonBar>
+         </children>
+      </HBox>
+   </children>
+</VBox>
