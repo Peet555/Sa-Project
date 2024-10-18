@@ -20,7 +20,7 @@
       <Pane layoutY="693.0" prefHeight="108.0" prefWidth="1201.0" style="-fx-background-color: #a3e9a4;">
          <children>
             <Button fx:id="handleContinueShopping" layoutX="420.0" layoutY="63.0" mnemonicParsing="false" text="เลือกซื้อสินค้าต่อ" />
-            <Button layoutX="559.0" layoutY="63.0" mnemonicParsing="false" text="สั่งซื้อ" />
+            <Button fx:id="handleConfirmOrder" layoutX="559.0" layoutY="63.0" mnemonicParsing="false" text="สั่งซื้อ" />
             <Button layoutX="671.0" layoutY="63.0" mnemonicParsing="false" text="สั่งจอง" />
             <Label layoutX="356.0" layoutY="6.0" text="ราคาสินค้ารวมทั้งหมด :">
                <font>
