@@ -17,14 +17,14 @@
       <VBox layoutY="1.0" prefHeight="110.0" prefWidth="610.0">
          <children>
             <ImageView fx:id="logo" fitHeight="59.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true" />
-            <HBox prefHeight="38.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: #a3e9a4;">
+            <HBox prefHeight="38.0" prefWidth="610.0" spacing="20.0" style="-fx-background-color: #a3e9a4;">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <children>
                   <Label prefHeight="18.0" prefWidth="0.0" />
-                  <Button mnemonicParsing="false" style="-fx-background-radius: 50;" text="ตรวจสอบ Order" />
-                  <Button mnemonicParsing="false" style="-fx-background-radius: 50;" text="ตรวจสอบการชำระเงิน" />
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบ Order" textFill="WHITE" />
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบการชำระเงิน" textFill="WHITE" />
                   <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ลงทะเบียนสินค้า" />
                   <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="เตรียมและจัดส่งสินค้า" />
                   <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="สั่งของ" />

@@ -7,26 +7,26 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import ku.cs.services.FXRouter;
 
-
 import java.awt.*;
 import java.io.IOException;
 
-public class stockEditProductController {
+public class stockAddProductController {
+
     @FXML
     public ImageView logo ;
 
     @FXML
-    public TextField nameText ;
+    public TextField nameAdd ;
 
     @FXML
-    public TextField quantityText ;
+    public TextField quantityAdd ;
     @FXML
-    public TextField typeText ;
+    public TextField typeAdd ;
     @FXML
-    public TextField priceText ;
+    public TextField priceAdd ;
 
     @FXML
-    public ImageView productPic ;
+    public ImageView addPic ;
 
     @FXML
     public TextArea description ;
@@ -35,7 +35,7 @@ public class stockEditProductController {
     public Hyperlink upload ;
 
     @FXML
-    public void saveEdit() {
+    public void saveAdd() {
         try {
             FXRouter.goTo("Stock");
         } catch (IOException e) {
@@ -44,14 +44,11 @@ public class stockEditProductController {
     }
 
     @FXML
-    public void cancleEdit() {
+    public void cancleAdd() {
         try {
             FXRouter.goTo("Stock");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }
