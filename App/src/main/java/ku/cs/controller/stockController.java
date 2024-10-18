@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 
-import java.lang.classfile.Label;
+//import java.lang.classfile.Label;
 
 public class stockController {
 

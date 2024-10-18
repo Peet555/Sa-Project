@@ -44,7 +44,7 @@
          <children>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
               <buttons>
-                <Button fx:id="buttonOrder" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="เพิ่มในรายการสินค้า" textFill="#0bab00" />
+                <Button fx:id="buttonOrderList" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="เพิ่มในรายการสินค้า" textFill="#0bab00" />
               </buttons>
                <HBox.margin>
                   <Insets />

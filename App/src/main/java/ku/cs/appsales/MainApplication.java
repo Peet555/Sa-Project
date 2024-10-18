@@ -42,6 +42,7 @@ public class MainApplication extends Application {
         FXRouter.when("Stock", resourcesPath + "stock.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("EditStock", resourcesPath + "stockEditProduct.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("AddStock", resourcesPath + "stockAddProduct.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("orderListPageCustomer", resourcesPath + "orderListCustomer.fxml", "SA Project", MIN_WIGHT, 760);
     }
 
     /**
