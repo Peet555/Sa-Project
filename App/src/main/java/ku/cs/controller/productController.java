@@ -18,8 +18,8 @@ import java.util.Objects;
 public class productController {
 
     @FXML
-    public Button buttonOrder;
-    public Button buttonPreOrder;
+//    public Button buttonOrder;
+//    public Button buttonPreOrder;
     public VBox vBox;
 
     @FXML
@@ -36,13 +36,13 @@ public class productController {
             }
         });
 
-        buttonPreOrder.setOnAction(event -> {
-            try {
-                showPreOrderWindow();
-            } catch (IOException e) {
-                System.err.println("Failed to open pre-order window.");
-            }
-        });
+//        buttonPreOrder.setOnAction(event -> {
+//            try {
+//                showPreOrderWindow();
+//            } catch (IOException e) {
+//                System.err.println("Failed to open pre-order window.");
+//            }
+//        });
     }
 
     public void addTypeProductItem(int index) throws IOException {
