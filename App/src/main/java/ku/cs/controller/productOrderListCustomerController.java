@@ -3,14 +3,12 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
+import ku.cs.services.FXRouter;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class productOrderListCustomerController {
 
@@ -19,6 +17,9 @@ public class productOrderListCustomerController {
 
     @FXML
     public VBox vBox;
+
+    @FXML
+    private Button handleContinueShopping; // อ้างอิงถึงปุ่ม "เลือกซื้อสินค้าต่อ"
 
     @FXML
     public void initialize() throws IOException {
@@ -32,18 +33,26 @@ public class productOrderListCustomerController {
 
         // ตั้งค่า ScrollPane ให้สามารถเลื่อนดู VBox ได้
         scrollPane.setContent(vBox);
+
+        handleContinueShopping.setOnAction(event -> {
+            try {
+                FXRouter.goTo("Homepage"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println();
+
+            }
+        });
     }
 
     // Method สำหรับเพิ่มสินค้า Mock ลงใน VBox
     private void addProductItem(int index) throws IOException {
         // โหลด FXML สำหรับแต่ละสินค้าที่จะนำมาแสดง (orderListCustomerItem.fxml)
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ku/cs/view/orderListCustomerItem.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderListCustomerItem.fxml"));
         Node node = loader.load();
-
-
-
 
         // เพิ่มสินค้า (node) ลงใน VBox
         vBox.getChildren().add(node);
     }
+
+
 }
