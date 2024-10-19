@@ -3,6 +3,8 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import ku.cs.services.FXRouter;  // import FXRouter
+import java.io.IOException;
 
 public class orderConfirmationWindowController {
 
@@ -22,11 +24,17 @@ public class orderConfirmationWindowController {
     @FXML
     public void confirmOrder() {
         // ทำการยืนยันคำสั่งซื้อ
-        // สามารถทำการส่งข้อมูลหรือไปยังหน้าอื่นได้ตามที่ต้องการ
         System.out.println("Order Confirmed");
 
-        // ปิดหน้าต่าง
+        // ปิดหน้าต่างนี้
         Stage stage = (Stage) confirmOrder.getScene().getWindow();
         stage.close();
+
+        // เปลี่ยนไปยังหน้า customerOrderHistoryController
+        try {
+            FXRouter.goTo("customerOrderHistory");
+        } catch (IOException e) {
+            System.err.println("Error navigating to customerOrderHistory: " + e.getMessage());
+        }
     }
 }
