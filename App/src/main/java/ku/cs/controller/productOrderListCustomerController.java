@@ -24,6 +24,9 @@ public class productOrderListCustomerController {
     public Button handleConfirmOrder;  // ปุ่มสั่งซื้อ
 
     @FXML
+    public Button handleConfirmPreOrder;  // ปุ่มสั่งจอง
+
+    @FXML
     public void initialize() throws IOException {
         // จำนวนสินค้าที่จะ Mock ข้อมูล (เช่น 5 รายการ)
         int itemCount = 5;
@@ -53,6 +56,16 @@ public class productOrderListCustomerController {
                 System.err.println("Cannot open order confirmation window.");
             }
         });
+
+        // เมื่อกดปุ่ม "สั่งจอง"
+        handleConfirmPreOrder.setOnAction(event -> {
+            try {
+                // เปิดหน้าต่างยืนยันคำสั่งซื้อ (preOrderConfirmationWindowController)
+                openPreOrderConfirmationWindow();
+            } catch (IOException e) {
+                System.err.println("Cannot open order confirmation window.");
+            }
+        });
     }
 
     // Method สำหรับเปิดหน้าต่าง orderConfirmationWindowController
@@ -64,6 +77,20 @@ public class productOrderListCustomerController {
         // สร้าง Stage ใหม่เพื่อเปิดหน้าต่างใหม่
         Stage stage = new Stage();
         stage.setTitle("ยืนยันคำสั่งซื้อ");
+        stage.initModality(Modality.APPLICATION_MODAL);  // ทำให้หน้าต่างนี้เป็น Modal
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    // Method สำหรับเปิดหน้าต่าง preOrderConfirmationWindowController
+    private void openPreOrderConfirmationWindow() throws IOException {
+        // โหลด FXML ของหน้าต่าง preOrderConfirmationWindow
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/preOrderConfirmationWindows.fxml"));
+        VBox root = loader.load();
+
+        // สร้าง Stage ใหม่เพื่อเปิดหน้าต่างใหม่
+        Stage stage = new Stage();
+        stage.setTitle("ยืนยันคำสั่งจอง");
         stage.initModality(Modality.APPLICATION_MODAL);  // ทำให้หน้าต่างนี้เป็น Modal
         stage.setScene(new Scene(root));
         stage.show();
