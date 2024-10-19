@@ -29,7 +29,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="972.0" layoutY="160.0" mnemonicParsing="false" text="ชำระเงิน" />
+      <Button fx:id="paymentButton" layoutX="972.0" layoutY="160.0" mnemonicParsing="false" text="ชำระเงิน" />
       <Label fx:id="quantityLabel1" layoutX="267.0" layoutY="80.0" text="วันที่จัดส่ง :">
          <font>
             <Font size="18.0" />
