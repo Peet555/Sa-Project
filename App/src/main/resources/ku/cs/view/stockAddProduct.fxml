@@ -12,82 +12,121 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.stockAddProductController">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.stockAddProductController">
    <children>
-      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="620.0">
+      <VBox layoutX="644.0" layoutY="266.0" prefHeight="119.0" prefWidth="122.0" spacing="25.0">
          <children>
-            <VBox layoutX="-10.0" layoutY="-13.0" prefHeight="124.0" prefWidth="630.0">
-               <children>
-                  <ImageView fx:id="logo" fitHeight="59.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true" />
-                  <HBox prefHeight="40.0" prefWidth="630.0" spacing="20.0" style="-fx-background-color: #a3e9a4;">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <children>
-                        <Label prefHeight="18.0" prefWidth="0.0" />
-                        <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบ Order" textFill="WHITE" />
-                        <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบการชำระเงิน" textFill="WHITE" />
-                        <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ลงทะเบียนสินค้า" />
-                        <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="เตรียมและจัดส่งสินค้า" />
-                        <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="สั่งของ" />
-                     </children>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox layoutX="90.0" layoutY="129.0" prefHeight="148.0" prefWidth="200.0">
-               <children>
-                  <ImageView fx:id="addPic" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </VBox>
-            <VBox layoutX="354.0" layoutY="128.0" prefHeight="119.0" prefWidth="122.0" spacing="25.0">
-               <children>
-                  <Label text="Name :">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Quantity :">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Type :">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Price :">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox layoutX="427.0" layoutY="126.0" prefHeight="119.0" prefWidth="122.0" spacing="15.0">
-               <children>
-                  <TextField fx:id="nameAdd" prefHeight="26.0" prefWidth="135.0" />
-                  <TextField fx:id="quantityAdd" />
-                  <TextField fx:id="typeAdd" />
-                  <TextField fx:id="priceAdd" />
-               </children>
-            </VBox>
-            <TextArea fx:id="description" layoutX="349.0" layoutY="287.0" prefHeight="78.0" prefWidth="200.0" promptText="ลายละอียดสินค้า" />
-            <Hyperlink fx:id="upload" layoutX="150.0" layoutY="287.0" text="อัปโหลดรูปภาพ" />
-            <Button layoutX="90.0" layoutY="338.0" mnemonicParsing="false" onAction="#saveAdd" prefHeight="26.0" prefWidth="88.0" style="-fx-background-radius: 50; -fx-background-color: #a3e9a4;" text="บันทึก">
+            <Label text="Name :">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
-            </Button>
-            <Button layoutX="202.0" layoutY="338.0" mnemonicParsing="false" onAction="#cancleAdd" prefHeight="26.0" prefWidth="88.0" style="-fx-background-radius: 50; -fx-background-color: ff4848;" text="ยกเลิก">
+            </Label>
+            <Label text="Quantity :">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
-            </Button>
+            </Label>
+            <Label text="Type :">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Price :">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
-      </AnchorPane>
+      </VBox>
+      <VBox layoutX="750.0" layoutY="261.0" prefHeight="119.0" prefWidth="122.0" spacing="15.0">
+         <children>
+            <TextField fx:id="nameAdd" prefHeight="26.0" prefWidth="135.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="quantityAdd" prefHeight="37.0" prefWidth="133.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="typeAdd">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="priceAdd">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextField>
+         </children>
+      </VBox>
+      <TextArea fx:id="description" layoutX="644.0" layoutY="483.0" prefHeight="126.0" prefWidth="227.0" promptText="ลายละอียดสินค้า">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextArea>
+      <Button layoutX="784.0" layoutY="654.0" mnemonicParsing="false" onAction="#cancleAdd" prefHeight="26.0" prefWidth="88.0" style="-fx-background-radius: 50; -fx-background-color: ff4848;" text="ยกเลิก">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="644.0" layoutY="654.0" mnemonicParsing="false" onAction="#saveAdd" prefHeight="26.0" prefWidth="88.0" style="-fx-background-radius: 50; -fx-background-color: #a3e9a4;" text="บันทึก">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Hyperlink fx:id="upload" layoutX="387.0" layoutY="575.0" text="อัปโหลดรูปภาพ">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Hyperlink>
+      <VBox layoutX="332.0" layoutY="244.0" prefHeight="312.0" prefWidth="214.0">
+         <children>
+            <ImageView fx:id="addPic" fitHeight="312.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
+      <VBox layoutY="9.0" prefHeight="218.0" prefWidth="1209.0">
+         <children>
+            <ImageView fx:id="logo" fitHeight="95.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox prefHeight="59.0" prefWidth="1200.0" spacing="100.0" style="-fx-background-color: #a3e9a4;">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="0.0" />
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบ Order" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบการชำระเงิน" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ลงทะเบียนสินค้า">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="เตรียมและจัดส่งสินค้า">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="สั่งของ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
