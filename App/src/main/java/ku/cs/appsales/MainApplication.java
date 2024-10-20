@@ -45,8 +45,9 @@ public class MainApplication extends Application {
         FXRouter.when("orderListPageCustomer", resourcesPath + "orderListCustomer.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("customerOrderHistory", resourcesPath + "Customer_Order_History.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("profile", resourcesPath + "profile.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("VerifyPayment", resourcesPath + "verifyPayment.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("CheckProof", resourcesPath + "checkProofPayment.fxml", "SA Project", MIN_WIGHT, 760);
     }
-
     /**
      * ใส่ theme ให้กับหน้าโปแกรม
      * @param styleFileName ไฟล์ theme ที่มีนามสกุลเป็น .css เช่น default.css
