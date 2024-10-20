@@ -45,7 +45,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="850.0" layoutY="160.0" mnemonicParsing="false" text="ยืนยันการรับสินค้า" />
+      <Button fx:id="confirmReceiptProduct" layoutX="850.0" layoutY="160.0" mnemonicParsing="false" text="ยืนยันการรับสินค้า" />
       <Label fx:id="quantityLabel12" layoutX="267.0" layoutY="117.0" text="สถานะออเดอร์">
          <font>
             <Font size="18.0" />

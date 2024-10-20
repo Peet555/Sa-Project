@@ -14,9 +14,6 @@
             <Button fx:id="homeButton" layoutX="93.0" layoutY="31.0" mnemonicParsing="false" text="HOME" />
          </children>
       </Pane>
-      <Button layoutX="1008.0" layoutY="111.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="895.0" layoutY="111.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="1100.0" layoutY="111.0" mnemonicParsing="false" text="Button" />
       <Label fx:id="profileName" layoutX="428.0" layoutY="328.0" text="ชื่อบัญชี :">
          <font>
             <Font size="18.0" />
@@ -58,5 +55,8 @@
          </font>
       </Label>
       <ImageView fx:id="profileImageView" fitHeight="230.0" fitWidth="188.0" layoutX="117.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="cartButton" layoutX="952.0" layoutY="126.0" mnemonicParsing="false" text="Shopping Cart" />
+      <Button fx:id="profileButton" layoutX="871.0" layoutY="126.0" mnemonicParsing="false" text="Profile" />
+      <Button fx:id="orderHistoryButton" layoutX="1068.0" layoutY="126.0" mnemonicParsing="false" text="Order History" />
    </children>
 </AnchorPane>

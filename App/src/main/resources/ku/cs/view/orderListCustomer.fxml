@@ -12,11 +12,9 @@
    <children>
       <Pane layoutY="187.0" prefHeight="86.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
-            <Button layoutX="44.0" layoutY="31.0" mnemonicParsing="false" text="Home" />
+            <Button fx:id="homeButton" layoutX="44.0" layoutY="31.0" mnemonicParsing="false" text="Home" />
          </children>
       </Pane>
-      <Button layoutX="1072.0" layoutY="117.0" mnemonicParsing="false" text="2" />
-      <Button layoutX="993.0" layoutY="117.0" mnemonicParsing="false" text="1" />
       <Pane layoutY="693.0" prefHeight="108.0" prefWidth="1201.0" style="-fx-background-color: #a3e9a4;">
          <children>
             <Button fx:id="handleContinueShopping" layoutX="420.0" layoutY="63.0" mnemonicParsing="false" text="เลือกซื้อสินค้าต่อ" />
@@ -44,5 +42,8 @@
             <VBox fx:id="vBox" prefHeight="421.0" prefWidth="1198.0" />
          </content>
       </ScrollPane>
+      <Button fx:id="cartButton" layoutX="952.0" layoutY="126.0" mnemonicParsing="false" text="Shopping Cart" />
+      <Button fx:id="profileButton" layoutX="871.0" layoutY="126.0" mnemonicParsing="false" text="Profile" />
+      <Button fx:id="orderHistoryButton" layoutX="1068.0" layoutY="126.0" mnemonicParsing="false" text="Order History" />
    </children>
 </AnchorPane>

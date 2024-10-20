@@ -16,11 +16,23 @@ public class customerOrderHistoryItemController {
     public Button paymentButton;  // ปุ่มชำระเงิน
 
     @FXML
+    public Button confirmReceiptProduct; // ปุ่มยืนยันการรับสินค้า
+
+    @FXML
     public void initialize() {
         // กำหนดการทำงานของปุ่มชำระเงิน
         paymentButton.setOnAction(event -> {
             try {
                 openPaymentWindow();
+            } catch (IOException e) {
+                System.err.println("Error opening payment window: " + e.getMessage());
+            }
+        });
+
+        // กำหนดการทำงานของปุ่มยืนยันการรับสินค้า
+        confirmReceiptProduct.setOnAction(event -> {
+            try {
+                openConfirmReceiptProduct();
             } catch (IOException e) {
                 System.err.println("Error opening payment window: " + e.getMessage());
             }
@@ -36,6 +48,19 @@ public class customerOrderHistoryItemController {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Payment Confirmation");
+        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
+        stage.showAndWait();  // แสดงหน้าต่าง
+    }
+
+    // Method สำหรับเปิดหน้าต่าง paymentOrderWindow
+    private void openConfirmReceiptProduct() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/confirm_receipt_product.fxml"));
+        Parent root = loader.load();
+
+        // สร้าง Stage สำหรับหน้าต่างใหม่
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Order Receipt Confirmation");
         stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
         stage.showAndWait();  // แสดงหน้าต่าง
     }
