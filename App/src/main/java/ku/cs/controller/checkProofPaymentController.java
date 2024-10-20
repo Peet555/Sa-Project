@@ -4,10 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 
-public class verifyPaymentController {
+public class checkProofPaymentController {
     @FXML
-    public TableView statusPayment ;
+    public TableView paymentList ;
 
     @FXML
-    public ImageView logo ;
+    public ImageView proofPayment ;
+
+
 }
