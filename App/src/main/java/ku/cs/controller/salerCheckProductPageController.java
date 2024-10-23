@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
@@ -76,5 +77,24 @@ public class salerCheckProductPageController {
         Stage stage = new Stage();
         stage.setScene(new Scene(deniedOrderWindow));
         stage.showAndWait(); // รอจนกว่าจะปิดหน้าต่าง
+    }
+
+    @FXML
+    public void goVerifyPayment(){
+        try {
+            FXRouter.goTo("VerifyPayment");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @FXML
+    public void goCheckOrder(){
+        try {
+            FXRouter.goTo("SalerCheckOrder");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
