@@ -49,7 +49,7 @@ public class MainApplication extends Application {
         FXRouter.when("CheckProof", resourcesPath + "checkProofPayment.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("SalerCheckOrder", resourcesPath + "salerCheckOrderPage.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("Delivery", resourcesPath + "deliveryPrepare.fxml", "SA Project", MIN_WIGHT, 760);
-
+        FXRouter.when("OrderStock", resourcesPath + "stockOrder.fxml", "SA Project", MIN_WIGHT, 760);
     }
     /**
      * ใส่ theme ให้กับหน้าโปแกรม

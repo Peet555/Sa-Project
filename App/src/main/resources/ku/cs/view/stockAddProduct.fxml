@@ -106,17 +106,17 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ลงทะเบียนสินค้า">
+                  <Button mnemonicParsing="false" onAction="#goStock" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ลงทะเบียนสินค้า">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="เตรียมและจัดส่งสินค้า">
+                  <Button mnemonicParsing="false" onAction="#goDeliver" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="เตรียมและจัดส่งสินค้า">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="สั่งของ">
+                  <Button mnemonicParsing="false" onAction="#goOrder" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="สั่งของ">
                      <font>
                         <Font size="14.0" />
                      </font>
