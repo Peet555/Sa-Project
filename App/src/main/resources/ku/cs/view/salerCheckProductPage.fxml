@@ -33,7 +33,7 @@
          </content>
       </ScrollPane>
       <Button fx:id="confirmButton" layoutX="1033.0" layoutY="331.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="ยืนยันคำสั่งซื้อ" />
-      <Button layoutX="1033.0" layoutY="375.0" mnemonicParsing="false" text="ปฎิเสธคำสั่งซื้อ" />
+      <Button fx:id="denyButton" layoutX="1033.0" layoutY="375.0" mnemonicParsing="false" text="ปฎิเสธคำสั่งซื้อ" />
       <Button fx:id="backButton" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" text="ย้อนกลับ" />
    </children>
 </AnchorPane>

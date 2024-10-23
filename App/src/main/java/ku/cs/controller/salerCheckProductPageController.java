@@ -15,6 +15,8 @@ public class salerCheckProductPageController {
     private Button backButton;
     @FXML
     private Button confirmButton;
+    @FXML
+    private Button denyButton;
 
     @FXML
     public void initialize() {
@@ -31,6 +33,14 @@ public class salerCheckProductPageController {
         confirmButton.setOnAction(event -> {
             try {
                 openConfirmOrderWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        // กำหนดการทำงานของปุ่มปฎิเสธคำสั่งซื้อ
+        denyButton.setOnAction(event -> {
+            try {
+                openDeniedOrderWindow();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,6 +66,15 @@ public class salerCheckProductPageController {
 
         Stage stage = new Stage();
         stage.setScene(new Scene(confirmOrderWindow));
+        stage.showAndWait(); // รอจนกว่าจะปิดหน้าต่าง
+    }
+    // เมธอดสำหรับเปิดหน้าต่างปฎิเสธคำสั่งซื้อ
+    private void openDeniedOrderWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/deniedOrderWindow.fxml"));
+        Parent deniedOrderWindow = loader.load();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(deniedOrderWindow));
         stage.showAndWait(); // รอจนกว่าจะปิดหน้าต่าง
     }
 }
