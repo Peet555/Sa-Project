@@ -12,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
@@ -108,5 +109,15 @@ public class salerCheckOrderPageController {
         public String getOrderTimestamp() {
             return orderTimestamp;
         }
+    }
+
+    @FXML
+    public void goVerifyPayment() {
+        try {
+            FXRouter.goTo("VerifyPayment");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
