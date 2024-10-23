@@ -28,6 +28,12 @@ public class profileController {
     public Button homeButton;
 
     @FXML
+    public Button cartButton;
+
+    @FXML
+    public Button orderHistoryButton;
+
+    @FXML
     public void initialize() throws IOException {
 
         homeButton.setOnAction(event -> {

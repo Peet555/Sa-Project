@@ -17,7 +17,7 @@ public class stockOrderController {
     public TextField idStockOrder ;
 
     @FXML
-    public TableView quantityStockOrder ;
+    public TextField quantityStockOrder ;
 
     @FXML
     public void goStock(){

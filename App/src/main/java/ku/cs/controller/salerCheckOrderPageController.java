@@ -39,9 +39,9 @@ public class salerCheckOrderPageController {
 
         // สร้างข้อมูลจำลอง (Mock Data)
         ObservableList<Order> orders = FXCollections.observableArrayList(
-                new Order("001", "Online", "Pending", "2024-10-11 10:00:00"),
-                new Order("002", "Offline", "Shipped", "2024-10-11 12:30:00"),
-                new Order("003", "Online", "Delivered", "2024-10-12 09:45:00")
+                new Order("001", "Order", "รอตรวจสอบ", "2024-10-11 10:00:00"),
+                new Order("002", "PreOrder", "ยืนยัน", "2024-10-11 12:30:00"),
+                new Order("003", "Order", "ปฎิเสธ", "2024-10-12 09:45:00")
         );
 
         // เพิ่มข้อมูลลงใน TableView

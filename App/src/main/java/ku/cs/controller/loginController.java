@@ -3,6 +3,7 @@ package ku.cs.controller;
 
 import animatefx.animation.FadeIn;
 import animatefx.animation.FadeOutDown;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -38,15 +39,13 @@ public class loginController {
         URL url = getClass().getResource("/ku/cs/picture/backgroundlogin.png");
         if (url != null) logo.setImage(new Image(url.toExternalForm()));
 
-        new FadeOutDown(passwordLabel).setSpeed(1024).play();
 
-        FocusedPropertyUtil.setAppearNodeOnFieldFocused(password, passwordLabel);
-        FocusedPropertyUtil.setAppearNodeOnFieldFocused(username, usernameLabel);
-
-        errorLabel.setVisible(false);
-
-        new FadeIn(body).play();
     }
 
 
+    public void onLoginButton(ActionEvent actionEvent) {
+    }
+
+    public void onRegisterButton(ActionEvent actionEvent) {
+    }
 }
