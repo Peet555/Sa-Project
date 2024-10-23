@@ -26,7 +26,7 @@ public class MainApplication extends Application {
 
         FXRouter.bind(this, stage);
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
-        FXRouter.goTo("Stock");
+        FXRouter.goTo("SalerCheckOrder");
         setTheme("theme.css");
     }
 
@@ -47,6 +47,8 @@ public class MainApplication extends Application {
         FXRouter.when("profile", resourcesPath + "profile.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("VerifyPayment", resourcesPath + "verifyPayment.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("CheckProof", resourcesPath + "checkProofPayment.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("SalerCheckOrder", resourcesPath + "salerCheckOrderPage.fxml", "SA Project", MIN_WIGHT, 760);
+
     }
     /**
      * ใส่ theme ให้กับหน้าโปแกรม

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckOrderPageController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckProductPageController">
    <children>
       <Pane layoutY="171.0" prefHeight="91.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
@@ -19,17 +19,21 @@
          </children>
       </Pane>
       <Button layoutX="1034.0" layoutY="93.0" mnemonicParsing="false" text="Profile" />
-      <ScrollPane layoutX="334.0" layoutY="274.0" prefHeight="495.0" prefWidth="533.0">
+      <ScrollPane layoutX="334.0" layoutY="274.0" prefHeight="495.0" prefWidth="603.0">
          <content>
-            <TableView fx:id="orderTable" prefHeight="492.0" prefWidth="530.0">
-              <columns>
-                <TableColumn fx:id="orderIdColumn" prefWidth="99.0" text="Order_ID" />
-                <TableColumn fx:id="orderTypeColumn" prefWidth="107.0" text="Order_type" />
-                  <TableColumn fx:id="orderStatusColumn" prefWidth="162.0" text="Order_Status" />
-                  <TableColumn fx:id="orderTimestampColumn" minWidth="0.0" prefWidth="161.0" text="Order_Timestamp" />
-              </columns>
+            <TableView prefHeight="492.0" prefWidth="600.0">
+               <columns>
+                  <TableColumn prefWidth="99.0" text="Product_ID" />
+                  <TableColumn prefWidth="107.0" text="Product_Type" />
+                  <TableColumn prefWidth="171.0" text="Product_name" />
+                  <TableColumn minWidth="0.0" prefWidth="116.0" text="Quantity" />
+                  <TableColumn prefWidth="111.0" text="Price" />
+               </columns>
             </TableView>
          </content>
       </ScrollPane>
+      <Button layoutX="1033.0" layoutY="331.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="ยืนยันคำสั่งซื้อ" />
+      <Button layoutX="1033.0" layoutY="375.0" mnemonicParsing="false" text="ปฎิเสธคำสั่งซื้อ" />
+      <Button fx:id="backButton" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" text="ย้อนกลับ" />
    </children>
 </AnchorPane>
