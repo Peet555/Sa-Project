@@ -1,10 +1,15 @@
 package ku.cs.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import ku.cs.services.FXRouter;
 
 
@@ -37,9 +42,9 @@ public class stockEditProductController {
     @FXML
     public void saveEdit() {
         try {
-            FXRouter.goTo("Stock");
+            openConfirmWindow();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error opening payment window: " + e.getMessage());
         }
     }
 
@@ -77,6 +82,18 @@ public class stockEditProductController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void openConfirmWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/editConfirmWindow.fxml"));
+        Parent root = loader.load();
+
+        // สร้าง Stage สำหรับหน้าต่างใหม่
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Confirmation");
+        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
+        stage.showAndWait();  // แสดงหน้าต่าง
     }
 
 
