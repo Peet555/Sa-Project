@@ -19,8 +19,12 @@ public class confirmCheckPaymentWindowController {
 
     @FXML
     public void confirmClick(){
-        Stage stage = (Stage) okayButton.getScene().getWindow();
-        stage.close();
+        try {
+            FXRouter.goTo("verifyPayment");
+            closeWindow();  // ปิดหน้าต่าง Modal หลังจากไปที่หน้าใหม่
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
