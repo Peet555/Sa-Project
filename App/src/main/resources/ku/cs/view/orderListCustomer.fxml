@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productOrderListCustomerController">
+   <children>
+      <Pane layoutY="187.0" prefHeight="86.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
+         <children>
+            <Button fx:id="homeButton" layoutX="44.0" layoutY="31.0" mnemonicParsing="false" text="Home" />
+         </children>
+      </Pane>
+      <Pane layoutY="693.0" prefHeight="108.0" prefWidth="1201.0" style="-fx-background-color: #a3e9a4;">
+         <children>
+            <Button fx:id="handleContinueShopping" layoutX="420.0" layoutY="63.0" mnemonicParsing="false" text="เลือกซื้อสินค้าต่อ" />
+            <Button fx:id="handleConfirmOrder" layoutX="559.0" layoutY="63.0" mnemonicParsing="false" text="สั่งซื้อ" />
+            <Button fx:id="handleConfirmPreOrder" layoutX="671.0" layoutY="63.0" mnemonicParsing="false" text="สั่งจอง" />
+            <Label layoutX="356.0" layoutY="6.0" text="ราคาสินค้ารวมทั้งหมด :">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="601.0" layoutY="6.0" text="Label">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="544.0" layoutY="41.0" text="คำเตือน" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ScrollPane fx:id="scrollPane" layoutY="273.0" prefHeight="420.0" prefWidth="1200.0">
+         <content>
+            <VBox fx:id="vBox" prefHeight="421.0" prefWidth="1198.0" />
+         </content>
+      </ScrollPane>
+      <Button fx:id="cartButton" layoutX="952.0" layoutY="126.0" mnemonicParsing="false" text="Shopping Cart" />
+      <Button fx:id="profileButton" layoutX="871.0" layoutY="126.0" mnemonicParsing="false" text="Profile" />
+      <Button fx:id="orderHistoryButton" layoutX="1068.0" layoutY="126.0" mnemonicParsing="false" text="Order History" />
+   </children>
+</AnchorPane>

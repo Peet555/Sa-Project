@@ -20,6 +20,15 @@ public class productModelController {
     private Button homeButton; // เชื่อมต่อกับปุ่ม "Home" จาก FXML
 
     @FXML
+    public Button profileButton ;
+
+    @FXML
+    public Button cartButton ;
+
+    @FXML
+    public Button orderHistoryButton ;
+
+    @FXML
     public void initialize() throws IOException {
         // จำนวนสินค้า
         int itemCount = 18;
@@ -36,6 +45,29 @@ public class productModelController {
             } catch (IOException e) {
                 System.err.println();
 
+            }
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("profile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
+            }
+        });
+
+        cartButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderList");
+            } catch (IOException e) {
+                System.err.println("Cannot go to cart");
+            }
+        });
+
+        orderHistoryButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderHistory");
+            } catch (IOException e) {
+                System.err.println("Cannot go to order history");
             }
         });
     }

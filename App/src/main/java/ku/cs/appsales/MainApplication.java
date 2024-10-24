@@ -26,7 +26,9 @@ public class MainApplication extends Application {
 
         FXRouter.bind(this, stage);
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
-        FXRouter.goTo("login");
+
+        FXRouter.goTo("Product");
+
         setTheme("theme.css");
     }
 
@@ -39,11 +41,21 @@ public class MainApplication extends Application {
         FXRouter.when("ProductModel", resourcesPath + "productModel.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("root", resourcesPath + "root.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("Product", resourcesPath + "product.fxml", "SA Project", MIN_WIGHT, 760);
-
-
+        FXRouter.when("Stock", resourcesPath + "stock.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("EditStock", resourcesPath + "stockEditProduct.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("AddStock", resourcesPath + "stockAddProduct.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("orderListPageCustomer", resourcesPath + "orderListCustomer.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("customerOrderHistory", resourcesPath + "Customer_Order_History.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("profile", resourcesPath + "profile.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("VerifyPayment", resourcesPath + "verifyPayment.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("CheckProof", resourcesPath + "checkProofPayment.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("SalerCheckOrder", resourcesPath + "salerCheckOrderPage.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("Delivery", resourcesPath + "deliveryPrepare.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("OrderStock", resourcesPath + "stockOrder.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("CustomerOrderList", resourcesPath + "orderListCustomer.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("CustomerOrderHistory", resourcesPath + "Customer_Order_History.fxml", "SA Project", MIN_WIGHT, 760);
 
     }
-
     /**
      * ใส่ theme ให้กับหน้าโปแกรม
      * @param styleFileName ไฟล์ theme ที่มีนามสกุลเป็น .css เช่น default.css

@@ -2,6 +2,7 @@ package ku.cs.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import ku.cs.services.FXRouter;
@@ -15,6 +16,15 @@ public class homePageController {
     private HBox currentSelectedProduct = null; // ใช้เพื่อเก็บ item ที่ถูกเลือก
 
     @FXML
+    public Button profileButton ;
+
+    @FXML
+    public Button cartButton ;
+
+    @FXML
+    public Button orderHistoryButton ;
+
+    @FXML
     public void initialize() throws IOException {
         // จำนวนสินค้า
         int itemCount = 18;
@@ -24,6 +34,29 @@ public class homePageController {
         for (int i = 0; i < itemCount; i++) {
             addTypeProductItem(i, columns);
         }
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("profile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
+            }
+        });
+
+        cartButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderList");
+            } catch (IOException e) {
+                System.err.println("Cannot go to cart");
+            }
+        });
+
+        orderHistoryButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderHistory");
+            } catch (IOException e) {
+                System.err.println("Cannot go to order history");
+            }
+        });
 
     }
 
