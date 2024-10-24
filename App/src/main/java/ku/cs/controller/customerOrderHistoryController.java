@@ -3,13 +3,28 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import ku.cs.services.FXRouter;
+
 import java.io.IOException;
 
 public class customerOrderHistoryController {
 
     @FXML
     private VBox vBox;  // เชื่อมกับ VBox จาก FXML
+
+    @FXML
+    public Button profileButton ;
+
+    @FXML
+    public Button cartButton ;
+
+    @FXML
+    public Button orderHistoryButton ;
+
+    @FXML
+    public Button homeButton;
 
     @FXML
     public void initialize() {
@@ -24,6 +39,36 @@ public class customerOrderHistoryController {
                 System.err.println("Error loading order history item: " + e.getMessage());
             }
         }
+        homeButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("Homepage"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to Homepage");
+            }
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("profile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
+            }
+        });
+
+        cartButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderList");
+            } catch (IOException e) {
+                System.err.println("Cannot go to cart");
+            }
+        });
+
+        orderHistoryButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderHistory");
+            } catch (IOException e) {
+                System.err.println("Cannot go to order history");
+            }
+        });
     }
 
     // Method สำหรับเพิ่ม customerOrderHistoryItem ลงใน VBox

@@ -24,6 +24,15 @@ public class productController {
     public Button homeButton;
 
     @FXML
+    public Button profileButton ;
+
+    @FXML
+    public Button cartButton ;
+
+    @FXML
+    public Button orderHistoryButton ;
+
+    @FXML
     public void initialize() throws IOException {
         addTypeProductItem(1);
 
@@ -41,6 +50,29 @@ public class productController {
                 openProductQualityWindow();  // เรียกใช้ method เปิด Modal
             } catch (IOException e) {
                 System.err.println("Cannot go to productQualityWindow");
+            }
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("profile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
+            }
+        });
+
+        cartButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderList");
+            } catch (IOException e) {
+                System.err.println("Cannot go to cart");
+            }
+        });
+
+        orderHistoryButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderHistory");
+            } catch (IOException e) {
+                System.err.println("Cannot go to order history");
             }
         });
     }

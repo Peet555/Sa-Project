@@ -27,6 +27,18 @@ public class productOrderListCustomerController {
     public Button handleConfirmPreOrder;  // ปุ่มสั่งจอง
 
     @FXML
+    public Button profileButton ;
+
+    @FXML
+    public Button cartButton ;
+
+    @FXML
+    public Button orderHistoryButton ;
+
+    @FXML
+    public Button homeButton ;
+
+    @FXML
     public void initialize() throws IOException {
         // จำนวนสินค้าที่จะ Mock ข้อมูล (เช่น 5 รายการ)
         int itemCount = 5;
@@ -38,6 +50,14 @@ public class productOrderListCustomerController {
 
         // ตั้งค่า ScrollPane ให้สามารถเลื่อนดู VBox ได้
         // scrollPane.setContent(vBox);  // ใช้ได้ในกรณีที่มี ScrollPane
+
+        homeButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("Homepage"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to Homepage");
+            }
+        });
 
         handleContinueShopping.setOnAction(event -> {
             try {
@@ -64,6 +84,29 @@ public class productOrderListCustomerController {
                 openPreOrderConfirmationWindow();
             } catch (IOException e) {
                 System.err.println("Cannot open order confirmation window.");
+            }
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("profile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
+            }
+        });
+
+        cartButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderList");
+            } catch (IOException e) {
+                System.err.println("Cannot go to cart");
+            }
+        });
+
+        orderHistoryButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("CustomerOrderHistory");
+            } catch (IOException e) {
+                System.err.println("Cannot go to order history");
             }
         });
     }
