@@ -24,5 +24,6 @@
             </font>
         </Label>
       <Label fx:id="priceLabel" layoutX="348.0" layoutY="164.0" />
+      <Pane layoutX="-3.0" layoutY="198.0" prefHeight="5.0" prefWidth="1206.0" style="-fx-background-color: #b3e5fc;" />
     </children>
 </AnchorPane>
