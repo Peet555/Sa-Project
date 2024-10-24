@@ -53,8 +53,11 @@
          <children>
             <TableView fx:id="table" prefHeight="538.0" prefWidth="666.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="productID" prefWidth="135.0" text="Product_ID" />
+                <TableColumn fx:id="name" prefWidth="135.0" text="Product_Name" />
+                  <TableColumn fx:id="quantity" prefWidth="135.0" text="Quantity" />
+                  <TableColumn fx:id="price" prefWidth="135.0" text="Product_Price" />
+                  <TableColumn fx:id="supid" prefWidth="135.0" text="Supplier_ID" />
               </columns>
             </TableView>
          </children>
