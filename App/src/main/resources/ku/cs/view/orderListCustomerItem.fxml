@@ -25,5 +25,6 @@
         </Label>
       <Label fx:id="priceLabel" layoutX="348.0" layoutY="164.0" />
       <Pane layoutX="-3.0" layoutY="198.0" prefHeight="5.0" prefWidth="1206.0" style="-fx-background-color: #b3e5fc;" />
+      <Button fx:id="deleteProduct" layoutX="1024.0" layoutY="88.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="ลบออกจากรายการ" />
     </children>
 </AnchorPane>

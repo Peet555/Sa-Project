@@ -150,6 +150,12 @@ public class orderListCustomerController {
     private void addProductItem(int index) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderListCustomerItem.fxml"));
         Node node = loader.load();
+
+        // ส่ง VBox (vBox) ไปยัง orderListCustomerItemController
+        orderListCustomerItemController controller = loader.getController();
+        controller.setParentVBox(vBox);
+
         vBox.getChildren().add(node);
     }
+
 }
