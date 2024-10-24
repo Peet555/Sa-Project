@@ -58,9 +58,15 @@
          <children>
             <TableView fx:id="deliveryTable" prefHeight="447.0" prefWidth="530.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="id" prefWidth="95.0" text="orderID" />
+                <TableColumn fx:id="type" prefWidth="95.0" text="orderType" />
+                  <TableColumn fx:id="status" prefWidth="95.0" text="orderStatus" />
+                  <TableColumn fx:id="timeStamp" prefWidth="118.0" text="orderTimestamp" />
+                  <TableColumn fx:id="delivery" prefWidth="125.0" text="deliveryStatus" />
               </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </TableView>
          </children>
       </VBox>
