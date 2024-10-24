@@ -51,7 +51,7 @@ public class stockEditProductController {
     @FXML
     public void cancleEdit() {
         try {
-            FXRouter.goTo("Stock");
+            FXRouter.goTo("stock");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +60,7 @@ public class stockEditProductController {
     @FXML
     public void goOrder(){
         try {
-            FXRouter.goTo("OrderStock");
+            FXRouter.goTo("orderStock");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -69,7 +69,7 @@ public class stockEditProductController {
     @FXML
     public void goDeliver(){
         try {
-            FXRouter.goTo("Delivery");
+            FXRouter.goTo("delivery");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -78,7 +78,7 @@ public class stockEditProductController {
     @FXML
     public void goStock(){
         try {
-            FXRouter.goTo("Stock");
+            FXRouter.goTo("stock");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

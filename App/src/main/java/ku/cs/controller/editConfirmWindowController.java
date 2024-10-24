@@ -17,7 +17,7 @@ public class editConfirmWindowController {
     @FXML
     public void okayClick(){
         try {
-            FXRouter.goTo("Stock");
+            FXRouter.goTo("stock");
             closeWindow();  // ปิดหน้าต่าง Modal หลังจากไปที่หน้าใหม่
         } catch (IOException e) {
             throw new RuntimeException(e);

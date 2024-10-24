@@ -7,7 +7,7 @@ import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
-public class ConfirmCheckPaymentWindowController {
+public class confirmCheckPaymentWindowController {
     @FXML
     public Button cancleButton ;
 
@@ -20,7 +20,7 @@ public class ConfirmCheckPaymentWindowController {
     @FXML
     public void confirmClick(){
         try {
-            FXRouter.goTo("VerifyPayment");
+            FXRouter.goTo("verifyPayment");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

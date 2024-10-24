@@ -17,7 +17,7 @@ public class checkProofPaymentController {
     @FXML
     public void goVerifyPayment(){
         try {
-            FXRouter.goTo("VerifyPayment");
+            FXRouter.goTo("verifyPayment");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -27,7 +27,7 @@ public class checkProofPaymentController {
     @FXML
     public void goCheckOrder(){
         try {
-            FXRouter.goTo("SalerCheckOrder");
+            FXRouter.goTo("salerCheckOrder");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

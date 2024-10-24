@@ -16,7 +16,7 @@ import ku.cs.services.RootService;
 import java.io.IOException;
 import java.net.URL;
 
-public class RootController {
+public class rootController {
     private Data data;
     @FXML
     public StackPane loadingPane;

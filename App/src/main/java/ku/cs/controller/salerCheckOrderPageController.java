@@ -114,7 +114,7 @@ public class salerCheckOrderPageController {
     @FXML
     public void goVerifyPayment() {
         try {
-            FXRouter.goTo("VerifyPayment");
+            FXRouter.goTo("verifyPayment");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

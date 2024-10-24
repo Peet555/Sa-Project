@@ -42,7 +42,7 @@ public class profileController {
 
         homeButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("Homepage"); // เปลี่ยนไปหน้า HomePage
+                FXRouter.goTo("homePage"); // เปลี่ยนไปหน้า HomePage
             } catch (IOException e) {
                 System.err.println("Cannot go to Homepage");
             }
@@ -57,7 +57,7 @@ public class profileController {
 
         cartButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("CustomerOrderList");
+                FXRouter.goTo("customerOrderList");
             } catch (IOException e) {
                 System.err.println("Cannot go to cart");
             }
@@ -65,7 +65,7 @@ public class profileController {
 
         orderHistoryButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("CustomerOrderHistory");
+                FXRouter.goTo("customerOrderHistory");
             } catch (IOException e) {
                 System.err.println("Cannot go to order history");
             }

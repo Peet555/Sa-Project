@@ -1,16 +1,16 @@
 package ku.cs.services;
 
 import javafx.util.Duration;
-import ku.cs.controller.RootController;
+import ku.cs.controller.rootController;
 
 public class RootService {
-    private static RootController controller;
+    private static rootController controller;
 
-    public static RootController getController() {
+    public static rootController getController() {
         return controller;
     }
 
-    public static void setController(RootController controller) {
+    public static void setController(rootController controller) {
         RootService.controller = controller;
     }
 
@@ -24,10 +24,10 @@ public class RootService {
     }
 
     public static void showBar(String text, Duration duration) {
-        showBar(text, RootController.Color.GREEN, duration);
+        showBar(text, rootController.Color.GREEN, duration);
     }
 
-    public static void showBar(String text, RootController.Color color, Duration duration) {
+    public static void showBar(String text, rootController.Color color, Duration duration) {
         controller.showBar(text, color, duration);
     }
 
@@ -36,7 +36,7 @@ public class RootService {
     }
 
     public static void showErrorBar(String text, Duration duration) {
-        showBar(text, RootController.Color.RED, duration);
+        showBar(text, rootController.Color.RED, duration);
     }
 
     public static void showLoadingIndicator() {

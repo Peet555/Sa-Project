@@ -20,10 +20,10 @@
       <Label layoutX="232.0" layoutY="138.0" text="เลขที่บัญชี 555-55-5555-5555" />
       <Separator layoutX="7.0" layoutY="248.0" prefHeight="35.0" prefWidth="589.0" />
       <Label layoutX="340.0" layoutY="275.0" text="ราคาสินค้าทั้งหมด :" />
-      <Label layoutX="442.0" layoutY="275.0" text="label" />
+      <Label fx:id="totalPriceLabel" layoutX="442.0" layoutY="275.0" />
       <Button fx:id="confirmPaymentButton" layoutX="252.0" layoutY="344.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="111.0" text="ยืนยันการชำระเงิน" />
       <Label layoutX="338.0" layoutY="300.0" text="ค่ามัดจำ :" />
-      <Label layoutX="390.0" layoutY="300.0" text="label" />
+      <Label fx:id="priceDeposit" layoutX="390.0" layoutY="300.0" />
       <Label fx:id="fileName" layoutX="294.0" layoutY="240.0" textFill="RED" />
    </children>
 </AnchorPane>

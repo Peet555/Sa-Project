@@ -21,7 +21,7 @@ public class stockController {
     @FXML
     public void goOrder(){
         try {
-            FXRouter.goTo("OrderStock");
+            FXRouter.goTo("orderStock");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -30,7 +30,7 @@ public class stockController {
     @FXML
     public void goDeliver(){
         try {
-            FXRouter.goTo("Delivery");
+            FXRouter.goTo("delivery");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -3,6 +3,7 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,7 +13,7 @@ import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
-public class productOrderListCustomerController {
+public class orderListCustomerController {
 
     @FXML
     public VBox vBox;
@@ -39,6 +40,12 @@ public class productOrderListCustomerController {
     public Button homeButton ;
 
     @FXML
+    public Label cannotClickOrderButton;
+
+    @FXML
+    public Label totalOrderPrice;
+
+    @FXML
     public void initialize() throws IOException {
         // จำนวนสินค้าที่จะ Mock ข้อมูล (เช่น 5 รายการ)
         int itemCount = 5;
@@ -53,7 +60,7 @@ public class productOrderListCustomerController {
 
         homeButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("Homepage"); // เปลี่ยนไปหน้า HomePage
+                FXRouter.goTo("homePage"); // เปลี่ยนไปหน้า HomePage
             } catch (IOException e) {
                 System.err.println("Cannot go to Homepage");
             }
@@ -61,7 +68,7 @@ public class productOrderListCustomerController {
 
         handleContinueShopping.setOnAction(event -> {
             try {
-                FXRouter.goTo("Homepage"); // เปลี่ยนไปหน้า HomePage
+                FXRouter.goTo("homePage"); // เปลี่ยนไปหน้า HomePage
             } catch (IOException e) {
                 System.err.println();
             }
@@ -96,7 +103,7 @@ public class productOrderListCustomerController {
 
         cartButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("CustomerOrderList");
+                FXRouter.goTo("customerOrderList");
             } catch (IOException e) {
                 System.err.println("Cannot go to cart");
             }
@@ -104,7 +111,7 @@ public class productOrderListCustomerController {
 
         orderHistoryButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("CustomerOrderHistory");
+                FXRouter.goTo("customerOrderHistory");
             } catch (IOException e) {
                 System.err.println("Cannot go to order history");
             }
