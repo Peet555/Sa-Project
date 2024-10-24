@@ -59,11 +59,11 @@
             </TableView>
          </children>
       </VBox>
-      <Button layoutX="903.0" layoutY="332.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="117.0" style="-fx-background-radius: 50; -fx-background-color: ffc746;" text="แก้ไขข้อมูล">
+      <Button layoutX="903.0" layoutY="332.0" mnemonicParsing="false" onAction="#goEdit" prefHeight="37.0" prefWidth="117.0" style="-fx-background-radius: 50; -fx-background-color: ffc746;" text="แก้ไขข้อมูล">
          <font>
             <Font size="16.0" />
          </font></Button>
-      <Button layoutX="904.0" layoutY="400.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6dfaff;" text="ลงทะเบียนสินค้า">
+      <Button layoutX="904.0" layoutY="400.0" mnemonicParsing="false" onAction="#goAdd" style="-fx-background-radius: 50; -fx-background-color: #6dfaff;" text="ลงทะเบียนสินค้า">
          <font>
             <Font size="16.0" />
          </font></Button>

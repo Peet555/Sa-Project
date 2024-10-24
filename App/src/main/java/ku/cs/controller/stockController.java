@@ -35,4 +35,22 @@ public class stockController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    public void goAdd() {
+        try {
+            FXRouter.goTo("addStock");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void goEdit() {
+        try {
+            FXRouter.goTo("editStock");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
