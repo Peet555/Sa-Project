@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class confirmCheckPaymentWindowController {
     @FXML
-    public Button cancleButton ;
+    public Button cancleButton , okayButton ;
 
     @FXML
     public void cancleClick(){
@@ -19,15 +19,15 @@ public class confirmCheckPaymentWindowController {
 
     @FXML
     public void confirmClick(){
-        try {
-            FXRouter.goTo("verifyPayment");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Stage stage = (Stage) okayButton.getScene().getWindow();
+        stage.close();
+    }
 
-        //อัตเดตข้อมูลที่บันทึก
-
-
+    @FXML
+    public void closeWindow() {
+        // ปิดหน้าต่างที่เป็น Modal (จะใช้ Stage ที่เป็นหน้าต่างใหม่)
+        Stage stage = (Stage) okayButton.getScene().getWindow();
+        stage.close();  // ปิดหน้าต่าง Modal
     }
 
 }
