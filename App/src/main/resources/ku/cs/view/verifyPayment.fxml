@@ -58,8 +58,10 @@
          <children>
             <TableView fx:id="statusPayment" prefHeight="565.0" prefWidth="754.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="orderID" prefWidth="190.0" text="Order_ID" />
+                <TableColumn fx:id="orderType" prefWidth="190.0" text="Order_Type" />
+                  <TableColumn fx:id="orderStatus" prefWidth="190.0" text="Order_Status" />
+                  <TableColumn fx:id="orderTime" prefWidth="190.0" text="Order_Timestamp" />
               </columns>
             </TableView>
          </children>
