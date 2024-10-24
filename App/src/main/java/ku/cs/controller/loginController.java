@@ -34,11 +34,9 @@ public class loginController {
 
 
     public void initialize() {
-        password.textProperty().addListener((observableValue, s, t1) -> errorLabel.setVisible(false));
-        username.textProperty().addListener((observableValue, s, t1) -> errorLabel.setVisible(false));
+
         URL url = getClass().getResource("/ku/cs/picture/backgroundlogin.png");
         if (url != null) logo.setImage(new Image(url.toExternalForm()));
-
 
     }
 
