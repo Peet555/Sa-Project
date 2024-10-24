@@ -3,6 +3,7 @@ module ku.cs {
     requires javafx.fxml;
     requires AnimateFX;
     requires java.desktop;
+    requires java.sql;
 
     opens ku.cs to javafx.fxml;
     exports ku.cs;

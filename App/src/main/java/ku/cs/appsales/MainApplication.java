@@ -26,7 +26,7 @@ public class MainApplication extends Application {
 
         FXRouter.bind(this, stage);
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
-        FXRouter.goTo("Product");
+        FXRouter.goTo("login");
         setTheme("theme.css");
     }
 
