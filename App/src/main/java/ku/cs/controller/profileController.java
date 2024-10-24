@@ -3,38 +3,38 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 
 public class profileController {
-    @FXML
-    public Label profileName;
 
     @FXML
-    public Label profileID;
+    public Label customerUserName; // username
 
     @FXML
-    public Label profilePhone;
+    public Label customerName; // name
 
     @FXML
-    public Label profileAddress;
+    public Label customerEmail; // email
 
     @FXML
-    public ImageView profileImageView;
+    public Label customerPhone; // phone
 
     @FXML
-    public Button homeButton;
+    public Label customerAddress; // address
 
     @FXML
-    public Button cartButton;
+    public Button homeButton; // home
 
     @FXML
-    public Button orderHistoryButton;
+    public Button cartButton; // cart
 
     @FXML
-    public Button profileButton ;
+    public Button orderHistoryButton; // order history
+
+    @FXML
+    public Button profileButton ; // profile
 
 
     @FXML
@@ -57,7 +57,7 @@ public class profileController {
 
         cartButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("customerOrderList");
+                FXRouter.goTo("customerOrderList"); // เปลี่ยนไปหน้า Cart
             } catch (IOException e) {
                 System.err.println("Cannot go to cart");
             }
@@ -65,7 +65,7 @@ public class profileController {
 
         orderHistoryButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("customerOrderHistory");
+                FXRouter.goTo("customerOrderHistory"); // เปลี่ยนไปหน้า Order History
             } catch (IOException e) {
                 System.err.println("Cannot go to order history");
             }

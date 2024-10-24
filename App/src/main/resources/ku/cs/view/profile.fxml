@@ -32,7 +32,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="userName" layoutX="505.0" layoutY="354.0" text="username">
+      <Label fx:id="customerUserName" layoutX="505.0" layoutY="354.0" text="customerUserName">
          <font>
             <Font size="18.0" />
          </font>
@@ -60,7 +60,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="508.0" layoutY="472.0" text="customerEmail">
+      <Label fx:id="customerEmail" layoutX="508.0" layoutY="472.0" text="customerEmail">
          <font>
             <Font size="18.0" />
          </font>
