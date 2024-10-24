@@ -11,8 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.services.FXRouter;
-
-import java.awt.*;
 import java.io.IOException;
 
 public class stockAddProductController {

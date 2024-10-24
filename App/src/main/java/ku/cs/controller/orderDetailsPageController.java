@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
@@ -93,7 +90,7 @@ public class orderDetailsPageController {
 
     // Method สำหรับเพิ่มสินค้า Mock ลงใน VBox
     private void addProductItem(int index) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderListCustomerItem.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderHistoryDetailsItem.fxml"));
         Node node = loader.load();
         vBox.getChildren().add(node);
     }

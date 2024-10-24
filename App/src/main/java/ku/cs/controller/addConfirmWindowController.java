@@ -4,8 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import ku.cs.services.FXRouter;
-
-import java.awt.*;
 import java.io.IOException;
 
 public class addConfirmWindowController {
