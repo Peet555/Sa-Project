@@ -3,6 +3,7 @@ package ku.cs.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,26 +12,25 @@ import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
-//import java.lang.classfile.Label;
-
 public class stockController {
 
+    @FXML
+    private TableView<Product> table;
+    @FXML
+    private TableColumn<Product, String> productID;
+    @FXML
+    private TableColumn<Product, String> name;
+    @FXML
+    private TableColumn<Product, Integer> quantity;
+    @FXML
+    private TableColumn<Product, Integer> price;
+    @FXML
+    private TableColumn<Product, String> supid;
+    @FXML
+    private Button editButton;  // ปุ่มแก้ไขข้อมูล
 
     @FXML
-    private TableView<Product> table ;
-    @FXML
-    private TableColumn<Product,String> productID ;
-    @FXML
-    private TableColumn<Product,String> name ;
-    @FXML
-    private TableColumn<Product,Integer> quantity ;
-    @FXML
-    private TableColumn<Product,Integer> price ;
-    @FXML
-    private TableColumn<Product,String> supid ;
-
-    @FXML
-    public void initialize(){
+    public void initialize() {
         productID.setCellValueFactory(new PropertyValueFactory<>("productID"));
         name.setCellValueFactory(new PropertyValueFactory<>("productName"));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -38,17 +38,26 @@ public class stockController {
         supid.setCellValueFactory(new PropertyValueFactory<>("supplierID"));
 
         ObservableList<Product> products = FXCollections.observableArrayList(
-                new Product("001", "TV", 20, 1000,"00010")
+                new Product("001", "TV", 20, 1000, "00010")
         );
 
         table.setItems(products);
+
+        // ปิดการใช้งานปุ่ม "แก้ไขข้อมูล" ก่อนเลือกข้อมูล
+        editButton.setDisable(true);
+
+        // เพิ่ม listener เพื่อตรวจสอบว่าแถวถูกเลือกในตารางหรือไม่
+        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            // หากเลือกแถวให้เปิดใช้งานปุ่มแก้ไข, หากไม่ให้ปิดการใช้งาน
+            editButton.setDisable(newValue == null);
+        });
     }
 
     @FXML
-    public ImageView logo ;
+    public ImageView logo;
 
     @FXML
-    public void goOrder(){
+    public void goOrder() {
         try {
             FXRouter.goTo("orderStock");
         } catch (IOException e) {
@@ -57,7 +66,7 @@ public class stockController {
     }
 
     @FXML
-    public void goDeliver(){
+    public void goDeliver() {
         try {
             FXRouter.goTo("delivery");
         } catch (IOException e) {
@@ -76,19 +85,21 @@ public class stockController {
 
     @FXML
     public void goEdit() {
-        try {
-            FXRouter.goTo("editStock");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (!table.getSelectionModel().isEmpty()) {  // ตรวจสอบว่ามีการเลือกแถวหรือไม่
+            try {
+                FXRouter.goTo("editStock");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public static class Product {
-        private String productID ;
-        private String productName ;
-        private Integer quantity ;
-        private Integer productPrice ;
-        private String supplierID ;
+        private String productID;
+        private String productName;
+        private Integer quantity;
+        private Integer productPrice;
+        private String supplierID;
 
         public Product(String productID, String productName, Integer quantity, Integer productPrice, String supplierID) {
             this.productID = productID;
@@ -117,7 +128,5 @@ public class stockController {
         public String getSupplierID() {
             return supplierID;
         }
-        }
-
     }
-
+}
