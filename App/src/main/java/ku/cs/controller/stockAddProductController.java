@@ -7,42 +7,70 @@ import javafx.scene.Scene;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.services.FXRouter;
+
+import java.io.File;
 import java.io.IOException;
 
 public class stockAddProductController {
 
     @FXML
-    public ImageView logo ;
+    public ImageView logo;
 
     @FXML
-    public TextField nameAdd ;
+    public TextField nameAdd;
 
     @FXML
-    public TextField quantityAdd ;
+    public TextField quantityAdd;
     @FXML
-    public TextField typeAdd ;
+    public TextField typeAdd;
     @FXML
-    public TextField priceAdd ;
+    public TextField priceAdd;
 
     @FXML
-    public ImageView addPic ;
+    public ImageView addPic;
 
     @FXML
-    public TextArea description ;
+    public TextArea description;
 
     @FXML
-    public Hyperlink upload ;
+    public Hyperlink upload;
+
+    @FXML
+    public void initialize() {
+        // กำหนดให้ Hyperlink ทำงานเมื่อคลิก
+        upload.setOnAction(event -> uploadImage());
+    }
+
+    // เมธอดสำหรับการอัพโหลดรูปภาพ
+    @FXML
+    public void uploadImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("เลือกไฟล์รูปภาพ");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        // เปิดหน้าต่างเลือกไฟล์
+        File file = fileChooser.showOpenDialog(upload.getScene().getWindow());
+        if (file != null) {
+            // สร้าง Image จากไฟล์และตั้งค่าให้แสดงใน addPic
+            Image image = new Image(file.toURI().toString());
+            addPic.setImage(image);
+        }
+    }
 
     @FXML
     public void saveAdd() {
         try {
             openConfirmWindow();
         } catch (IOException e) {
-            System.err.println("Error opening payment window: " + e.getMessage());
+            System.err.println("Error opening confirmation window: " + e.getMessage());
         }
     }
 
@@ -56,7 +84,7 @@ public class stockAddProductController {
     }
 
     @FXML
-    public void goOrder(){
+    public void goOrder() {
         try {
             FXRouter.goTo("orderStock");
         } catch (IOException e) {
@@ -65,7 +93,7 @@ public class stockAddProductController {
     }
 
     @FXML
-    public void goDeliver(){
+    public void goDeliver() {
         try {
             FXRouter.goTo("delivery");
         } catch (IOException e) {
@@ -74,7 +102,7 @@ public class stockAddProductController {
     }
 
     @FXML
-    public void goStock(){
+    public void goStock() {
         try {
             FXRouter.goTo("stock");
         } catch (IOException e) {
@@ -90,8 +118,7 @@ public class stockAddProductController {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Confirmation");
-        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
+        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal
         stage.showAndWait();  // แสดงหน้าต่าง
     }
-
 }
