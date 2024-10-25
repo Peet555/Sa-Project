@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.deliveryPrepareController">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.deliveryPrepareController">
    <children>
       <VBox layoutY="19.0" prefHeight="208.0" prefWidth="1220.0">
          <children>
@@ -70,7 +70,7 @@
             </TableView>
          </children>
       </VBox>
-      <Button layoutX="894.0" layoutY="329.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #a3e9a4;" text="เตรียมจัดส่ง">
+      <Button fx:id="prepareButton" layoutX="894.0" layoutY="329.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #a3e9a4;" text="เตรียมจัดส่ง">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
