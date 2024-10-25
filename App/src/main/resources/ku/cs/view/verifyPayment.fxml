@@ -11,11 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.verifyPaymentController">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.verifyPaymentController">
    <children>
-      <VBox layoutY="-1.0" prefHeight="228.0" prefWidth="1210.0">
+      <VBox prefHeight="228.0" prefWidth="1210.0">
          <children>
             <ImageView fx:id="logo" fitHeight="95.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile">
+               <VBox.margin>
+                  <Insets left="1000.0" />
+               </VBox.margin>
+            </Button>
             <HBox prefHeight="59.0" prefWidth="1200.0" spacing="100.0" style="-fx-background-color: #a3e9a4;">
                <VBox.margin>
                   <Insets top="50.0" />

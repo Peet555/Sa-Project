@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -27,6 +28,8 @@ public class verifyPaymentController {
     private TableColumn<PaymentOrder,String> orderStatus ;
     @FXML
     private TableColumn<PaymentOrder,String> orderTime ;
+    @FXML
+    private Button profileButton;
 
     @FXML
     public ImageView logo ;
@@ -63,6 +66,13 @@ public class verifyPaymentController {
                 }
             });
             return row;
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("employeeSellerProfile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
+            }
         });
     }
 

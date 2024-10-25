@@ -28,6 +28,8 @@ public class stockController {
     private TableColumn<Product, String> supid;
     @FXML
     private Button editButton;  // ปุ่มแก้ไขข้อมูล
+    @FXML
+    private Button profileButton;
 
     @FXML
     public void initialize() {
@@ -50,6 +52,13 @@ public class stockController {
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // หากเลือกแถวให้เปิดใช้งานปุ่มแก้ไข, หากไม่ให้ปิดการใช้งาน
             editButton.setDisable(newValue == null);
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("employeeWarehouseProfile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
+            }
         });
     }
 
@@ -129,4 +138,5 @@ public class stockController {
             return supplierID;
         }
     }
+
 }

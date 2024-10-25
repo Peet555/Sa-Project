@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -43,23 +45,40 @@ public class stockAddProductController {
 
     @FXML
     public void initialize() {
-        // กำหนดให้ Hyperlink ทำงานเมื่อคลิก
         upload.setOnAction(event -> uploadImage());
     }
 
-    // เมธอดสำหรับการอัพโหลดรูปภาพ
+    // Method to validate input fields
+    private boolean validateInput() {
+        if (nameAdd.getText().isEmpty() || quantityAdd.getText().isEmpty() ||
+                typeAdd.getText().isEmpty() || priceAdd.getText().isEmpty()) {
+            showAlert("Error", "กรุณาใส่ข้อมูลให้ครบ");
+            return false;
+        }
+        return true;
+    }
+
+    // Method to show alert dialog
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    // Method for uploading images
     @FXML
     public void uploadImage() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("เลือกไฟล์รูปภาพ");
+        fileChooser.setTitle("Select Image File");
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
 
-        // เปิดหน้าต่างเลือกไฟล์
+        // Open file chooser dialog
         File file = fileChooser.showOpenDialog(upload.getScene().getWindow());
         if (file != null) {
-            // สร้าง Image จากไฟล์และตั้งค่าให้แสดงใน addPic
+            // Create Image from the file and set to addPic
             Image image = new Image(file.toURI().toString());
             addPic.setImage(image);
         }
@@ -67,6 +86,10 @@ public class stockAddProductController {
 
     @FXML
     public void saveAdd() {
+        if (!validateInput()) {
+            return; // Stop if validation fails
+        }
+
         try {
             openConfirmWindow();
         } catch (IOException e) {
@@ -114,11 +137,10 @@ public class stockAddProductController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/addConfirmWindow.fxml"));
         Parent root = loader.load();
 
-        // สร้าง Stage สำหรับหน้าต่างใหม่
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Confirmation");
-        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal
-        stage.showAndWait();  // แสดงหน้าต่าง
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 }

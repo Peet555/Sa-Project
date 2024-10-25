@@ -38,6 +38,9 @@ public class deliveryPrepareController {
     private Button prepareButton;
 
     @FXML
+    private Button profileButton;
+
+    @FXML
     public void initialize() {
         // Setting cell value factories for table columns
         id.setCellValueFactory(new PropertyValueFactory<>("orderID"));
@@ -67,6 +70,13 @@ public class deliveryPrepareController {
                 prepareDelivery();
             } catch (IOException e) {
                 System.err.println("Error opening payment window: " + e.getMessage());
+            }
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("employeeWarehouseProfile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
             }
         });
     }

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckOrderPageController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckOrderPageController">
    <children>
       <Pane layoutY="171.0" prefHeight="91.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
@@ -26,5 +30,6 @@
             </TableView>
          </content>
       </ScrollPane>
+      <Button fx:id="profileButton" layoutX="1024.0" layoutY="106.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile" />
    </children>
 </AnchorPane>

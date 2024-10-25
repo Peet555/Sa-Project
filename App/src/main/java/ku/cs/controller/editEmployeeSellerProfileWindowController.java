@@ -1,19 +1,12 @@
 package ku.cs.controller;
 
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-
-public class editProfileWindowController {
-
+public class editEmployeeSellerProfileWindowController {
     @FXML
     private Button confirmButton, cancelButton;
-
-    @FXML
-    private TextField nameField,phoneNumberField,addressField;
 
     @FXML
     public void initialize() {
@@ -30,6 +23,4 @@ public class editProfileWindowController {
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         stage.close();
     }
-
-
 }

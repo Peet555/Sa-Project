@@ -1,27 +1,18 @@
 package ku.cs.controller;
-
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
-public class editProfileWindowController {
+
+public class recordOrderForSupWindowController {
 
     @FXML
-    private Button confirmButton, cancelButton;
-
-    @FXML
-    private TextField nameField,phoneNumberField,addressField;
+    private Button confirmButton ;
 
     @FXML
     public void initialize() {
         confirmButton.setOnAction(event -> {
-            closeWindow();
-        });
-
-        cancelButton.setOnAction(event -> {
             closeWindow();
         });
     }
