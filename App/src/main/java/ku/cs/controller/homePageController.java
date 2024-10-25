@@ -44,7 +44,7 @@ public class homePageController {
 
         cartButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("CustomerOrderList");
+                FXRouter.goTo("customerOrderList");
             } catch (IOException e) {
                 System.err.println("Cannot go to cart");
             }
@@ -52,7 +52,7 @@ public class homePageController {
 
         orderHistoryButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("CustomerOrderHistory");
+                FXRouter.goTo("customerOrderHistory");
             } catch (IOException e) {
                 System.err.println("Cannot go to order history");
             }
@@ -87,7 +87,7 @@ public class homePageController {
 
                 // เปลี่ยนไปที่หน้า ProductModel
                 try {
-                    FXRouter.goTo("ProductModel");
+                    FXRouter.goTo("productModel");
                 } catch (IOException e) {
                     System.err.println("ไปที่หน้า ProductModel ไม่ได้");
 

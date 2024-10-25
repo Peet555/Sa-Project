@@ -7,17 +7,20 @@ import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
-public class editConfirmWindowController {
+public class confirmCheckPaymentWindowController {
+    @FXML
+    public Button cancleButton , okayButton ;
 
     @FXML
-    private Button okayButton ;
-
-
+    public void cancleClick(){
+        Stage stage = (Stage) cancleButton.getScene().getWindow();
+        stage.close();
+    }
 
     @FXML
-    public void okayClick(){
+    public void confirmClick(){
         try {
-            FXRouter.goTo("stock");
+            FXRouter.goTo("verifyPayment");
             closeWindow();  // ปิดหน้าต่าง Modal หลังจากไปที่หน้าใหม่
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -30,4 +33,5 @@ public class editConfirmWindowController {
         Stage stage = (Stage) okayButton.getScene().getWindow();
         stage.close();  // ปิดหน้าต่าง Modal
     }
+
 }

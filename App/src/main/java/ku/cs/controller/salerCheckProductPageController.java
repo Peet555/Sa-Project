@@ -18,6 +18,8 @@ public class salerCheckProductPageController {
     private Button confirmButton;
     @FXML
     private Button denyButton;
+    @FXML
+    private Button profileButton;
 
     @FXML
     public void initialize() {
@@ -44,6 +46,13 @@ public class salerCheckProductPageController {
                 openDeniedOrderWindow();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        });
+        profileButton.setOnAction(event -> {
+            try {
+                FXRouter.goTo("employeeSellerProfile"); // เปลี่ยนไปหน้า HomePage
+            } catch (IOException e) {
+                System.err.println("Cannot go to profile");
             }
         });
     }
@@ -82,7 +91,7 @@ public class salerCheckProductPageController {
     @FXML
     public void goVerifyPayment(){
         try {
-            FXRouter.goTo("VerifyPayment");
+            FXRouter.goTo("verifyPayment");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +101,7 @@ public class salerCheckProductPageController {
     @FXML
     public void goCheckOrder(){
         try {
-            FXRouter.goTo("SalerCheckOrder");
+            FXRouter.goTo("salerCheckOrder");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,33 +1,37 @@
 package ku.cs.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class confirmReceiptProductController {
+import java.io.IOException;
+
+public class confirmReadyForDeliveryWindow {
 
     @FXML
-    private Button confirmButton; // ปุ่มยืนยัน
-
-    @FXML
-    private Button cancelButton;  // ปุ่มยกเลิก
+    private Button confirmButton, cancelButton;
 
     @FXML
     public void initialize() {
-        // เมื่อกดปุ่ม "ยืนยัน" ให้ปิดหน้าต่าง
         confirmButton.setOnAction(event -> {
             closeWindow();
         });
 
-        // เมื่อกดปุ่ม "ยกเลิก" ให้ปิดหน้าต่าง
         cancelButton.setOnAction(event -> {
             closeWindow();
         });
     }
+
+
 
     // เมธอดสำหรับปิดหน้าต่าง
     private void closeWindow() {
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         stage.close();
     }
+
+
 }

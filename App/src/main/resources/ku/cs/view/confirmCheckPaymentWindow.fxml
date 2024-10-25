@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="127.0" prefWidth="306.0" spacing="15.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.ConfirmCheckPaymentWindowController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="127.0" prefWidth="306.0" spacing="15.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.confirmCheckPaymentWindowController">
    <children>
       <HBox alignment="TOP_CENTER" prefHeight="19.0" prefWidth="306.0" style="-fx-background-color: #a3e9a4; -fx-background-radius: 50;" />
       <Label text="ต้องการยืนยันคำสั่งซื้อหรือไม่">
@@ -17,7 +17,7 @@
       <HBox prefHeight="34.0" prefWidth="306.0" spacing="60.0">
          <children>
             <Label />
-            <Button mnemonicParsing="false" onAction="#confirmClick" prefHeight="37.0" prefWidth="69.0" style="-fx-background-color: #a3e9a4; -fx-background-radius: 50;" text="ยืนยัน">
+            <Button fx:id="okayButton" mnemonicParsing="false" onAction="#confirmClick" prefHeight="37.0" prefWidth="69.0" style="-fx-background-color: #a3e9a4; -fx-background-radius: 50;" text="ยืนยัน">
                <font>
                   <Font size="16.0" />
                </font>
