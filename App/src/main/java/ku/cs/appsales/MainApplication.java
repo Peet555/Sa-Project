@@ -2,9 +2,11 @@ package ku.cs.appsales;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import ku.cs.network.Client;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class MainApplication extends Application {
@@ -16,20 +18,17 @@ public class MainApplication extends Application {
     final private static double MIN_HEIGHT = 800;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, URISyntaxException {
         MainApplication.stage = stage;
         stage.setResizable(true);
         stage.setMinWidth(MIN_WIGHT);
         stage.setMinHeight(MIN_HEIGHT);
-
         configRoute();
-
         FXRouter.bind(this, stage);
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
-
-        FXRouter.goTo("Product");
-
+        FXRouter.goTo("root");
         setTheme("theme.css");
+        Client.init("localhost",(short) 25670);
     }
 
     private static void configRoute() {
@@ -54,7 +53,8 @@ public class MainApplication extends Application {
         FXRouter.when("OrderStock", resourcesPath + "stockOrder.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("CustomerOrderList", resourcesPath + "orderListCustomer.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("CustomerOrderHistory", resourcesPath + "Customer_Order_History.fxml", "SA Project", MIN_WIGHT, 760);
-
+        FXRouter.when("ReCus", resourcesPath + "registerCustomer.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("ReEm", resourcesPath + "registerEmployee.fxml", "SA Project", MIN_WIGHT, 760);
     }
     /**
      * ใส่ theme ให้กับหน้าโปแกรม

@@ -87,14 +87,6 @@
                         </StackPane>
                      </children>
                   </HBox>
-                  <Label fx:id="errorLabel" text="Incorrect Username or Password" textFill="#ff0303" underline="true">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
                   <HBox alignment="CENTER">
                      <VBox.margin>
                         <Insets top="25.0" />
@@ -107,11 +99,12 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Button mnemonicParsing="false" onAction="#onRegisterButton" styleClass="button-link" text="don't have an account? register now">
+                  <Button mnemonicParsing="false" onAction="#onRegisterCustomerButton" styleClass="button-link" text="register customer">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#onRegisterEmployeeButton" styleClass="button-link" text="register employee" />
                </children>
             </VBox>
          </children>
