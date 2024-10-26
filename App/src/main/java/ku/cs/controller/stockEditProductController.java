@@ -83,15 +83,6 @@ public class stockEditProductController {
     }
 
     @FXML
-    public void goOrder() {
-        try {
-            FXRouter.goTo("orderStock");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
     public void goDeliver() {
         try {
             FXRouter.goTo("delivery");

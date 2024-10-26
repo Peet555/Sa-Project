@@ -52,7 +52,7 @@ public class profileController {
                 try {
                     openEditProfileWindow();
                 } catch (IOException e) {
-                    System.err.println("Error opening payment window: " + e.getMessage());
+                    System.err.println(e.getMessage());
                 }
             });
 
