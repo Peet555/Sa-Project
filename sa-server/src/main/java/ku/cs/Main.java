@@ -16,6 +16,7 @@ import ku.cs.repository.CustomerRepository;
 import ku.cs.repository.EmployeeRepository;
 import ku.cs.service.CustomerService;
 import ku.cs.service.EmployeeSevice;
+import ku.cs.service.LoginService;
 import org.json.JSONObject;
 import com.sun.net.httpserver.HttpServer;
 
@@ -58,7 +59,7 @@ public class Main {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-        server.createContext("/login", new LoginController());
+        server.createContext("/login", new LoginController(new LoginService(new CustomerRepository(conn),new EmployeeRepository(conn))));
         server.createContext("/register_customer", new RegisterCustomerController(new CustomerService(new CustomerRepository(conn))));
         server.createContext("/register_employee",new RegisterEmployeeController(new EmployeeSevice(new EmployeeRepository(conn))));
 

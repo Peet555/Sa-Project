@@ -28,6 +28,7 @@ public class CustomerService {
 
 
     public void createCustomer(JSONObject json) throws InvalidNameException, SQLException {
+        System.out.println(json.toString());
         Customer customer = new Customer(
                 UUID.randomUUID().toString().substring(0,33),
                 json.getString("username"),

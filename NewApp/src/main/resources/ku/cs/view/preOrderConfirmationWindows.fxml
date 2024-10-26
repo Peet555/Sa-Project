@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="212.0" prefWidth="246.0" spacing="20.0" style="-fx-border-color: black; -fx-border-width: 3; -fx-border-radius: 10; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.preOrderConfirmationWindowController">
+   <children>
+      <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="ยืนยันคำสั่งจอง" />
+      <HBox prefHeight="0.0" prefWidth="200.0">
+         <children>
+            <Label prefHeight="27.0" prefWidth="56.0" style="-fx-font-size: 18px;" text="ราคา :" />
+            <Label fx:id="totalPriceLabel" />
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="ค่ามัดจำ :" />
+            <Label fx:id="priceDeposit" />
+         </children>
+      </HBox>
+      <HBox prefHeight="16.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="confirmOrder" mnemonicParsing="false" onAction="#confirmOrder" text="ยืนยัน" />
+            <Button fx:id="cancelOrder" mnemonicParsing="false" onAction="#cancelOrder" text="ยกเลิก">
+               <HBox.margin>
+                  <Insets left="80.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

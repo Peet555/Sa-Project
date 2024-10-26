@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="20.0" style="-fx-border-color: black; -fx-border-width: 3; -fx-border-radius: 10; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.orderConfirmationWindowController">
+    <children>
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="ยืนยันคำสั่งซื้อ" />
+        <HBox prefHeight="0.0" prefWidth="200.0">
+            <children>
+                <Label prefHeight="27.0" prefWidth="56.0" style="-fx-font-size: 18px;" text="ราคา :" />
+                <Label fx:id="totalPriceLabel" text="Label" />
+            </children>
+        </HBox>
+        <HBox prefHeight="16.0" prefWidth="200.0">
+            <children>
+                <Button fx:id="confirmOrder" mnemonicParsing="false" text="ยืนยัน" onAction="#confirmOrder"/>
+                <Button fx:id="cancelOrder" mnemonicParsing="false" text="ยกเลิก" onAction="#cancelOrder">
+                    <HBox.margin>
+                        <Insets left="80.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</VBox>

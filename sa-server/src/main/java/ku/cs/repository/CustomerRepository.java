@@ -1,10 +1,8 @@
 package ku.cs.repository;
 
 import ku.cs.entity.Customer;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.sql.SQLException;
 
 public class CustomerRepository {
@@ -36,6 +34,7 @@ public class CustomerRepository {
         }
     }
 
+
     public Customer getCustomerByUserName(String username) throws SQLException {
         try {
             this.statement = connection.createStatement();
@@ -50,14 +49,15 @@ public class CustomerRepository {
             String resultUsername = resultSet.getString("username");
             String resultName = resultSet.getString("NAME");
             String resultEmail = resultSet.getString("Email");
-            String resultPassword = resultSet.getString("customer_password");
-            String resultPhoneNumber = resultSet.getString("PHONE_NUMBER");
+            String resultPassword = resultSet.getString("customer_password").replace(" ","");
+            String resultPhoneNumber = resultSet.getString("Customer_Phone_number");
             String resultAddress = resultSet.getString("Customer_Address");
 
 
             return new Customer(resultUUID, resultUsername, resultName, resultPassword, resultEmail, resultAddress, resultPhoneNumber);
 
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         } finally {
             this.statement.close();

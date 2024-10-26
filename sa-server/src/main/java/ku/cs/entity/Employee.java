@@ -78,4 +78,17 @@ public class Employee {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "Employee [" + this.employee_ID + ", " + this.employee_username + ", " + this.employee_name + ", " + this.role + "]";
+    }
+
+    public boolean validatePassword(String password) {
+
+        if (this.employee_password.equals(password)) return true;
+
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), this.employee_password);
+        return result.verified;
+    }
 }

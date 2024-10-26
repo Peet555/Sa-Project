@@ -83,7 +83,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "User [" + this.customerId + ", " + this.username + ", " + this.name + "]";
+        return "Customer [" + this.customerId + ", " + this.username + ", " + this.name + "]";
     }
 
     public boolean validatePassword(String password) {

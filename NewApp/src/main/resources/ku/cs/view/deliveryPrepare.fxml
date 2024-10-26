@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.deliveryPrepareController">
+   <children>
+      <VBox layoutY="19.0" prefHeight="208.0" prefWidth="1220.0">
+         <children>
+            <ImageView fx:id="logo" fitHeight="95.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile">
+               <VBox.margin>
+                  <Insets left="1000.0" />
+               </VBox.margin>
+            </Button>
+            <HBox prefHeight="59.0" prefWidth="1200.0" spacing="100.0" style="-fx-background-color: #a3e9a4;">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="0.0" />
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบ Order" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ตรวจสอบการชำระเงิน" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goStock" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ลงทะเบียนสินค้า">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="เตรียมและจัดส่งสินค้า">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goOrder" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="สั่งของ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="250.0" layoutY="286.0" prefHeight="446.0" prefWidth="530.0">
+         <children>
+            <TableView fx:id="deliveryTable" prefHeight="447.0" prefWidth="530.0">
+              <columns>
+                <TableColumn fx:id="id" prefWidth="95.0" text="orderID" />
+                <TableColumn fx:id="type" prefWidth="95.0" text="orderType" />
+                  <TableColumn fx:id="status" prefWidth="95.0" text="orderStatus" />
+                  <TableColumn fx:id="timeStamp" prefWidth="118.0" text="orderTimestamp" />
+                  <TableColumn fx:id="delivery" prefWidth="125.0" text="deliveryStatus" />
+              </columns>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TableView>
+         </children>
+      </VBox>
+      <Button fx:id="prepareButton" layoutX="894.0" layoutY="329.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #a3e9a4;" text="เตรียมจัดส่ง">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
