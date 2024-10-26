@@ -65,14 +65,6 @@ public class stockController {
     @FXML
     public ImageView logo;
 
-    @FXML
-    public void goOrder() {
-        try {
-            FXRouter.goTo("orderStock");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @FXML
     public void goDeliver() {

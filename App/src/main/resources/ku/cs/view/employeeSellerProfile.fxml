@@ -58,7 +58,6 @@
             <Button layoutX="306.0" layoutY="27.0" mnemonicParsing="false" onAction="#goVerifyPayment" prefHeight="41.0" prefWidth="134.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ตรวจสอบการชำระเงิน" />
             <Button layoutX="540.0" layoutY="27.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="104.0" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ลงทะเบียนสินค้า" textFill="WHITE" />
             <Button layoutX="752.0" layoutY="27.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="134.0" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="เตรียมและจัดส่งสินค้า" textFill="WHITE" />
-            <Button layoutX="976.0" layoutY="27.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="88.0" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="สั่งของ" textFill="WHITE" />
          </children>
       </Pane>
    </children>

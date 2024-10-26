@@ -37,11 +37,6 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="สั่งของ" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
                </children>
                <padding>
                   <Insets top="15.0" />
