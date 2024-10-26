@@ -2,9 +2,11 @@ package ku.cs.appsales;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import ku.cs.network.Client;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class MainApplication extends Application {
@@ -16,20 +18,21 @@ public class MainApplication extends Application {
     final private static double MIN_HEIGHT = 800;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, URISyntaxException {
         MainApplication.stage = stage;
         stage.setResizable(true);
         stage.setMinWidth(MIN_WIGHT);
         stage.setMinHeight(MIN_HEIGHT);
-
         configRoute();
-
         FXRouter.bind(this, stage);
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
 
-        FXRouter.goTo("salerCheckOrder");
+
+        FXRouter.goTo("root");
+
 
         setTheme("theme.css");
+        Client.init("localhost",(short) 25670);
     }
 
     private static void configRoute() {
@@ -46,6 +49,7 @@ public class MainApplication extends Application {
         FXRouter.when("addStock", resourcesPath + "stockAddProduct.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("orderListPageCustomer", resourcesPath + "orderListCustomer.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("profile", resourcesPath + "profile.fxml", "SA Project", MIN_WIGHT, 760);
+
         FXRouter.when("verifyPayment", resourcesPath + "verifyPayment.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("checkProof", resourcesPath + "checkProofPayment.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("salerCheckOrder", resourcesPath + "salerCheckOrderPage.fxml", "SA Project", MIN_WIGHT, 760);
@@ -56,7 +60,8 @@ public class MainApplication extends Application {
         FXRouter.when("customerOrderHistory", resourcesPath + "customerOrderHistory.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("employeeSellerProfile", resourcesPath + "employeeSellerProfile.fxml", "SA Project", MIN_WIGHT, 760);
         FXRouter.when("employeeWarehouseProfile", resourcesPath + "employeeWarehouseProfile.fxml", "SA Project", MIN_WIGHT, 760);
-
+        FXRouter.when("ReCus", resourcesPath + "registerCustomer.fxml", "SA Project", MIN_WIGHT, 760);
+        FXRouter.when("ReEm", resourcesPath + "registerEmployee.fxml", "SA Project", MIN_WIGHT, 760);
 
 
     }
