@@ -28,11 +28,11 @@ public class MainApplication extends Application {
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
 
 
-        FXRouter.goTo("stock");
+        FXRouter.goTo("root");
 
 
         setTheme("theme.css");
-//        Client.init("localhost",(short) 25670);
+        Client.init("localhost",(short) 25670);
     }
 
     private static void configRoute() {
