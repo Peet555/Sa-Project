@@ -1,6 +1,7 @@
 package ku.cs.controller;
 
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -9,6 +10,9 @@ import javafx.util.Duration;
 import ku.cs.connect.RegisterCustomerConnect;
 import ku.cs.services.FocusedPropertyUtil;
 import ku.cs.services.RootService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -35,6 +39,7 @@ public class RegisterCustomerController {
     public Label userNameError;
     public Label passwordError;
     public Label confirmPasswordError;
+
     @FXML
     private ComboBox<String> role;
     private RegisterCustomerConnect registerConnect = new RegisterCustomerConnect();
@@ -94,10 +99,18 @@ public class RegisterCustomerController {
 
     @FXML
     public void onRegister() throws Exception {
-        registerConnect.insertCustomer(userName.getText(), password.getText(), confirmPassword.getText());
+        String hashedPassword = BCrypt.hashpw(password.getText(), BCrypt.gensalt());
+        if (!isPasswordValid() ) {
+            Platform.runLater(() -> RootService.showErrorBar("Confirm Password failed"));
+            return;
+        }
+        registerConnect.insertCustomer(userName.getText(),yourName.getText() ,hashedPassword);
         RootService.open("login.fxml");
     }
 
+    private boolean isPasswordValid() {
+        return password.getText().equals(confirmPassword.getText());
+    }
 
     @FXML
     public void onGoLogIn() throws IOException {

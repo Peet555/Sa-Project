@@ -6,10 +6,12 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import ku.cs.connect.RegisterEmployeeConnect;
 import ku.cs.network.RegisterClient;
 import ku.cs.services.FXRouter;
 import ku.cs.services.FocusedPropertyUtil;
 import ku.cs.services.RootService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +39,7 @@ public class RegisterEmployeeController {
     public Label confirmPasswordError;
     @FXML
     public ComboBox<String> role;
+    RegisterEmployeeConnect registerEmployeeConnect = new RegisterEmployeeConnect();
 
     int annoyScore = 0;
 
@@ -105,19 +108,9 @@ public class RegisterEmployeeController {
             Platform.runLater(() -> RootService.showErrorBar("Role is empty"));
             return;
         }
-        RegisterClient client = new RegisterClient();
-        String res;
-        res = client.registerEmployee(userName.getText(),yourName.getText(),password.getText(),(String)role.getValue());
-        System.out.println(res);
+        String hashedPassword = BCrypt.hashpw(password.getText(), BCrypt.gensalt());
+        registerEmployeeConnect.insertEmployee(userName.getText(),yourName.getText(), hashedPassword,(String)role.getValue());
         RootService.open("login.fxml");
-
-        try{
-
-        }catch (Exception e) {
-            e.printStackTrace();
-            res = e.getMessage();
-            RootService.getController().showBar(res, RootController.Color.RED, Duration.seconds(5));
-        }
     }
 
     @FXML

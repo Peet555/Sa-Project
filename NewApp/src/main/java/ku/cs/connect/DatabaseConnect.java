@@ -12,24 +12,29 @@ public class DatabaseConnect {
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
-    // สร้าง connection เพียงครั้งเดียว (Singleton Pattern)
-    public static Connection getConnection() {
+    // เมธอดสำหรับเริ่มการเชื่อมต่อ
+    public static void initializeConnection() {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
                 System.out.println("Connected to the database.");
             } catch (SQLException e) {
-                System.out.println("Database connection failed: " + e.getMessage());
+                System.out.println("Failed to connect to the database: " + e.getMessage());
             }
         }
+    }
+
+    // เมธอดสำหรับดึงการเชื่อมต่อ
+    public static Connection getConnection() {
         return connection;
     }
 
-    // ปิดการเชื่อมต่อ (ใช้เมื่อปิดแอปพลิเคชัน)
+    // เมธอดสำหรับปิดการเชื่อมต่อ
     public static void closeConnection() {
         if (connection != null) {
             try {
                 connection.close();
+                connection = null;
                 System.out.println("Database connection closed.");
             } catch (SQLException e) {
                 System.out.println("Failed to close the connection: " + e.getMessage());

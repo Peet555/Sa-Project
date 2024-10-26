@@ -2,12 +2,14 @@ package ku.cs.appsales;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import ku.cs.connect.DatabaseConnect;
 import ku.cs.network.Client;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.Connection;
 
 public class MainApplication extends Application {
 
@@ -31,6 +33,7 @@ public class MainApplication extends Application {
 
         setTheme("theme.css");
         //Client.init("localhost",(short) 25670);
+        DatabaseConnect.initializeConnection();
     }
 
     private static void configRoute() {
