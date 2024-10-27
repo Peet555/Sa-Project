@@ -8,7 +8,7 @@ public class DatabaseConnect {
     private static Connection connection = null;
 
     // กำหนดข้อมูลการเชื่อมต่อฐานข้อมูล
-    private static final String URL = "jdbc:mysql://localhost:3306/sa project";
+    private static final String URL = "jdbc:mysql://localhost:3306/sa2";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 

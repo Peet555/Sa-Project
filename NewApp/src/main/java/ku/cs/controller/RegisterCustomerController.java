@@ -11,7 +11,6 @@ import ku.cs.connect.RegisterCustomerConnect;
 import ku.cs.services.FocusedPropertyUtil;
 import ku.cs.services.RootService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 import java.net.URL;

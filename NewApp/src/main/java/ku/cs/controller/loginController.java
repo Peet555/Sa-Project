@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import ku.cs.connect.LoginConnect;
 import ku.cs.models.Customer;
 import ku.cs.models.Employee;
 import ku.cs.network.CustomerInfoClient;
@@ -39,7 +40,7 @@ public class loginController {
     protected ImageView logo;
     @FXML
     public ComboBox<String> role;
-
+    private LoginConnect loginConnect = new LoginConnect();
     public void initialize() {
 
         URL url = getClass().getResource("/ku/cs/picture/backgroundlogin.png");
@@ -53,28 +54,22 @@ public class loginController {
         if(role.getValue() == null) {
             RootService.showErrorBar("Please select a role");
         }else {
-            try {
-                // Login
-                LoginClient clientLogin = new LoginClient();
-                clientLogin.login(username.getText(), password.getText());
+            if (role.getValue().equals("Customer")) {
+                loginConnect.selectCustomer(username.getText(), password.getText());
+                RootService.open("homePage.fxml");
+            } else {
+                if(loginConnect.selectEmployee(username.getText(), password.getText())) {
+                    if(loginConnect.selectRole(username.getText()).equals("Sale")){
+                        RootService.open("salerCheckOrderPage.fxml");
+                    }else{
+                        RootService.open("stock.fxml");
+                    }
 
-                RootService.open("homepage.fxml");
-            } catch (Exception e) {
-                RootService.showErrorBar(e.getMessage());
+                }
             }
         }
-
-
-    }
-    private static Customer getCustomer() {
-        CustomerInfoClient clientUserInfo = new CustomerInfoClient();
-        return clientUserInfo.getCustomerInfo();
     }
 
-    private static Employee getEmployee() {
-        EmployeeInfoClient clientUserInfo = new EmployeeInfoClient();
-        return clientUserInfo.getEmployee();
-    }
 
     public void onRegisterCustomerButton(ActionEvent actionEvent) throws IOException {
 
