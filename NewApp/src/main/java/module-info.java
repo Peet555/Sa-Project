@@ -14,6 +14,8 @@ module ku.cs {
     opens ku.cs.appsales to javafx.fxml;
     exports ku.cs.appsales;
 
+    opens ku.cs.models to javafx.base;
+
     opens ku.cs.controller to javafx.fxml;
     exports ku.cs.controller;
 }

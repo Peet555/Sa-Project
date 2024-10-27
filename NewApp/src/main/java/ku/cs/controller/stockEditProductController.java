@@ -12,10 +12,11 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.connect.stockEditProductConnect;
+import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class stockEditProductController {
     @FXML
@@ -23,7 +24,6 @@ public class stockEditProductController {
 
     @FXML
     public TextField nameText;
-
     @FXML
     public TextField quantityText;
     @FXML
@@ -33,17 +33,36 @@ public class stockEditProductController {
 
     @FXML
     public ImageView productPic;
-
     @FXML
     public TextArea description;
-
     @FXML
     public Hyperlink upload;
 
+    private Product selectedProduct;  // เก็บข้อมูล Product ที่ต้องการแก้ไข
+    private File selectedImageFile;
+
     @FXML
     public void initialize() {
+        // รับข้อมูล Product ที่ส่งมาจาก stockController
+        selectedProduct = (Product) FXRouter.getData();
+
         // กำหนดให้ Hyperlink ทำงานเมื่อคลิก
         upload.setOnAction(event -> uploadImage());
+
+        if (selectedProduct != null && selectedProduct.getImage() != null) {
+            productPic.setImage(new Image(selectedProduct.getImage()));
+        }
+
+
+
+        // แสดงข้อมูล Product ที่เลือกในฟอร์มแก้ไข
+        if (selectedProduct != null) {
+            nameText.setText(selectedProduct.getProduct_Name());
+            quantityText.setText(String.valueOf(selectedProduct.getQuantity()));
+            typeText.setText(selectedProduct.getType());
+            priceText.setText(String.valueOf(selectedProduct.getPrice()));
+            description.setText(selectedProduct.getDescription());
+        }
     }
 
     // เมธอดสำหรับการอัพโหลดรูปภาพ
@@ -55,21 +74,46 @@ public class stockEditProductController {
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
 
-        // เปิดหน้าต่างเลือกไฟล์
         File file = fileChooser.showOpenDialog(upload.getScene().getWindow());
         if (file != null) {
-            // สร้าง Image จากไฟล์และตั้งค่าให้แสดงใน productPic
+            // Create Image from file and display it
             Image image = new Image(file.toURI().toString());
             productPic.setImage(image);
+
+            // Save the selected image file reference
+            selectedImageFile = file; // Save the file for later use in saveEdit
         }
     }
 
     @FXML
     public void saveEdit() {
+        // Set the product details
+        selectedProduct.setProduct_Name(nameText.getText());
+        selectedProduct.setQuantity(Integer.parseInt(quantityText.getText()));
+        selectedProduct.setType(typeText.getText());
+        selectedProduct.setPrice(Integer.parseInt(priceText.getText()));
+        selectedProduct.setDescription(description.getText());
+
+        // If an image was uploaded, convert it to InputStream
+        if (selectedImageFile != null) {
+            try {
+                InputStream inputStream = new FileInputStream(selectedImageFile);
+                selectedProduct.setImage(inputStream);
+            } catch (FileNotFoundException e) {
+                System.err.println("File not found: " + e.getMessage());
+            }
+        } else {
+            selectedProduct.setImage(null); // No image selected
+        }
+
+        // Update the database
+        stockEditProductConnect.updateProduct(selectedProduct);
+
+        // Return to product list
         try {
-            openConfirmWindow();
+            FXRouter.goTo("stock");
         } catch (IOException e) {
-            System.err.println("Error opening confirmation window: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

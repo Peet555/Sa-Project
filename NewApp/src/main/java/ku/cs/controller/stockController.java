@@ -8,6 +8,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import ku.cs.connect.stockConnect;
+import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
@@ -15,41 +17,40 @@ import java.io.IOException;
 public class stockController {
 
     @FXML
-    private TableView<Product> table;
+    public TableView<Product> productTable;
     @FXML
-    private TableColumn<Product, String> productID;
+    public TableColumn<Product, String> Product_ID;
     @FXML
-    private TableColumn<Product, String> name;
+    public TableColumn<Product, String> Product_Name;
     @FXML
-    private TableColumn<Product, Integer> quantity;
+    public TableColumn<Product, Integer> Quantity;
     @FXML
-    private TableColumn<Product, Integer> price;
+    public TableColumn<Product, Integer> Price;
     @FXML
-    private TableColumn<Product, String> supid;
+    public TableColumn<Product, String> Type;
     @FXML
-    private Button editButton;  // ปุ่มแก้ไขข้อมูล
+    public Button editButton;  // ปุ่มแก้ไขข้อมูล
     @FXML
-    private Button profileButton;
+    public Button profileButton;
 
     @FXML
     public void initialize() {
-        productID.setCellValueFactory(new PropertyValueFactory<>("productID"));
-        name.setCellValueFactory(new PropertyValueFactory<>("productName"));
-        quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        price.setCellValueFactory(new PropertyValueFactory<>("productPrice"));
-        supid.setCellValueFactory(new PropertyValueFactory<>("supplierID"));
+        Product_ID.setCellValueFactory(new PropertyValueFactory<>("Product_ID"));
+        Product_Name.setCellValueFactory(new PropertyValueFactory<>("Product_Name"));
+        Quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        Price.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        Type.setCellValueFactory(new PropertyValueFactory<>("Type"));
 
-        ObservableList<Product> products = FXCollections.observableArrayList(
-                new Product("001", "TV", 20, 1000, "00010")
-        );
 
-        table.setItems(products);
+        stockConnect stockDb = new stockConnect();
+        ObservableList<Product> products = stockDb.getAllProducts();
+        productTable.setItems(products);
 
         // ปิดการใช้งานปุ่ม "แก้ไขข้อมูล" ก่อนเลือกข้อมูล
         editButton.setDisable(true);
 
         // เพิ่ม listener เพื่อตรวจสอบว่าแถวถูกเลือกในตารางหรือไม่
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        productTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // หากเลือกแถวให้เปิดใช้งานปุ่มแก้ไข, หากไม่ให้ปิดการใช้งาน
             editButton.setDisable(newValue == null);
         });
@@ -94,49 +95,16 @@ public class stockController {
 
     @FXML
     public void goEdit() {
-        if (!table.getSelectionModel().isEmpty()) {  // ตรวจสอบว่ามีการเลือกแถวหรือไม่
+        if (!productTable.getSelectionModel().isEmpty()) {  // ตรวจสอบว่ามีการเลือกแถวหรือไม่
+            Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
             try {
-                FXRouter.goTo("editStock");
+                FXRouter.goTo("editStock", selectedProduct);  // ส่งข้อมูล product ที่เลือกไปยัง editStock
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public static class Product {
-        private String productID;
-        private String productName;
-        private Integer quantity;
-        private Integer productPrice;
-        private String supplierID;
 
-        public Product(String productID, String productName, Integer quantity, Integer productPrice, String supplierID) {
-            this.productID = productID;
-            this.productName = productName;
-            this.quantity = quantity;
-            this.productPrice = productPrice;
-            this.supplierID = supplierID;
-        }
-
-        public String getProductID() {
-            return productID;
-        }
-
-        public String getProductName() {
-            return productName;
-        }
-
-        public Integer getQuantity() {
-            return quantity;
-        }
-
-        public Integer getProductPrice() {
-            return productPrice;
-        }
-
-        public String getSupplierID() {
-            return supplierID;
-        }
-    }
 
 }
