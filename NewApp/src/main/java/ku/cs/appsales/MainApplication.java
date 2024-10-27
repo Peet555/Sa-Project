@@ -27,9 +27,10 @@ public class MainApplication extends Application {
         stage.setMinHeight(MIN_HEIGHT);
         configRoute();
         FXRouter.bind(this, stage);
+
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
 
-        FXRouter.goTo("stock");
+        FXRouter.goTo("root");
 
         setTheme("theme.css");
         //Client.init("localhost",(short) 25670);

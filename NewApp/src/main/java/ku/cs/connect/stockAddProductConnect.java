@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class stockAddProductConnect {
 
-    public void addProduct(String productId, String name, int quantity, String type, double price, String description) {
-        String query = "INSERT INTO product (product_id, product_name, quantity, type, price, description) VALUES (?, ?, ?, ?, ?, ?)";
+    public void addProduct(String productId, String name, int quantity, String type, double price, String description, byte[] image) {
+        String query = "INSERT INTO product (product_id, product_name, quantity, type, price, description, product_image) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnect.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -18,6 +18,7 @@ public class stockAddProductConnect {
             stmt.setString(4, type);
             stmt.setDouble(5, price);
             stmt.setString(6, description);
+            stmt.setBytes(7, image); // เก็บรูปภาพเป็น BLOB
 
             stmt.executeUpdate();
             System.out.println("Product added successfully.");

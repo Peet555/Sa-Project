@@ -13,7 +13,9 @@ import ku.cs.connect.stockAddProductConnect;
 import ku.cs.services.FXRouter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 
 public class stockAddProductController {
 
@@ -37,6 +39,7 @@ public class stockAddProductController {
     public Hyperlink upload;
 
     private stockAddProductConnect stockConnect = new stockAddProductConnect();
+    private byte[] imageBytes; // เก็บข้อมูลภาพในรูปแบบ byte array
 
     @FXML
     public void initialize() {
@@ -69,8 +72,13 @@ public class stockAddProductController {
 
         File file = fileChooser.showOpenDialog(upload.getScene().getWindow());
         if (file != null) {
-            Image image = new Image(file.toURI().toString());
-            addPic.setImage(image);
+            try {
+                imageBytes = Files.readAllBytes(file.toPath()); // แปลงรูปภาพเป็น byte array
+                Image image = new Image(file.toURI().toString());
+                addPic.setImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -87,7 +95,8 @@ public class stockAddProductController {
         double price = Double.parseDouble(priceAdd.getText());
         String desc = description.getText();
 
-        stockConnect.addProduct(id, name, quantity, type, price, desc);
+        // ส่งข้อมูลภาพแบบ byte array พร้อมข้อมูลอื่นๆ
+        stockConnect.addProduct(id, name, quantity, type, price, desc, imageBytes);
 
         showAlert("Success", "Product added successfully!");
         clearFields();
@@ -101,6 +110,7 @@ public class stockAddProductController {
         priceAdd.clear();
         description.clear();
         addPic.setImage(null);
+        imageBytes = null; // เคลียร์ข้อมูลภาพ
     }
 
     @FXML
