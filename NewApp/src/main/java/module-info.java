@@ -6,6 +6,7 @@ module ku.cs {
     requires java.sql;
     requires org.json;
     requires spring.security.crypto;
+    requires jbcrypt;
 
     opens ku.cs to javafx.fxml;
     exports ku.cs;

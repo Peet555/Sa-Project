@@ -1,7 +1,6 @@
 package ku.cs.connect;
 
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

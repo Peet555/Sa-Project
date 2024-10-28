@@ -30,10 +30,10 @@ public class MainApplication extends Application {
 
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
 
-        FXRouter.goTo("salerCheckOrder");
+
+        FXRouter.goTo("root");
 
         setTheme("theme.css");
-        //Client.init("localhost",(short) 25670);
         DatabaseConnect.initializeConnection();
     }
 

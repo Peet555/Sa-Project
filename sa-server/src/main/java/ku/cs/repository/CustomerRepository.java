@@ -45,13 +45,14 @@ public class CustomerRepository {
                             username));
 
             this.resultSet.next();
-            String resultUUID = resultSet.getString("Customer_ID");
-            String resultUsername = resultSet.getString("username");
-            String resultName = resultSet.getString("NAME");
-            String resultEmail = resultSet.getString("Email");
-            String resultPassword = resultSet.getString("customer_password").replace(" ","");
-            String resultPhoneNumber = resultSet.getString("Customer_Phone_number");
-            String resultAddress = resultSet.getString("Customer_Address");
+            String resultUUID = resultSet.getString("Customer_ID").replaceAll("\\s+", "");
+            String resultUsername = resultSet.getString("username").replaceAll("\\s+", "");
+            String resultName = resultSet.getString("NAME").replaceAll("\\s+", "");
+            String resultEmail = resultSet.getString("Email").replaceAll("\\s+", "");
+            String resultPassword = resultSet.getString("customer_password").replaceAll("\\s+", "");
+            String resultPhoneNumber = resultSet.getString("Customer_Phone_number").replaceAll("\\s+", "");
+            String resultAddress = resultSet.getString("Customer_Address").replaceAll("\\s+", "");
+
 
 
             return new Customer(resultUUID, resultUsername, resultName, resultPassword, resultEmail, resultAddress, resultPhoneNumber);
@@ -74,13 +75,13 @@ public class CustomerRepository {
                             username));
 
             this.resultSet.next();
-            String resultUUID = resultSet.getString("Customer_ID");
-            String resultUsername = resultSet.getString("username");
-            String resultName = resultSet.getString("NAME");
-            String resultEmail = resultSet.getString("Email");
-            String resultPassword = resultSet.getString("customer_password");
-            String resultPhoneNumber = resultSet.getString("PHONE_NUMBER");
-            String resultAddress = resultSet.getString("Customer_Address");
+            String resultUUID = resultSet.getString("Customer_ID").replaceAll("\\s+", "");
+            String resultUsername = resultSet.getString("username").replaceAll("\\s+", "");
+            String resultName = resultSet.getString("NAME").replaceAll("\\s+", "");
+            String resultEmail = resultSet.getString("Email").replaceAll("\\s+", "");
+            String resultPassword = resultSet.getString("customer_password").replaceAll("\\s+", "");
+            String resultPhoneNumber = resultSet.getString("PHONE_NUMBER").replaceAll("\\s+", "");
+            String resultAddress = resultSet.getString("Customer_Address").replaceAll("\\s+", "");
 
 
             return new Customer(resultUUID, resultUsername, resultName, resultPassword, resultEmail, resultAddress, resultPhoneNumber);

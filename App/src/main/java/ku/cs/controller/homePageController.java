@@ -34,16 +34,17 @@ public class homePageController {
 
         String[] typeNames = {"grill","iron","kettle","oil-free-fryer","rice-cooker","washing-machine"};
         String[] imagePaths = {
-                "ku/cs/picture/grill.jpg",
-                "ku/cs/picture/iron.jpg",
-                "ku/cs/picture/kettle.jpg",
-                "ku/cs/picture/oil-free-fryer.jpg",
-                "ku/cs/picture/rice-cooker.jpg",
-                "ku/cs/picture/washing-machine.jpg",
+                "/ku/cs/picture/grill.jpg",
+                "/ku/cs/picture/iron.jpg",
+                "/ku/cs/picture/kettle.jpg",
+                "/ku/cs/picture/oil-free-fryer.jpg",
+                "/ku/cs/picture/rice-cooker.jpg",
+                "/ku/cs/picture/washing-machin.jpg",
         };
 
 
         for (int i = 0; i < itemCount; i++) {
+
             addTypeProductItem(i, columns, typeNames[i], imagePaths[i]);
         }
         profileButton.setOnAction(event -> {

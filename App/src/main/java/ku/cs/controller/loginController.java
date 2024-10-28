@@ -58,9 +58,10 @@ public class loginController {
                 LoginClient clientLogin = new LoginClient();
                 clientLogin.login(username.getText(), password.getText());
 
-                RootService.open("homepage.fxml");
+                RootService.open("homePage.fxml");
             } catch (Exception e) {
                 RootService.showErrorBar(e.getMessage());
+                e.printStackTrace();
             }
         }
 

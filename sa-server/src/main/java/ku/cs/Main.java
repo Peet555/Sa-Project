@@ -26,7 +26,7 @@ public class Main {
         Connection conn = null;
         String user;
         String password;
-        String dataSourceUrl = "jdbc:mysql://localhost/sa project";
+        String dataSourceUrl = "jdbc:mysql://localhost/sa2";
 
         try (InputStream inputStream = Main.class.getResourceAsStream("./database-access.json")) {
             Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8.name()).useDelimiter("\\A");
