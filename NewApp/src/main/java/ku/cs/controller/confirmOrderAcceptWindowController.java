@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import ku.cs.connect.OrderStatusUpdateConnect;
+import ku.cs.connect.orderProductConnect;
 
 import java.io.IOException;
 
@@ -14,10 +16,17 @@ public class confirmOrderAcceptWindowController {
     @FXML
     private Button confirmButton, cancelButton;
 
+    private String orderId;
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     @FXML
     public void initialize() {
         confirmButton.setOnAction(event -> {
             try {
+                updateOrderStatusToConfirmed(); // เรียกใช้ฟังก์ชันเพื่ออัปเดตสถานะ
                 openNotiInvoiceWindow();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -27,6 +36,11 @@ public class confirmOrderAcceptWindowController {
         cancelButton.setOnAction(event -> {
             closeWindow();
         });
+    }
+
+    private void updateOrderStatusToConfirmed() {
+        OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
+        statusUpdater.updateOrderStatus(orderId, 2); // เปลี่ยนสถานะเป็น 2
     }
 
     // เมธอดสำหรับเปิดหน้าต่าง notiInvoiceCreatedWindowController
@@ -41,7 +55,6 @@ public class confirmOrderAcceptWindowController {
         closeWindow(); // ปิดหน้าต่าง confirmOrder
     }
 
-    // เมธอดสำหรับปิดหน้าต่าง
     private void closeWindow() {
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         stage.close();

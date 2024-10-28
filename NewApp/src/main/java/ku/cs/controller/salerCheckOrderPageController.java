@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import ku.cs.connect.sellerCheckOrderConnect;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
@@ -31,7 +32,6 @@ public class salerCheckOrderPageController {
     @FXML
     private Button profileButton ;
 
-    @FXML
     public void initialize() {
         // กำหนดค่าใน TableColumn โดยใช้ PropertyValueFactory และ String โดยตรง
         orderIdColumn.setCellValueFactory(new PropertyValueFactory<>("orderID"));
@@ -39,14 +39,9 @@ public class salerCheckOrderPageController {
         orderStatusColumn.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
         orderTimestampColumn.setCellValueFactory(new PropertyValueFactory<>("orderTimestamp"));
 
-        // สร้างข้อมูลจำลอง (Mock Data)
-        ObservableList<Order> orders = FXCollections.observableArrayList(
-                new Order("001", "Order", "รอตรวจสอบ", "2024-10-11 10:00:00"),
-                new Order("002", "PreOrder", "ยืนยัน", "2024-10-11 12:30:00"),
-                new Order("003", "Order", "ปฎิเสธ", "2024-10-12 09:45:00")
-        );
-
-        // เพิ่มข้อมูลลงใน TableView
+        // ดึงข้อมูลจากฐานข้อมูลมาแสดงใน TableView
+        sellerCheckOrderConnect dbConnect = new sellerCheckOrderConnect();
+        ObservableList<Order> orders = dbConnect.getOrders();
         orderTable.setItems(orders);
 
         // ตรวจจับการคลิกสองครั้งที่แถวใน TableView
@@ -55,11 +50,8 @@ public class salerCheckOrderPageController {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     Order rowData = row.getItem();
-                    System.out.println("Double click on: " + rowData.getOrderID());
-
-                    // เปลี่ยนหน้าไปยังหน้า salerCheckProductPageController
                     try {
-                        changeToProductPage();
+                        changeToProductPage(rowData.getOrderID());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -77,17 +69,19 @@ public class salerCheckOrderPageController {
     }
 
     // เมธอดเพื่อเปลี่ยนหน้าไปยัง salerCheckProductPageController
-    private void changeToProductPage() throws IOException {
-        // โหลดหน้าใหม่
+    private void changeToProductPage(String orderId) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/salerCheckProductPage.fxml"));
         Parent productPage = loader.load();
 
-        // ตั้งค่า Scene ใหม่
+        salerCheckProductPageController controller = loader.getController();
+        controller.setOrderID(orderId);  // ส่ง Order_ID
+
         Stage stage = (Stage) orderTable.getScene().getWindow();
         Scene scene = new Scene(productPage);
         stage.setScene(scene);
         stage.show();
     }
+
 
     // คลาส Order ใช้ String ธรรมดาแทน SimpleStringProperty
     public static class Order {

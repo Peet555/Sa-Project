@@ -32,7 +32,7 @@ public class deliveryPrepareController {
     @FXML
     private TableColumn<Order, String> timeStamp;
     @FXML
-    private TableColumn<Order, String> delivery;
+    private TableColumn<Order, String> Delivery_date;
 
     @FXML
     private Button prepareButton;
@@ -47,7 +47,7 @@ public class deliveryPrepareController {
         type.setCellValueFactory(new PropertyValueFactory<>("orderType"));
         status.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
         timeStamp.setCellValueFactory(new PropertyValueFactory<>("timeStamp"));
-        delivery.setCellValueFactory(new PropertyValueFactory<>("deliveryStatus"));
+        Delivery_date.setCellValueFactory(new PropertyValueFactory<>("Delivery_date"));
 
         // Populating table with sample data
         ObservableList<Order> orders = FXCollections.observableArrayList(
@@ -84,7 +84,7 @@ public class deliveryPrepareController {
 
     // เมธอดสำหรับเปิดหน้าต่างยืนยันการเตรียมจัดส่ง
     private void prepareDelivery() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/confirmReadyForDeliveryWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/specifyDateForDeliveryWindow.fxml"));
         Parent root = loader.load();
 
         // สร้าง Stage สำหรับหน้าต่างใหม่
@@ -117,14 +117,14 @@ public class deliveryPrepareController {
         private String orderType;
         private String orderStatus;
         private String timeStamp;
-        private String deliveryStatus;
+        private String delivery_date;
 
-        public Order(String orderID, String orderType, String orderStatus, String timeStamp, String deliveryStatus) {
+        public Order(String orderID, String orderType, String orderStatus, String timeStamp, String delivery_date) {
             this.orderID = orderID;
             this.orderType = orderType;
             this.orderStatus = orderStatus;
             this.timeStamp = timeStamp;
-            this.deliveryStatus = deliveryStatus;
+            this.delivery_date = delivery_date;
         }
 
         public String getOrderID() {
@@ -144,7 +144,7 @@ public class deliveryPrepareController {
         }
 
         public String getDeliveryStatus() {
-            return deliveryStatus;
+            return delivery_date;
         }
     }
 }

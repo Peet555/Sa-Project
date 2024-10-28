@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckProductPageController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckProductPageController">
    <children>
       <Pane layoutY="171.0" prefHeight="91.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
@@ -20,13 +16,13 @@
       </Pane>
       <ScrollPane layoutX="334.0" layoutY="274.0" prefHeight="495.0" prefWidth="603.0">
          <content>
-            <TableView prefHeight="492.0" prefWidth="600.0">
+            <TableView fx:id="orderProductTable" prefHeight="492.0" prefWidth="600.0">
                <columns>
-                  <TableColumn prefWidth="99.0" text="Product_ID" />
-                  <TableColumn prefWidth="107.0" text="Product_Type" />
-                  <TableColumn prefWidth="171.0" text="Product_name" />
-                  <TableColumn minWidth="0.0" prefWidth="116.0" text="Quantity" />
-                  <TableColumn prefWidth="111.0" text="Price" />
+                  <TableColumn fx:id="Product_ID" prefWidth="99.0" text="Product_ID" />
+                  <TableColumn fx:id="Product_Type" prefWidth="107.0" text="Product_Type" />
+                  <TableColumn fx:id="Product_Name" prefWidth="171.0" text="Product_name" />
+                  <TableColumn fx:id="Order_Quantity_Line" minWidth="0.0" prefWidth="116.0" text="Quantity" />
+                  <TableColumn fx:id="Price" prefWidth="111.0" text="Price" />
                </columns>
             </TableView>
          </content>

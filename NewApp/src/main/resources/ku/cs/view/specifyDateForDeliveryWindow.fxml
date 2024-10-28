@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="192.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.specifyDateForDeliveryWindow">
+   <children>
+      <Pane layoutX="-6.0" prefHeight="60.0" prefWidth="606.0" style="-fx-background-color: #a3e9a4;">
+         <children>
+            <Label layoutX="250.0" layoutY="13.0" text="ระบุวันจัดส่ง">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="confirmButton" layoutX="175.0" layoutY="146.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" text="ยืนยัน" />
+      <Button fx:id="cancelButton" layoutX="342.0" layoutY="146.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="86.0" text="ยกเลิก" />
+      <DatePicker fx:id="Specify_date" layoutX="213.0" layoutY="90.0" />
+   </children>
+</AnchorPane>
