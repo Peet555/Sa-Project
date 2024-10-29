@@ -110,11 +110,6 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#goOrder" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="สั่งของ">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
                </children>
                <padding>
                   <Insets top="15.0" />

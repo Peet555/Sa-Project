@@ -1,5 +1,6 @@
 package ku.cs.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,6 +29,8 @@ public class verifyPaymentController {
     @FXML
     private TableColumn<Invoice, String> orderID;
     @FXML
+    private TableColumn<Invoice, String> Order_Type;
+    @FXML
     private TableColumn<Invoice, String> Invoice_ID;
     @FXML
     private TableColumn<Invoice, String> Status_Pay;
@@ -43,9 +46,17 @@ public class verifyPaymentController {
         Status_Pay.setCellValueFactory(new PropertyValueFactory<>("statusPay"));
         Invoice_Timestamp.setCellValueFactory(new PropertyValueFactory<>("invoiceTimestamp"));
 
+        // สร้างคอลัมน์ Order_Type โดยไม่ต้องมีฟิลด์ใน Invoice
+        Order_Type.setCellValueFactory(cellData -> {
+            String orderId = cellData.getValue().getOrderID();
+            String orderType = getOrderType(orderId); // เรียกใช้งาน getOrderType
+            return new SimpleStringProperty(orderType);
+        });
+
         ObservableList<Invoice> invoices = loadInvoicesFromDatabase();
         Invoice_Table.setItems(invoices);
 
+        // ตั้งค่าการคลิกที่แถว
         Invoice_Table.setRowFactory(tv -> {
             TableRow<Invoice> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -68,6 +79,8 @@ public class verifyPaymentController {
             }
         });
     }
+
+
 
     private ObservableList<Invoice> loadInvoicesFromDatabase() {
         ObservableList<Invoice> invoices = FXCollections.observableArrayList();
@@ -95,6 +108,32 @@ public class verifyPaymentController {
 
         return invoices;
     }
+
+
+    private String getOrderType(String orderId) {
+        String orderType = null;
+        String query = "SELECT Order_Type FROM `order` WHERE Order_ID = ?";
+
+        try (Connection connection = DatabaseConnect.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, orderId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                orderType = resultSet.getString("Order_Type");
+                System.out.println("Order_Type for Order_ID " + orderId + ": " + orderType); // Debug line
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving order type: " + e.getMessage());
+        }
+
+        return orderType;
+    }
+
+
+
+
 
     private String convertStatusToString(int status) {
         switch (status) {
