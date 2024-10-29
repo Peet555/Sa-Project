@@ -40,7 +40,7 @@ public class employeeSellerProfileController {
             try {
                 openEditEmployeeProfileWindow();
             } catch (IOException e) {
-                System.err.println("Error opening payment window: " + e.getMessage());
+                System.err.println("Error opening edit window: " + e.getMessage());
             }
         });
 

@@ -14,14 +14,16 @@ public class editEmployeeWarehouseProfileWindowController {
     private Button confirmButton, cancelButton;
     @FXML
     private TextField nameField,phoneNumberField;
-    private TextArea address;
-    private EditEmployeeConnect editEmployeeConnect = new EditEmployeeConnect();
     @FXML
+    private TextArea addressField;
+    private EditEmployeeConnect editEmployeeConnect = new EditEmployeeConnect();
+
+
     public void initialize() {
         confirmButton.setOnAction(event -> {
             User user = LoginConnect.getCurrentUser();
             if(user != null){
-                editEmployeeConnect.editProfileEmployee(nameField.getText(),phoneNumberField.getText(), address.getText(), user.getID());
+                editEmployeeConnect.editProfileEmployee(nameField.getText(),phoneNumberField.getText(),addressField.getText(), user.getID());
                 closeWindow();
             }
         });
