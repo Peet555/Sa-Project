@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import ku.cs.services.FXRouter;
-import ku.cs.services.RootService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -40,7 +39,7 @@ public class homePageController {
                 "/ku/cs/picture/kettle.jpg",
                 "/ku/cs/picture/oil-free-fryer.jpg",
                 "/ku/cs/picture/rice-cooker.jpg",
-                "/ku/cs/picture/washing-machin.jpg",
+                "/ku/cs/picture/washing-machine.jpg",
         };
 
 

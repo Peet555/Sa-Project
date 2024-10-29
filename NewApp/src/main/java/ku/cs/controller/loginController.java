@@ -41,6 +41,7 @@ public class loginController {
     @FXML
     public ComboBox<String> role;
     private LoginConnect loginConnect = new LoginConnect();
+
     public void initialize() {
 
         URL url = getClass().getResource("/ku/cs/picture/backgroundlogin.png");
@@ -55,16 +56,20 @@ public class loginController {
             RootService.showErrorBar("Please select a role");
         }else {
             if (role.getValue().equals("Customer")) {
-                loginConnect.selectCustomer(username.getText(), password.getText());
-                RootService.open("homePage.fxml");
+                if(!loginConnect.selectCustomer(username.getText(), password.getText())){
+                    RootService.showErrorBar("Invalid username or password");
+
+                }else{
+                RootService.open("homePage.fxml");}
             } else {
-                if(loginConnect.selectEmployee(username.getText(), password.getText())) {
+                if(!loginConnect.selectEmployee(username.getText(), password.getText())) {
+                    RootService.showErrorBar("Invalid username or password");
+                }else{
                     if(loginConnect.selectRole(username.getText()).equals("Sale")){
                         RootService.open("salerCheckOrderPage.fxml");
                     }else{
                         RootService.open("stock.fxml");
                     }
-
                 }
             }
         }
