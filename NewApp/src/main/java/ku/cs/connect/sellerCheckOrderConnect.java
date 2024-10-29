@@ -29,25 +29,59 @@ public class sellerCheckOrderConnect {
 
                 // แปลง Order_Status จากตัวเลขเป็นข้อความ
                 String orderStatus;
-                switch (status) {
-                    case 1:
-                        orderStatus = "รอยืนยัน";
-                        break;
-                    case 2:
-                        orderStatus = "รอชำระเงิน";
-                        break;
-                    case 3:
-                        orderStatus = "ชำระเงินแล้ว";
-                        break;
-                    case 4:
-                        orderStatus = "กำลังจัดส่ง";
-                        break;
-                    case 5:
-                        orderStatus = "ได้รับของแล้ว";
-                        break;
-                    default:
-                        orderStatus = "สถานะไม่ทราบ";
-                        break;
+                if ("สั่งซื้อ".equals(orderType)) {
+                    switch (status) {
+                        case 1:
+                            orderStatus = "รอยืนยัน";
+                            break;
+                        case 2:
+                            orderStatus = "รอชำระเงิน";
+                            break;
+                        case 3:
+                            orderStatus = "ชำระเงินแล้ว";
+                            break;
+                        case 4:
+                            orderStatus = "กำลังจัดส่ง";
+                            break;
+                        case 5:
+                            orderStatus = "ได้รับของแล้ว";
+                            break;
+                        default:
+                            orderStatus = "สถานะไม่ทราบ";
+                            break;
+                    }
+                } else if ("สั่งจอง".equals(orderType)) {
+                    switch (status) {
+                        case 1:
+                            orderStatus = "รอยืนยัน";
+                            break;
+                        case 2:
+                            orderStatus = "รอชำระค่ามัดจำ";
+                            break;
+                        case 3:
+                            orderStatus = "ชำระค่ามัดจำแล้ว";
+                            break;
+                        case 4:
+                            orderStatus = "รอสินค้าเข้าคลัง";
+                            break;
+                        case 5:
+                            orderStatus = "ชำระยอดคงเหลือ";
+                            break;
+                        case 6:
+                            orderStatus = "ชำระแล้ว";
+                            break;
+                        case 7:
+                            orderStatus = "กำลังจัดส่ง";
+                            break;
+                        case 8:
+                            orderStatus = "ได้รับของแล้ว";
+                            break;
+                        default:
+                            orderStatus = "สถานะไม่ทราบ";
+                            break;
+                    }
+                } else {
+                    orderStatus = "ประเภทคำสั่งซื้อไม่ทราบ";
                 }
 
                 // เพิ่มข้อมูลลงในรายการ orders

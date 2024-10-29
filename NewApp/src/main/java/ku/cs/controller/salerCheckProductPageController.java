@@ -145,10 +145,26 @@ public class salerCheckProductPageController {
         try {
             connection.setAutoCommit(false);
 
+            // ดึง Order_Type ก่อน
+            OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
+            String orderType = statusUpdater.getOrderType(orderId);
+
             // อัปเดต Order_Status ในตาราง order
             String updateOrderStatusQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
             PreparedStatement updateStmt = connection.prepareStatement(updateOrderStatusQuery);
-            updateStmt.setInt(1, 2);
+
+            int newStatus = 0;
+            if ("สั่งซื้อ".equals(orderType)) {
+                newStatus = 3; // เปลี่ยนสถานะสำหรับ Order_Type "สั่งซื้อ"
+            } else if ("สั่งจอง".equals(orderType)) {
+                // กำหนด Order_Status สำหรับ Order_Type "สั่งจอง"
+                newStatus = getNewStatusForReservation(orderId); // ฟังก์ชันใหม่
+            } else {
+                System.out.println("Unknown Order_Type: " + orderType);
+                return; // ไม่ทำอะไรถ้าไม่รู้จัก Order_Type
+            }
+
+            updateStmt.setInt(1, newStatus);
             updateStmt.setString(2, orderId);
             updateStmt.executeUpdate();
 
@@ -175,25 +191,52 @@ public class salerCheckProductPageController {
             insertStmt.setString(2, orderId);
             insertStmt.setInt(3, invoicePrice);
             insertStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-            insertStmt.setString(5, "2"); // สถานะจ่ายเงินเหมือน Order_Status
+            insertStmt.setInt(5, newStatus); // ใช้ newStatus จากอัปเดตข้างบน
 
             insertStmt.executeUpdate();
-            connection.commit();
 
-            System.out.println("Order confirmed and invoice created.");
+            connection.commit(); // ยืนยันการทำงาน
+            System.out.println("Order confirmed and invoice created successfully.");
+
         } catch (SQLException e) {
-            System.out.println("Error processing order confirmation: " + e.getMessage());
+            System.err.println("Failed to confirm order: " + e.getMessage());
             try {
                 if (connection != null) {
-                    connection.rollback();
+                    connection.rollback(); // ยกเลิกการทำงานถ้ามีปัญหา
                 }
-            } catch (SQLException rollbackEx) {
-                System.out.println("Error during rollback: " + rollbackEx.getMessage());
+            } catch (SQLException rollbackException) {
+                System.err.println("Failed to rollback: " + rollbackException.getMessage());
             }
         } finally {
-            DatabaseConnect.closeConnection();
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(true); // ตั้งค่า auto-commit กลับเป็น true
+                }
+            } catch (SQLException e) {
+                System.err.println("Failed to set auto-commit: " + e.getMessage());
+            }
         }
     }
+
+    // ฟังก์ชันใหม่เพื่อตรวจสอบ Order_Status สำหรับ Order_Type "สั่งจอง"
+    private int getNewStatusForReservation(String orderId) {
+        OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
+        int currentStatus = statusUpdater.getOrderStatus(orderId);
+
+        // สามารถกำหนดตรรกะที่เหมาะสมที่นี่ตามความต้องการ
+        switch (currentStatus) {
+            case 1: return 2; // รอยืนยัน -> รอชำระค่ามัดจำ
+            case 2: return 3; // รอชำระค่ามัดจำ -> ชำระค่ามัดจำแล้ว
+            case 3: return 4; // ชำระค่ามัดจำแล้ว -> รอสินค้าเข้าคลัง
+            case 4: return 5; // รอสินค้าเข้าคลัง -> ชำระยอดคงเหลือ
+            case 5: return 6; // ชำระยอดคงเหลือ -> ชำระแล้ว
+            case 6: return 7; // ชำระแล้ว -> กำลังจัดส่ง
+            case 7: return 8; // กำลังจัดส่ง -> ได้รับของแล้ว
+            default: return currentStatus; // กรณีอื่นๆ คงสถานะเดิม
+        }
+    }
+
+
 
     @FXML
     public void goVerifyPayment() {
