@@ -10,6 +10,13 @@ public class Product {
      int Quantity;
      String Description; // คำอธิบาย
      InputStream Product_Image;
+     byte[] Product_Image_Byte;
+
+    public Product(String product_Name, int price, byte[] product_Image) {
+        Product_Name = product_Name;
+        Price = price;
+        Product_Image_Byte = product_Image;
+    }
 
     public Product(String Product_ID, String Product_Name, int Quantity, int Price, String Type, String Description, InputStream Product_Image) {
         this.Product_ID = Product_ID;
@@ -71,6 +78,10 @@ public class Product {
 
     public void setImage(InputStream product_Image) {
         this.Product_Image = product_Image;
+    }
+
+    public byte[] getProduct_Image_Byte() {
+        return Product_Image_Byte;
     }
 
     @Override

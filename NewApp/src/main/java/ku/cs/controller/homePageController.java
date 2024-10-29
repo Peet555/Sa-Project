@@ -100,11 +100,11 @@ public class homePageController {
         // เมื่อ Double Click ที่ item จะเปลี่ยนไปหน้า ProductModel
         p.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                System.out.println("Double clicked on item at row " + row + ", column " + col);
+                System.out.println("Double clicked on item at row " + row + ", column " + col +"productModel"+ typeName);
 
                 // เปลี่ยนไปที่หน้า ProductModel
                 try {
-                    FXRouter.goTo("productModel");
+                    FXRouter.goTo("productModel", typeName);
                 } catch (IOException e) {
                     System.err.println("ไปที่หน้า ProductModel ไม่ได้");
 

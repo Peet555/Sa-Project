@@ -3,18 +3,28 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.ProductModelConnect;
+import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 public class productModelController {
 
     public GridPane gridPane;
     private HBox currentSelectedProduct = null; // ใช้เพื่อเก็บ item ที่ถูกเลือก
-
+    private ProductModelConnect productConnect = new ProductModelConnect();
 
     @FXML
     private Button homeButton; // เชื่อมต่อกับปุ่ม "Home" จาก FXML
@@ -27,16 +37,11 @@ public class productModelController {
 
     @FXML
     public Button orderHistoryButton ;
+    private String selectedType;
 
     @FXML
     public void initialize() throws IOException {
-        // จำนวนสินค้า
-        int itemCount = 18;
-
-        // เพิ่มสินค้า 18 รายการ โดยเรียก addTypeProductItem ในแต่ละลำดับ
-        for (int i = 0; i < itemCount; i++) {
-            addTypeProductItem(i);
-        }
+        loadProductsByType("typeName");
 
         // กดปุ่ม "Home" แล้วกลับไปหน้า Home Page
         homeButton.setOnAction(event -> {
@@ -72,42 +77,54 @@ public class productModelController {
         });
     }
 
-    public void addTypeProductItem(int index) throws IOException {
 
-        HBox p = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ku/cs/view/productModelItem.fxml")));
+    public void loadProductsByType(String typeName) {
+        List<Product> products = productConnect.loadProductsByType(typeName);
 
-        // กำหนดจำนวนแถว
-        int row = index / 4;  // 4 คอลัมน์
-        int col = (index % 4) + 1;  // 4 คอลัมน์
+        for (int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
 
-        // เมื่อคลิกครั้งแรกให้เปลี่ยนสีเป็นฟ้า
-        p.setOnMousePressed(event -> {
-            // หากมี item ที่เลือกอยู่แล้ว ให้เอาสีออก
-            if (currentSelectedProduct != null) {
-                currentSelectedProduct.setStyle("");  // ลบสีที่เลือก
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/productModelItem.fxml"));
+                HBox productItemBox = loader.load();
+
+                // Set product details via setProductDetails method
+                productModelItemController controller = loader.getController();
+                controller.setProductDetails(product);
+
+                // Add event listeners for interaction
+                addEventListeners(productItemBox);
+
+                // Calculate row and column based on index
+                int row = i / 4;
+                int col = i % 4;
+
+                // Add product item to gridPane
+                gridPane.add(productItemBox, col, row);
+
+            } catch (IOException e) {
+                System.err.println("Error loading product item: " + e.getMessage());
             }
-
-            // เปลี่ยนสีของ item ที่ถูกคลิก
-            p.setStyle("-fx-background-color: lightblue;");
-            currentSelectedProduct = p;  // เก็บ item ที่ถูกเลือก
+        }
+    }
+    private void addEventListeners(HBox productItemBox) {
+        productItemBox.setOnMousePressed(event -> {
+            if (currentSelectedProduct != null) {
+                currentSelectedProduct.setStyle("");  // Clear previous selection
+            }
+            productItemBox.setStyle("-fx-background-color: lightblue;");
+            currentSelectedProduct = productItemBox;
         });
 
-        // เมื่อ Double Click ที่ item จะเปลี่ยนไปหน้า ProductModel
-        p.setOnMouseClicked(event -> {
+        productItemBox.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                System.out.println("Double clicked on item at row " + row + ", column " + col);
-
-                // เปลี่ยนไปที่หน้า ProductModel
+                System.out.println("Double clicked on item");
                 try {
-                    FXRouter.goTo("product");
+                    FXRouter.goTo("productDetails");
                 } catch (IOException e) {
-                    System.err.println("ไปที่หน้า Product ไม่ได้");
-
+                    System.err.println("Failed to go to product details: " + e.getMessage());
                 }
             }
         });
-
-        // เพิ่ม item ลงใน gridPane ที่ตำแหน่ง row, col
-        gridPane.add(p, col, row);
     }
 }
