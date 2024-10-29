@@ -2,16 +2,28 @@ package ku.cs.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ku.cs.connect.EditEmployeeConnect;
+import ku.cs.connect.LoginConnect;
+import ku.cs.models.User;
 
 public class editEmployeeWarehouseProfileWindowController {
     @FXML
     private Button confirmButton, cancelButton;
-
+    @FXML
+    private TextField nameField,phoneNumberField;
+    private TextArea address;
+    private EditEmployeeConnect editEmployeeConnect = new EditEmployeeConnect();
     @FXML
     public void initialize() {
         confirmButton.setOnAction(event -> {
-            closeWindow();
+            User user = LoginConnect.getCurrentUser();
+            if(user != null){
+                editEmployeeConnect.editProfileEmployee(nameField.getText(),phoneNumberField.getText(), address.getText(), user.getID());
+                closeWindow();
+            }
         });
 
         cancelButton.setOnAction(event -> {
