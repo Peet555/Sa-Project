@@ -1,56 +1,56 @@
 package ku.cs.models;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 public class Order {
-    private String orderID;
-    private String employeeID;
-    private String customerID;
-    private int orderStatus;
-    private String orderTimestamp;
-    private int outstandingBalance;
-    private String orderType;
-    private String deliveryDate;
+    private String Order_ID;
+    private String Employee_ID;
+    private String Customer_ID;
+    private int Order_Status;
+    private Timestamp Order_Timestamp;    private int Outstanding_Balance;
+    private String Order_Type;
+    private String Delivery_date;
 
-    public Order(String orderID, String employeeID, String customerID, int orderStatus,
-                 String orderTimestamp, int outstandingBalance, String orderType, String deliveryDate) {
-        this.orderID = orderID;
-        this.employeeID = employeeID;
-        this.customerID = customerID;
-        this.orderStatus = orderStatus;
-        this.orderTimestamp = orderTimestamp;
-        this.outstandingBalance = outstandingBalance;
-        this.orderType = orderType;
-        this.deliveryDate = deliveryDate;
+    public Order(String Order_ID, String Employee_ID, String Customer_ID, int Order_Status,
+                 Timestamp orderTimestamp, int Outstanding_Balance, String Order_Type, String Delivery_date) {
+        this.Order_ID = Order_ID;
+        this.Employee_ID = Employee_ID;
+        this.Customer_ID = Customer_ID;
+        this.Order_Status = Order_Status;
+        this.Order_Timestamp = orderTimestamp;
+        this.Outstanding_Balance = Outstanding_Balance;
+        this.Order_Type = Order_Type;
+        this.Delivery_date = Delivery_date;
     }
 
-    public String getOrderID() {
-        return orderID;
+    public String getOrder_ID() {
+        return Order_ID;
     }
 
-    public String getEmployeeID() {
-        return employeeID;
+    public String getEmployee_ID() {
+        return Employee_ID;
     }
 
-    public String getCustomerID() {
-        return customerID;
+    public String getCustomer_ID() {
+        return Customer_ID;
     }
 
-    public int getOrderStatus() {
-        return orderStatus;
+    public int getOrder_Status() {
+        return Order_Status;
     }
 
-    public String getOrderTimestamp() {
-        return orderTimestamp;
+    public Timestamp getOrder_Timestamp() { return Order_Timestamp; }
+
+    public int getOutstanding_Balance() {
+        return Outstanding_Balance;
     }
 
-    public int getOutstandingBalance() {
-        return outstandingBalance;
+    public String getOrder_Type() {
+        return Order_Type;
     }
 
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public String getDeliveryDate() {
-        return deliveryDate;
+    public String getDelivery_date() {
+        return Delivery_date;
     }
 }

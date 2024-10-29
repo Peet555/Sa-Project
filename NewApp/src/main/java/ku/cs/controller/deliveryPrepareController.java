@@ -13,9 +13,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.models.Order;
 import ku.cs.services.FXRouter;
+import ku.cs.connect.DatabaseConnect;
 
 import java.io.IOException;
+import java.sql.*;
 
 public class deliveryPrepareController {
     @FXML
@@ -24,13 +27,13 @@ public class deliveryPrepareController {
     @FXML
     private TableView<Order> deliveryTable;
     @FXML
-    private TableColumn<Order, String> id;
+    private TableColumn<Order, String> Order_ID;
     @FXML
-    private TableColumn<Order, String> type;
+    private TableColumn<Order, String> Order_Type;
     @FXML
-    private TableColumn<Order, String> status;
+    private TableColumn<Order, String> Order_Status;
     @FXML
-    private TableColumn<Order, String> timeStamp;
+    private TableColumn<Order, String> Order_Timestamp;
     @FXML
     private TableColumn<Order, String> Delivery_date;
 
@@ -40,21 +43,17 @@ public class deliveryPrepareController {
     @FXML
     private Button profileButton;
 
+    // ObservableList to hold the orders
+    private ObservableList<Order> orderList;
+
     @FXML
     public void initialize() {
         // Setting cell value factories for table columns
-        id.setCellValueFactory(new PropertyValueFactory<>("orderID"));
-        type.setCellValueFactory(new PropertyValueFactory<>("orderType"));
-        status.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
-        timeStamp.setCellValueFactory(new PropertyValueFactory<>("timeStamp"));
+        Order_ID.setCellValueFactory(new PropertyValueFactory<>("Order_ID"));
+        Order_Type.setCellValueFactory(new PropertyValueFactory<>("Order_Type"));
+        Order_Status.setCellValueFactory(new PropertyValueFactory<>("Order_Status"));
+        Order_Timestamp.setCellValueFactory(new PropertyValueFactory<>("Order_Timestamp"));
         Delivery_date.setCellValueFactory(new PropertyValueFactory<>("Delivery_date"));
-
-        // Populating table with sample data
-        ObservableList<Order> orders = FXCollections.observableArrayList(
-                new Order("001", "Order", "ชำระแล้ว", "2024-10-11 10:00:00", "รอจัดส่ง"),
-                new Order("002", "Order", "ยังไม่ชำระ", "2024-10-15 10:00:00", "รอจัดส่ง")
-        );
-        deliveryTable.setItems(orders);
 
         // Disable the prepare button by default
         prepareButton.setDisable(true);
@@ -63,6 +62,9 @@ public class deliveryPrepareController {
         deliveryTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             prepareButton.setDisable(newSelection == null); // Enable if a row is selected
         });
+
+        // Load orders from the database into the delivery table
+        loadOrders();
 
         // Button action to open confirmation window
         prepareButton.setOnAction(event -> {
@@ -81,18 +83,55 @@ public class deliveryPrepareController {
         });
     }
 
+    // Method to load orders from the database
+    private void loadOrders() {
+        orderList = FXCollections.observableArrayList(); // Initialize the ObservableList
 
-    // เมธอดสำหรับเปิดหน้าต่างยืนยันการเตรียมจัดส่ง
-    private void prepareDelivery() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/specifyDateForDeliveryWindow.fxml"));
-        Parent root = loader.load();
+        Connection connection = DatabaseConnect.getConnection();
+        String sql = "SELECT Order_ID, Order_Type, Order_Status, Order_Timestamp, Delivery_date FROM `order` "; // Change 'Orders' to your actual table name
 
-        // สร้าง Stage สำหรับหน้าต่างใหม่
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
-        stage.showAndWait();  // แสดงหน้าต่าง
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                // Create Order objects from the result set
+                String orderId = resultSet.getString("Order_ID");
+                String orderType = resultSet.getString("Order_Type");
+                int orderStatus = resultSet.getInt("Order_Status");
+                Timestamp orderTimestamp = resultSet.getTimestamp("Order_Timestamp");
+                String deliveryDate = resultSet.getString("Delivery_date");
+
+                Order order = new Order(orderId, null, null, orderStatus, orderTimestamp, 0, orderType, deliveryDate); // Fill in with appropriate values
+                orderList.add(order); // Add the order to the list
+            }
+        } catch (SQLException e) {
+            System.err.println("Error loading orders: " + e.getMessage());
+        }
+
+        deliveryTable.setItems(orderList); // Set the items of the table
     }
+
+    // Method for opening delivery preparation window
+    private void prepareDelivery() throws IOException {
+        Order selectedOrder = deliveryTable.getSelectionModel().getSelectedItem(); // Get the selected order
+        if (selectedOrder != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/specifyDateForDeliveryWindow.fxml"));
+            Parent root = loader.load();
+
+            // Set the order ID in the specifyDateForDeliveryWindow controller
+            specifyDateForDeliveryWindow controller = loader.getController();
+            controller.setOrderId(selectedOrder.getOrder_ID()); // Pass the order ID
+
+            // Create a new stage for the delivery date window
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);  // The new window will be modal
+            stage.showAndWait();  // Show the new window
+        } else {
+            System.out.println("No order selected.");
+        }
+    }
+
 
     @FXML
     public void goOrder() {
@@ -109,42 +148,6 @@ public class deliveryPrepareController {
             FXRouter.goTo("stock");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public static class Order {
-        private String orderID;
-        private String orderType;
-        private String orderStatus;
-        private String timeStamp;
-        private String delivery_date;
-
-        public Order(String orderID, String orderType, String orderStatus, String timeStamp, String delivery_date) {
-            this.orderID = orderID;
-            this.orderType = orderType;
-            this.orderStatus = orderStatus;
-            this.timeStamp = timeStamp;
-            this.delivery_date = delivery_date;
-        }
-
-        public String getOrderID() {
-            return orderID;
-        }
-
-        public String getOrderType() {
-            return orderType;
-        }
-
-        public String getOrderStatus() {
-            return orderStatus;
-        }
-
-        public String getTimeStamp() {
-            return timeStamp;
-        }
-
-        public String getDeliveryStatus() {
-            return delivery_date;
         }
     }
 }

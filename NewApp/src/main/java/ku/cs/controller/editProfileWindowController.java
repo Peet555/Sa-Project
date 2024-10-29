@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import ku.cs.connect.EditCustomerConnect;
 
 import ku.cs.connect.LoginConnect;
 import ku.cs.models.Customer;
@@ -24,12 +25,18 @@ public class editProfileWindowController {
     @FXML
     private TextArea addressField;
 
+    private EditCustomerConnect editCustomerConnect = new EditCustomerConnect();
+
+
 
 
     public void initialize() {
         confirmButton.setOnAction(event -> {
-            closeWindow();
-
+            User user = LoginConnect.getCurrentUser();
+            if(user != null){
+                editCustomerConnect.editProfileCustomer(nameField.getText(),phoneNumberField.getText(),emailField.getText(),addressField.getText(), user.getID());
+                closeWindow();
+            }
         });
 
         cancelButton.setOnAction(event -> {

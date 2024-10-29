@@ -8,6 +8,8 @@ public class Invoice {
     private String statusPay;
     private byte[] paymentImage;
 
+    private String orderType;
+
     public Invoice(String invoiceID, String orderID, int invoicePrice, String invoiceTimestamp, String statusPay, byte[] paymentImage) {
         this.invoiceID = invoiceID;
         this.orderID = orderID;
@@ -39,5 +41,12 @@ public class Invoice {
 
     public byte[] getPaymentImage() {
         return paymentImage;
+    }
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public String getOrderType() {
+        return orderType;
     }
 }

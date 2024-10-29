@@ -125,7 +125,8 @@ public class salerCheckProductPageController {
         OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
         int orderStatus = statusUpdater.getOrderStatus(orderId);
 
-        if (orderStatus == 2) {
+        // ตรวจสอบสถานะ และปิดปุ่มยืนยันตามความเหมาะสม
+        if (orderStatus == 2) { // ปิดปุ่มถ้าสถานะเป็นรอชำระเงินหรือชำระเงินแล้ว
             confirmButton.setDisable(true);
         } else {
             confirmButton.setDisable(false);
@@ -148,7 +149,7 @@ public class salerCheckProductPageController {
             // อัปเดต Order_Status ในตาราง order
             String updateOrderStatusQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
             PreparedStatement updateStmt = connection.prepareStatement(updateOrderStatusQuery);
-            updateStmt.setInt(1, 2);
+            updateStmt.setInt(1, 2); // เปลี่ยนสถานะเป็นรอชำระเงิน
             updateStmt.setString(2, orderId);
             updateStmt.executeUpdate();
 
@@ -171,27 +172,27 @@ public class salerCheckProductPageController {
             // สร้างข้อมูลในตาราง invoice
             String insertInvoiceQuery = "INSERT INTO invoice (Invoice_ID, Order_ID, Invoice_Price, Invoice_Timestamp, Status_pay) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement insertStmt = connection.prepareStatement(insertInvoiceQuery);
-            insertStmt.setString(1, UUID.randomUUID().toString().replace("-", "")); // UUID without dashes
+            insertStmt.setString(1, UUID.randomUUID().toString().replace("-", "")); // ใช้ UUID สำหรับ Invoice_ID
             insertStmt.setString(2, orderId);
-            insertStmt.setInt(3, invoicePrice);
-            insertStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-            insertStmt.setString(5, "2"); // สถานะจ่ายเงินเหมือน Order_Status
-
+            insertStmt.setDouble(3, invoicePrice);
+            insertStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now())); // ใช้เวลาปัจจุบัน
+            insertStmt.setInt(5, 2); // เปลี่ยน Status_pay เป็นรอชำระเงิน
             insertStmt.executeUpdate();
-            connection.commit();
 
-            System.out.println("Order confirmed and invoice created.");
+            connection.commit(); // คอมมิทการเปลี่ยนแปลง
         } catch (SQLException e) {
-            System.out.println("Error processing order confirmation: " + e.getMessage());
+            System.err.println("Error updating order and creating invoice: " + e.getMessage());
             try {
-                if (connection != null) {
-                    connection.rollback();
-                }
-            } catch (SQLException rollbackEx) {
-                System.out.println("Error during rollback: " + rollbackEx.getMessage());
+                connection.rollback(); // ทำการ Rollback ถ้ามีข้อผิดพลาด
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         } finally {
-            DatabaseConnect.closeConnection();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

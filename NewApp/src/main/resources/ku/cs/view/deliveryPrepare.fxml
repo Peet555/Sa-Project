@@ -49,15 +49,15 @@
             </HBox>
          </children>
       </VBox>
-      <VBox layoutX="250.0" layoutY="286.0" prefHeight="446.0" prefWidth="530.0">
+      <VBox layoutX="111.0" layoutY="286.0" prefHeight="446.0" prefWidth="669.0">
          <children>
-            <TableView fx:id="deliveryTable" prefHeight="447.0" prefWidth="530.0">
+            <TableView fx:id="deliveryTable" prefHeight="447.0" prefWidth="591.0">
               <columns>
-                <TableColumn fx:id="id" prefWidth="95.0" text="orderID" />
-                <TableColumn fx:id="type" prefWidth="95.0" text="orderType" />
-                  <TableColumn fx:id="status" prefWidth="95.0" text="orderStatus" />
-                  <TableColumn fx:id="timeStamp" prefWidth="118.0" text="orderTimestamp" />
-                  <TableColumn fx:id="Delivery_date" prefWidth="125.0" text="Delivery_date" />
+                <TableColumn fx:id="Order_ID" prefWidth="109.0" text="Order_ID" />
+                <TableColumn fx:id="Order_Type" prefWidth="98.0" text="Order_Type" />
+                  <TableColumn fx:id="Order_Timestamp" prefWidth="126.0" text="Order_Timestamp" />
+                  <TableColumn fx:id="Order_Status" prefWidth="152.0" text="Order_Status" />
+                  <TableColumn fx:id="Delivery_date" prefWidth="183.0" text="Delivery_date" />
               </columns>
                <VBox.margin>
                   <Insets />
