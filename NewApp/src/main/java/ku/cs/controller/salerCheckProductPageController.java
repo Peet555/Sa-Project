@@ -125,7 +125,8 @@ public class salerCheckProductPageController {
         OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
         int orderStatus = statusUpdater.getOrderStatus(orderId);
 
-        if (orderStatus == 2) {
+        // ตรวจสอบสถานะ และปิดปุ่มยืนยันตามความเหมาะสม
+        if (orderStatus == 2) { // ปิดปุ่มถ้าสถานะเป็นรอชำระเงินหรือชำระเงินแล้ว
             confirmButton.setDisable(true);
         } else {
             confirmButton.setDisable(false);
@@ -145,26 +146,10 @@ public class salerCheckProductPageController {
         try {
             connection.setAutoCommit(false);
 
-            // ดึง Order_Type ก่อน
-            OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
-            String orderType = statusUpdater.getOrderType(orderId);
-
             // อัปเดต Order_Status ในตาราง order
             String updateOrderStatusQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
             PreparedStatement updateStmt = connection.prepareStatement(updateOrderStatusQuery);
-
-            int newStatus = 0;
-            if ("สั่งซื้อ".equals(orderType)) {
-                newStatus = 3; // เปลี่ยนสถานะสำหรับ Order_Type "สั่งซื้อ"
-            } else if ("สั่งจอง".equals(orderType)) {
-                // กำหนด Order_Status สำหรับ Order_Type "สั่งจอง"
-                newStatus = getNewStatusForReservation(orderId); // ฟังก์ชันใหม่
-            } else {
-                System.out.println("Unknown Order_Type: " + orderType);
-                return; // ไม่ทำอะไรถ้าไม่รู้จัก Order_Type
-            }
-
-            updateStmt.setInt(1, newStatus);
+            updateStmt.setInt(1, 2); // เปลี่ยนสถานะเป็นรอชำระเงิน
             updateStmt.setString(2, orderId);
             updateStmt.executeUpdate();
 
@@ -187,56 +172,29 @@ public class salerCheckProductPageController {
             // สร้างข้อมูลในตาราง invoice
             String insertInvoiceQuery = "INSERT INTO invoice (Invoice_ID, Order_ID, Invoice_Price, Invoice_Timestamp, Status_pay) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement insertStmt = connection.prepareStatement(insertInvoiceQuery);
-            insertStmt.setString(1, UUID.randomUUID().toString().replace("-", "")); // UUID without dashes
+            insertStmt.setString(1, UUID.randomUUID().toString().replace("-", "")); // ใช้ UUID สำหรับ Invoice_ID
             insertStmt.setString(2, orderId);
-            insertStmt.setInt(3, invoicePrice);
-            insertStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-            insertStmt.setInt(5, newStatus); // ใช้ newStatus จากอัปเดตข้างบน
-
+            insertStmt.setDouble(3, invoicePrice);
+            insertStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now())); // ใช้เวลาปัจจุบัน
+            insertStmt.setInt(5, 2); // เปลี่ยน Status_pay เป็นรอชำระเงิน
             insertStmt.executeUpdate();
 
-            connection.commit(); // ยืนยันการทำงาน
-            System.out.println("Order confirmed and invoice created successfully.");
-
+            connection.commit(); // คอมมิทการเปลี่ยนแปลง
         } catch (SQLException e) {
-            System.err.println("Failed to confirm order: " + e.getMessage());
+            System.err.println("Error updating order and creating invoice: " + e.getMessage());
             try {
-                if (connection != null) {
-                    connection.rollback(); // ยกเลิกการทำงานถ้ามีปัญหา
-                }
-            } catch (SQLException rollbackException) {
-                System.err.println("Failed to rollback: " + rollbackException.getMessage());
+                connection.rollback(); // ทำการ Rollback ถ้ามีข้อผิดพลาด
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         } finally {
             try {
-                if (connection != null) {
-                    connection.setAutoCommit(true); // ตั้งค่า auto-commit กลับเป็น true
-                }
+                connection.close();
             } catch (SQLException e) {
-                System.err.println("Failed to set auto-commit: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
-
-    // ฟังก์ชันใหม่เพื่อตรวจสอบ Order_Status สำหรับ Order_Type "สั่งจอง"
-    private int getNewStatusForReservation(String orderId) {
-        OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
-        int currentStatus = statusUpdater.getOrderStatus(orderId);
-
-        // สามารถกำหนดตรรกะที่เหมาะสมที่นี่ตามความต้องการ
-        switch (currentStatus) {
-            case 1: return 2; // รอยืนยัน -> รอชำระค่ามัดจำ
-            case 2: return 3; // รอชำระค่ามัดจำ -> ชำระค่ามัดจำแล้ว
-            case 3: return 4; // ชำระค่ามัดจำแล้ว -> รอสินค้าเข้าคลัง
-            case 4: return 5; // รอสินค้าเข้าคลัง -> ชำระยอดคงเหลือ
-            case 5: return 6; // ชำระยอดคงเหลือ -> ชำระแล้ว
-            case 6: return 7; // ชำระแล้ว -> กำลังจัดส่ง
-            case 7: return 8; // กำลังจัดส่ง -> ได้รับของแล้ว
-            default: return currentStatus; // กรณีอื่นๆ คงสถานะเดิม
-        }
-    }
-
-
 
     @FXML
     public void goVerifyPayment() {

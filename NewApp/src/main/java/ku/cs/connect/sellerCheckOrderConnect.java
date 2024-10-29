@@ -28,61 +28,7 @@ public class sellerCheckOrderConnect {
                 String orderTimestamp = resultSet.getString("Order_Timestamp");
 
                 // แปลง Order_Status จากตัวเลขเป็นข้อความ
-                String orderStatus;
-                if ("สั่งซื้อ".equals(orderType)) {
-                    switch (status) {
-                        case 1:
-                            orderStatus = "รอยืนยัน";
-                            break;
-                        case 2:
-                            orderStatus = "รอชำระเงิน";
-                            break;
-                        case 3:
-                            orderStatus = "ชำระเงินแล้ว";
-                            break;
-                        case 4:
-                            orderStatus = "กำลังจัดส่ง";
-                            break;
-                        case 5:
-                            orderStatus = "ได้รับของแล้ว";
-                            break;
-                        default:
-                            orderStatus = "สถานะไม่ทราบ";
-                            break;
-                    }
-                } else if ("สั่งจอง".equals(orderType)) {
-                    switch (status) {
-                        case 1:
-                            orderStatus = "รอยืนยัน";
-                            break;
-                        case 2:
-                            orderStatus = "รอชำระค่ามัดจำ";
-                            break;
-                        case 3:
-                            orderStatus = "ชำระค่ามัดจำแล้ว";
-                            break;
-                        case 4:
-                            orderStatus = "รอสินค้าเข้าคลัง";
-                            break;
-                        case 5:
-                            orderStatus = "ชำระยอดคงเหลือ";
-                            break;
-                        case 6:
-                            orderStatus = "ชำระแล้ว";
-                            break;
-                        case 7:
-                            orderStatus = "กำลังจัดส่ง";
-                            break;
-                        case 8:
-                            orderStatus = "ได้รับของแล้ว";
-                            break;
-                        default:
-                            orderStatus = "สถานะไม่ทราบ";
-                            break;
-                    }
-                } else {
-                    orderStatus = "ประเภทคำสั่งซื้อไม่ทราบ";
-                }
+                String orderStatus = getOrderStatus(orderType, status);
 
                 // เพิ่มข้อมูลลงในรายการ orders
                 orders.add(new Order(orderID, orderType, orderStatus, orderTimestamp));
@@ -92,5 +38,34 @@ public class sellerCheckOrderConnect {
         }
 
         return orders;
+    }
+
+    // ฟังก์ชันสำหรับแปลง Order_Status ขึ้นอยู่กับ Order_Type
+    private String getOrderStatus(String orderType, int status) {
+        switch (orderType) {
+            case "สั่งซื้อ": // Purchase Order
+                switch (status) {
+                    case 1: return "รอยืนยัน";
+                    case 2: return "รอชำระเงิน";
+                    case 3: return "ชำระเงินแล้ว";
+                    case 4: return "กำลังจัดส่ง";
+                    case 5: return "ได้รับของแล้ว";
+                    default: return "สถานะไม่ทราบ";
+                }
+            case "สั่งจอง": // Reservation Order
+                switch (status) {
+                    case 1: return "รอยืนยัน";
+                    case 2: return "รอชำระค่ามัดจำ";
+                    case 3: return "ชำระค่ามัดจำแล้ว";
+                    case 4: return "รอสินค้าเข้าคลัง";
+                    case 5: return "ชำระยอดคงเหลือ";
+                    case 6: return "ชำระแล้ว";
+                    case 7: return "กำลังจัดส่ง";
+                    case 8: return "ได้รับของแล้ว";
+                    default: return "สถานะไม่ทราบ";
+                }
+            default:
+                return "สถานะไม่ทราบ";
+        }
     }
 }

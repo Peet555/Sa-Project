@@ -43,22 +43,6 @@ public class OrderStatusUpdateConnect {
         return -1; // ส่งค่า -1 ถ้ามีปัญหาในการดึงข้อมูล
     }
 
-    public String getOrderType(String orderId) {
-        String query = "SELECT Order_Type FROM `order` WHERE Order_ID = ?";
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setString(1, orderId);
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getString("Order_Type");
-            }
-        } catch (SQLException e) {
-            System.err.println("Failed to retrieve order type: " + e.getMessage());
-        }
-        return null; // ส่งค่า null ถ้ามีปัญหาในการดึงข้อมูล
-    }
 
 
 }

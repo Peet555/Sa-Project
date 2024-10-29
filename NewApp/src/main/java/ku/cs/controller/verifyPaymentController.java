@@ -22,6 +22,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class verifyPaymentController {
     @FXML
@@ -84,30 +86,36 @@ public class verifyPaymentController {
 
     private ObservableList<Invoice> loadInvoicesFromDatabase() {
         ObservableList<Invoice> invoices = FXCollections.observableArrayList();
-        String query = "SELECT Invoice_ID, Order_ID, Invoice_Price, Invoice_Timestamp, Status_pay, Payment_Image FROM invoice";
+        String query = "SELECT i.Invoice_ID, i.Order_ID, i.Invoice_Price, i.Invoice_Timestamp, i.Status_pay, i.Payment_Image, o.Order_Type " +
+                "FROM invoice i " +
+                "JOIN `order` o ON i.Order_ID = o.Order_ID"; // Join with order table
 
         try (Connection connection = DatabaseConnect.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-                String statusPay = convertStatusToString(resultSet.getInt("Status_pay"));
+                String orderId = resultSet.getString("Order_ID");
+                String orderType = resultSet.getString("Order_Type");
 
                 invoices.add(new Invoice(
                         resultSet.getString("Invoice_ID"),
-                        resultSet.getString("Order_ID"),
+                        orderId,
                         resultSet.getInt("Invoice_Price"),
                         resultSet.getString("Invoice_Timestamp"),
-                        statusPay, // Use the converted status pay
-                        resultSet.getBytes("Payment_Image") // Use "Payment_Image" instead of null
+                        convertStatusToString(orderType, resultSet.getInt("Status_pay")),
+                        resultSet.getBytes("Payment_Image")
                 ));
             }
+
         } catch (SQLException e) {
             System.err.println("Error loading invoices: " + e.getMessage());
         }
 
         return invoices;
     }
+
+
 
 
     private String getOrderType(String orderId) {
@@ -118,11 +126,11 @@ public class verifyPaymentController {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, orderId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                orderType = resultSet.getString("Order_Type");
-                System.out.println("Order_Type for Order_ID " + orderId + ": " + orderType); // Debug line
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    orderType = resultSet.getString("Order_Type");
+                    System.out.println("Order_Type for Order_ID " + orderId + ": " + orderType);
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving order type: " + e.getMessage());
@@ -132,25 +140,52 @@ public class verifyPaymentController {
     }
 
 
-
-
-
-    private String convertStatusToString(int status) {
-        switch (status) {
-            case 1:
-                return "รอยืนยัน";
-            case 2:
-                return "รอชำระเงิน";
-            case 3:
-                return "ชำระเงินแล้ว";
-            case 4:
-                return "กำลังจัดส่ง";
-            case 5:
-                return "ได้รับของแล้ว";
-            default:
-                return "สถานะไม่ทราบ";
+    private String convertStatusToString(String orderType, int status) {
+        if ("สั่งจอง".equals(orderType)) {
+            // กรณี Order_Type เป็น "สั่งจอง"
+            switch (status) {
+                case 1:
+                    return "รอยืนยัน";
+                case 2:
+                    return "รอชำระค่ามัดจำ";
+                case 3:
+                    return "ชำระค่ามัดจำแล้ว";
+                case 4:
+                    return "รอสินค้าเข้าคลัง";
+                case 5:
+                    return "ชำระยอดคงเหลือ";
+                case 6:
+                    return "ชำระแล้ว";
+                case 7:
+                    return "กำลังจัดส่ง";
+                case 8:
+                    return "ได้รับของแล้ว";
+                default:
+                    return "สถานะไม่ทราบ";
+            }
+        } else {
+            // กรณี Order_Type เป็น "สั่งซื้อ"
+            switch (status) {
+                case 1:
+                    return "รอยืนยัน";
+                case 2:
+                    return "รอชำระเงิน";
+                case 3:
+                    return "ชำระเงินแล้ว";
+                case 4:
+                    return "กำลังจัดส่ง";
+                case 5:
+                    return "ได้รับของแล้ว";
+                default:
+                    return "สถานะไม่ทราบ";
+            }
         }
     }
+
+
+
+
+
 
     private void changeToProofPage() throws IOException {
         Invoice selectedInvoice = Invoice_Table.getSelectionModel().getSelectedItem();

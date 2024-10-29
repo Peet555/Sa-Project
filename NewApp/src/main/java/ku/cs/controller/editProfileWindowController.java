@@ -23,7 +23,7 @@ public class editProfileWindowController {
     private TextField nameField,phoneNumberField,emailField;
     @FXML
     private TextArea addressField;
-    private EditProfileCustomerConnect editProfileCustomerConnect = new EditProfileCustomerConnect();
+    private editProfileCustomerConnect = new EditProfileCustomerConnect();
 
 
 

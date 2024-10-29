@@ -31,7 +31,7 @@ public class MainApplication extends Application {
         // เลือกเส้นทางที่ต้องการใช้เป็นค่าเริ่มต้น
 
 
-        FXRouter.goTo("root");
+        FXRouter.goTo("salerCheckOrder");
 
         setTheme("theme.css");
         DatabaseConnect.initializeConnection();
