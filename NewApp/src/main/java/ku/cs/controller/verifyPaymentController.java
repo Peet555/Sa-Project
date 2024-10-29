@@ -11,53 +11,45 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import ku.cs.connect.DatabaseConnect;
+import ku.cs.models.Invoice;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class verifyPaymentController {
     @FXML
-    private TableView<PaymentOrder> statusPayment ;
+    private TableView<Invoice> Invoice_Table;
     @FXML
-    private TableColumn<PaymentOrder,String> orderID ;
+    private TableColumn<Invoice, String> orderID;
     @FXML
-    private TableColumn<PaymentOrder,String> orderType ;
+    private TableColumn<Invoice, String> Invoice_ID;
     @FXML
-    private TableColumn<PaymentOrder,String> orderStatus ;
+    private TableColumn<Invoice, String> Status_Pay;
     @FXML
-    private TableColumn<PaymentOrder,String> orderTime ;
+    private TableColumn<Invoice, String> Invoice_Timestamp;
     @FXML
     private Button profileButton;
 
     @FXML
-    public ImageView logo ;
-
-    @FXML
     public void initialize() {
-        // กำหนดค่าใน TableColumn โดยใช้ PropertyValueFactory และ String โดยตรง
         orderID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
-        orderType.setCellValueFactory(new PropertyValueFactory<>("orderType"));
-        orderStatus.setCellValueFactory(new PropertyValueFactory<>("orderStatus"));
-        orderTime.setCellValueFactory(new PropertyValueFactory<>("orderTime"));
+        Invoice_ID.setCellValueFactory(new PropertyValueFactory<>("invoiceID"));
+        Status_Pay.setCellValueFactory(new PropertyValueFactory<>("statusPay"));
+        Invoice_Timestamp.setCellValueFactory(new PropertyValueFactory<>("invoiceTimestamp"));
 
-        // สร้างข้อมูลจำลอง (Mock Data)
-        ObservableList<PaymentOrder> paymentOrders = FXCollections.observableArrayList(
-                new PaymentOrder("100012", "สั่งซื้อ", "ชำระแล้ว", "2024-10-11 10:00:00")
-        );
+        ObservableList<Invoice> invoices = loadInvoicesFromDatabase();
+        Invoice_Table.setItems(invoices);
 
-        // เพิ่มข้อมูลลงใน TableView
-        statusPayment.setItems(paymentOrders);
-
-        statusPayment.setRowFactory(tv -> {
-            TableRow<PaymentOrder> row = new TableRow<>();
+        Invoice_Table.setRowFactory(tv -> {
+            TableRow<Invoice> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    PaymentOrder rowData = row.getItem();
-                    System.out.println("Double click on: " + rowData.getOrderID());
-
-                    // เปลี่ยนหน้าไปยังหน้า salerCheckProductPageController
                     try {
                         changeToProofPage();
                     } catch (IOException e) {
@@ -67,66 +59,81 @@ public class verifyPaymentController {
             });
             return row;
         });
+
         profileButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("employeeSellerProfile"); // เปลี่ยนไปหน้า HomePage
+                FXRouter.goTo("employeeSellerProfile");
             } catch (IOException e) {
                 System.err.println("Cannot go to profile");
             }
         });
     }
 
-    private void changeToProofPage() throws IOException {
-        // โหลดหน้าใหม่
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/checkProofPayment.fxml"));
-        Parent proofPage = loader.load();
+    private ObservableList<Invoice> loadInvoicesFromDatabase() {
+        ObservableList<Invoice> invoices = FXCollections.observableArrayList();
+        String query = "SELECT Invoice_ID, Order_ID, Invoice_Price, Invoice_Timestamp, Status_pay, Payment_Image FROM invoice";
 
-        // ตั้งค่า Scene ใหม่
-        Stage stage = (Stage) statusPayment.getScene().getWindow();
-        Scene scene = new Scene(proofPage);
-        stage.setScene(scene);
-        stage.show();
+        try (Connection connection = DatabaseConnect.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String statusPay = convertStatusToString(resultSet.getInt("Status_pay"));
+
+                invoices.add(new Invoice(
+                        resultSet.getString("Invoice_ID"),
+                        resultSet.getString("Order_ID"),
+                        resultSet.getInt("Invoice_Price"),
+                        resultSet.getString("Invoice_Timestamp"),
+                        statusPay, // Use the converted status pay
+                        resultSet.getBytes("Payment_Image") // Use "Payment_Image" instead of null
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error loading invoices: " + e.getMessage());
+        }
+
+        return invoices;
+    }
+
+    private String convertStatusToString(int status) {
+        switch (status) {
+            case 1:
+                return "รอยืนยัน";
+            case 2:
+                return "รอชำระเงิน";
+            case 3:
+                return "ชำระเงินแล้ว";
+            case 4:
+                return "กำลังจัดส่ง";
+            case 5:
+                return "ได้รับของแล้ว";
+            default:
+                return "สถานะไม่ทราบ";
+        }
+    }
+
+    private void changeToProofPage() throws IOException {
+        Invoice selectedInvoice = Invoice_Table.getSelectionModel().getSelectedItem();
+        if (selectedInvoice != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/checkProofPayment.fxml"));
+            Parent proofPage = loader.load();
+
+            checkProofPaymentController controller = loader.getController();
+            controller.setInvoiceID(selectedInvoice.getInvoiceID());
+
+            Stage stage = (Stage) Invoice_Table.getScene().getWindow();
+            stage.setScene(new Scene(proofPage));
+            stage.show();
+        }
     }
 
     @FXML
-    public void goCheckOrder(){
+    public void goCheckOrder() {
         try {
             FXRouter.goTo("salerCheckOrder");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-    public static class PaymentOrder {
-        private String orderID ;
-        private String orderType ;
-        private String orderStatus ;
-        private String orderTime ;
-
-        public PaymentOrder(String orderID, String orderType, String orderStatus, String orderTime) {
-            this.orderID = orderID;
-            this.orderType = orderType;
-            this.orderStatus = orderStatus;
-            this.orderTime = orderTime;
-        }
-
-        public String getOrderID() {
-            return orderID;
-        }
-
-        public String getOrderType() {
-            return orderType;
-        }
-
-        public String getOrderStatus() {
-            return orderStatus;
-        }
-
-        public String getOrderTime() {
-            return orderTime;
-        }
-    }
-
-
-
 }
