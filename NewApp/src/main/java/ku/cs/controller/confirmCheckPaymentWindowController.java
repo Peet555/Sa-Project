@@ -11,6 +11,12 @@ public class confirmCheckPaymentWindowController {
     @FXML
     public Button cancleButton , okayButton ;
 
+    private checkProofPaymentController checkProofPaymentController;
+
+    public void setCheckProofPaymentController(checkProofPaymentController controller) {
+        this.checkProofPaymentController = controller;
+    }
+
     @FXML
     public void cancleClick(){
         Stage stage = (Stage) cancleButton.getScene().getWindow();
@@ -18,14 +24,22 @@ public class confirmCheckPaymentWindowController {
     }
 
     @FXML
-    public void confirmClick(){
+    public void confirmClick() {
+        System.out.println("Confirm button clicked."); // Debug statement
+        if (checkProofPaymentController != null) {
+            checkProofPaymentController.updateInvoiceStatus();
+        }
+
+        // Navigate to the verify payment page
         try {
             FXRouter.goTo("verifyPayment");
-            closeWindow();  // ปิดหน้าต่าง Modal หลังจากไปที่หน้าใหม่
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        closeWindow(); // Close the confirmation window
     }
+
 
     @FXML
     public void closeWindow() {
@@ -33,5 +47,7 @@ public class confirmCheckPaymentWindowController {
         Stage stage = (Stage) okayButton.getScene().getWindow();
         stage.close();  // ปิดหน้าต่าง Modal
     }
+
+
 
 }

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckOrderPageController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckOrderPageController">
    <children>
       <Pane layoutY="171.0" prefHeight="91.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
@@ -15,7 +11,6 @@
             <Button layoutX="306.0" layoutY="27.0" mnemonicParsing="false" onAction="#goVerifyPayment" prefHeight="41.0" prefWidth="134.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ตรวจสอบการชำระเงิน" />
             <Button layoutX="540.0" layoutY="27.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="104.0" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="ลงทะเบียนสินค้า" textFill="WHITE" />
             <Button layoutX="752.0" layoutY="27.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="134.0" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="เตรียมและจัดส่งสินค้า" textFill="WHITE" />
-            <Button layoutX="976.0" layoutY="27.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="88.0" style="-fx-background-radius: 50; -fx-background-color: a49f9f;" text="สั่งของ" textFill="WHITE" />
          </children>
       </Pane>
       <ScrollPane layoutX="334.0" layoutY="274.0" prefHeight="495.0" prefWidth="533.0">

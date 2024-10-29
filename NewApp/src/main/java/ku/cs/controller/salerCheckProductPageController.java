@@ -10,13 +10,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import ku.cs.connect.DatabaseConnect;
 import ku.cs.connect.OrderStatusUpdateConnect;
 import ku.cs.connect.orderProductConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
-import javax.swing.text.TabableView;
 import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class salerCheckProductPageController {
 
@@ -28,7 +31,6 @@ public class salerCheckProductPageController {
     private Button denyButton;
     @FXML
     private Button profileButton;
-
 
     @FXML
     private TableView<Product> orderProductTable;
@@ -48,7 +50,7 @@ public class salerCheckProductPageController {
     public void setOrderID(String orderId) {
         this.orderId = orderId;
         loadProducts();
-        checkOrderStatusAndDisableConfirmButton(); // เรียกใช้การตรวจสอบสถานะหลังจาก orderId ได้ค่าแล้ว
+        checkOrderStatusAndDisableConfirmButton();
     }
 
     private void loadProducts() {
@@ -59,14 +61,12 @@ public class salerCheckProductPageController {
 
     @FXML
     public void initialize() {
-
-
         Product_ID.setCellValueFactory(new PropertyValueFactory<>("Product_ID"));
         Product_Name.setCellValueFactory(new PropertyValueFactory<>("Product_Name"));
         Product_Type.setCellValueFactory(new PropertyValueFactory<>("Type"));
         Order_Quantity_Line.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         Price.setCellValueFactory(new PropertyValueFactory<>("Price"));
-        // กำหนดการทำงานของปุ่มย้อนกลับ
+
         backButton.setOnAction(event -> {
             try {
                 backToOrderPage();
@@ -75,7 +75,6 @@ public class salerCheckProductPageController {
             }
         });
 
-        // กำหนดการทำงานของปุ่มยืนยันคำสั่งซื้อ
         confirmButton.setOnAction(event -> {
             try {
                 openConfirmOrderWindow();
@@ -83,7 +82,7 @@ public class salerCheckProductPageController {
                 e.printStackTrace();
             }
         });
-        // กำหนดการทำงานของปุ่มปฎิเสธคำสั่งซื้อ
+
         denyButton.setOnAction(event -> {
             try {
                 openDeniedOrderWindow();
@@ -91,69 +90,113 @@ public class salerCheckProductPageController {
                 e.printStackTrace();
             }
         });
+
         profileButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("employeeSellerProfile"); // เปลี่ยนไปหน้า HomePage
+                FXRouter.goTo("employeeSellerProfile");
             } catch (IOException e) {
                 System.err.println("Cannot go to profile");
             }
         });
-
-
     }
 
-
-    // เมธอดเพื่อกลับไปยังหน้า salerCheckOrderPageController
     private void backToOrderPage() throws IOException {
-        // โหลดหน้า salerCheckOrderPage.fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/salerCheckOrderPage.fxml"));
         Parent orderPage = loader.load();
-
-        // ตั้งค่า Scene ใหม่เพื่อแสดงหน้า order page
         Stage stage = (Stage) backButton.getScene().getWindow();
         Scene scene = new Scene(orderPage);
         stage.setScene(scene);
         stage.show();
     }
-    // เมธอดสำหรับเปิดหน้าต่างยืนยันคำสั่งซื้อ
+
     private void openConfirmOrderWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/confirmOrderAcceptWindow.fxml"));
         Parent confirmOrderWindow = loader.load();
-
         confirmOrderAcceptWindowController controller = loader.getController();
-        controller.setOrderId(orderId); // ส่ง Order_ID ไปยังหน้าต่างยืนยันคำสั่งซื้อ
-
+        controller.setOrderId(orderId);
         Stage stage = new Stage();
         stage.setScene(new Scene(confirmOrderWindow));
         stage.showAndWait();
+
+        confirmOrder(orderId); // เรียกใช้ฟังก์ชันเพื่อเปลี่ยนสถานะและสร้างข้อมูลในตาราง invoice
     }
 
     private void checkOrderStatusAndDisableConfirmButton() {
         OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
-        int orderStatus = statusUpdater.getOrderStatus(orderId); // ดึงสถานะคำสั่งซื้อจากฐานข้อมูล
+        int orderStatus = statusUpdater.getOrderStatus(orderId);
 
-        System.out.println("Order Status: " + orderStatus); // เพิ่มการดีบักค่า orderStatus
-        if (orderStatus == 2) { // ถ้าสถานะเป็น 2
-            confirmButton.setDisable(true); // ปิดการใช้งานปุ่มยืนยันคำสั่งซื้อ
-            System.out.println("Confirm button is now disabled.");
+        if (orderStatus == 2) {
+            confirmButton.setDisable(true);
         } else {
-            confirmButton.setDisable(false); // เปิดการใช้งานปุ่มเมื่อสถานะไม่เป็น 2
-            System.out.println("Confirm button is enabled.");
+            confirmButton.setDisable(false);
         }
     }
 
-    // เมธอดสำหรับเปิดหน้าต่างปฎิเสธคำสั่งซื้อ
     private void openDeniedOrderWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/deniedOrderWindow.fxml"));
         Parent deniedOrderWindow = loader.load();
-
         Stage stage = new Stage();
         stage.setScene(new Scene(deniedOrderWindow));
-        stage.showAndWait(); // รอจนกว่าจะปิดหน้าต่าง
+        stage.showAndWait();
+    }
+
+    public void confirmOrder(String orderId) {
+        Connection connection = DatabaseConnect.getConnection();
+        try {
+            connection.setAutoCommit(false);
+
+            // อัปเดต Order_Status ในตาราง order
+            String updateOrderStatusQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
+            PreparedStatement updateStmt = connection.prepareStatement(updateOrderStatusQuery);
+            updateStmt.setInt(1, 2);
+            updateStmt.setString(2, orderId);
+            updateStmt.executeUpdate();
+
+            // คำนวณ Invoice_Price โดย join ตาราง product กับ Order_Line
+            String totalQuery = "SELECT SUM(p.Price * ol.Quantity_Order_Line) AS total " +
+                    "FROM Order_Line ol " +
+                    "JOIN product p ON ol.Product_ID = p.Product_ID " +
+                    "WHERE ol.Order_ID = ?";
+            PreparedStatement totalStmt = connection.prepareStatement(totalQuery);
+            totalStmt.setString(1, orderId);
+            ResultSet rs = totalStmt.executeQuery();
+            int invoicePrice = 0;
+            if (rs.next()) {
+                invoicePrice = rs.getInt("total");
+            } else {
+                System.out.println("No order line items found for Order_ID: " + orderId);
+                return;
+            }
+
+            // สร้างข้อมูลในตาราง invoice
+            String insertInvoiceQuery = "INSERT INTO invoice (Invoice_ID, Order_ID, Invoice_Price, Invoice_Timestamp, Status_pay) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement insertStmt = connection.prepareStatement(insertInvoiceQuery);
+            insertStmt.setString(1, UUID.randomUUID().toString().replace("-", "")); // UUID without dashes
+            insertStmt.setString(2, orderId);
+            insertStmt.setInt(3, invoicePrice);
+            insertStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+            insertStmt.setString(5, "2"); // สถานะจ่ายเงินเหมือน Order_Status
+
+            insertStmt.executeUpdate();
+            connection.commit();
+
+            System.out.println("Order confirmed and invoice created.");
+        } catch (SQLException e) {
+            System.out.println("Error processing order confirmation: " + e.getMessage());
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException rollbackEx) {
+                System.out.println("Error during rollback: " + rollbackEx.getMessage());
+            }
+        } finally {
+            DatabaseConnect.closeConnection();
+        }
     }
 
     @FXML
-    public void goVerifyPayment(){
+    public void goVerifyPayment() {
         try {
             FXRouter.goTo("verifyPayment");
         } catch (IOException e) {
@@ -161,9 +204,8 @@ public class salerCheckProductPageController {
         }
     }
 
-
     @FXML
-    public void goCheckOrder(){
+    public void goCheckOrder() {
         try {
             FXRouter.goTo("salerCheckOrder");
         } catch (IOException e) {
