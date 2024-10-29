@@ -52,13 +52,13 @@
       <VBox layoutX="111.0" layoutY="286.0" prefHeight="446.0" prefWidth="669.0">
          <children>
             <TableView fx:id="deliveryTable" prefHeight="447.0" prefWidth="591.0">
-              <columns>
-                <TableColumn fx:id="Order_ID" prefWidth="109.0" text="Order_ID" />
-                <TableColumn fx:id="Order_Type" prefWidth="98.0" text="Order_Type" />
+               <columns>
+                  <TableColumn fx:id="Order_ID" prefWidth="109.0" text="Order_ID" />
+                  <TableColumn fx:id="Order_Type" prefWidth="98.0" text="Order_Type" />
                   <TableColumn fx:id="Order_Timestamp" prefWidth="126.0" text="Order_Timestamp" />
                   <TableColumn fx:id="Order_Status" prefWidth="152.0" text="Order_Status" />
                   <TableColumn fx:id="Delivery_date" prefWidth="183.0" text="Delivery_date" />
-              </columns>
+               </columns>
                <VBox.margin>
                   <Insets />
                </VBox.margin>

@@ -19,10 +19,12 @@ public class specifyDateForDeliveryWindow {
     private DatePicker specifyDate;
 
     private String orderId; // To hold the order ID passed from deliveryPrepareController
+    private String orderType; // เพื่อเก็บประเภทของคำสั่งซื้อ
 
-    // Method to set the order ID
-    public void setOrderId(String orderId) {
+    // Method to set the order ID and type
+    public void setOrderDetails(String orderId, String orderType) {
         this.orderId = orderId;
+        this.orderType = orderType;
     }
 
     @FXML
@@ -37,18 +39,25 @@ public class specifyDateForDeliveryWindow {
         });
     }
 
-    // Method to save the selected delivery date to the database
+    // Method to save the selected delivery date and update Order_Status
     private void saveDeliveryDate() {
         LocalDate selectedDate = specifyDate.getValue();
         if (selectedDate != null) {
-            String sql = "UPDATE `order` SET Delivery_date = ? WHERE Order_ID = ?";
+            String sql = "UPDATE `order` SET Delivery_date = ?, Order_Status = ? WHERE Order_ID = ?";
             try (Connection connection = DatabaseConnect.getConnection();
                  PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setDate(1, java.sql.Date.valueOf(selectedDate)); // Set the delivery date
-                statement.setString(2, orderId); // Set the order ID
+
+                // Set the delivery date
+                statement.setDate(1, java.sql.Date.valueOf(selectedDate));
+
+                // Set the appropriate status based on the order type
+                int updatedStatus = orderType.equals("สั่งซื้อ") ? 4 : 7;
+                statement.setInt(2, updatedStatus);
+
+                statement.setString(3, orderId); // Set the order ID
                 statement.executeUpdate(); // Execute the update
             } catch (SQLException e) {
-                System.err.println("Error saving delivery date: " + e.getMessage());
+                System.err.println("Error saving delivery date and updating status: " + e.getMessage());
             }
         } else {
             System.out.println("No date selected.");

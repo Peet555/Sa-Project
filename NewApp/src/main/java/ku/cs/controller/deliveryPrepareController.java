@@ -1,5 +1,6 @@
 package ku.cs.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,7 +32,7 @@ public class deliveryPrepareController {
     @FXML
     private TableColumn<Order, String> Order_Type;
     @FXML
-    private TableColumn<Order, String> Order_Status;
+    private TableColumn<Order, String> Order_Status;  // This will now show the status string
     @FXML
     private TableColumn<Order, String> Order_Timestamp;
     @FXML
@@ -51,7 +52,8 @@ public class deliveryPrepareController {
         // Setting cell value factories for table columns
         Order_ID.setCellValueFactory(new PropertyValueFactory<>("Order_ID"));
         Order_Type.setCellValueFactory(new PropertyValueFactory<>("Order_Type"));
-        Order_Status.setCellValueFactory(new PropertyValueFactory<>("Order_Status"));
+        Order_Status.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getOrderStatus())); // Use getOrderStatus method
         Order_Timestamp.setCellValueFactory(new PropertyValueFactory<>("Order_Timestamp"));
         Delivery_date.setCellValueFactory(new PropertyValueFactory<>("Delivery_date"));
 
@@ -83,12 +85,11 @@ public class deliveryPrepareController {
         });
     }
 
-    // Method to load orders from the database
     private void loadOrders() {
         orderList = FXCollections.observableArrayList(); // Initialize the ObservableList
 
         Connection connection = DatabaseConnect.getConnection();
-        String sql = "SELECT Order_ID, Order_Type, Order_Status, Order_Timestamp, Delivery_date FROM `order` "; // Change 'Orders' to your actual table name
+        String sql = "SELECT Order_ID, Employee_ID, Customer_ID, Order_Status, Order_Timestamp, Outstanding_Balance, Order_Type, Delivery_date FROM `order`"; // Adjust the query to include Employee_ID, Customer_ID, and Outstanding_Balance
 
         try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -96,12 +97,15 @@ public class deliveryPrepareController {
             while (resultSet.next()) {
                 // Create Order objects from the result set
                 String orderId = resultSet.getString("Order_ID");
-                String orderType = resultSet.getString("Order_Type");
+                String employeeId = resultSet.getString("Employee_ID"); // Get Employee_ID
+                String customerId = resultSet.getString("Customer_ID"); // Get Customer_ID
                 int orderStatus = resultSet.getInt("Order_Status");
                 Timestamp orderTimestamp = resultSet.getTimestamp("Order_Timestamp");
+                int outstandingBalance = resultSet.getInt("Outstanding_Balance"); // Get Outstanding_Balance
+                String orderType = resultSet.getString("Order_Type");
                 String deliveryDate = resultSet.getString("Delivery_date");
 
-                Order order = new Order(orderId, null, null, orderStatus, orderTimestamp, 0, orderType, deliveryDate); // Fill in with appropriate values
+                Order order = new Order(orderId, employeeId, customerId, orderStatus, orderTimestamp, outstandingBalance, orderType, deliveryDate);
                 orderList.add(order); // Add the order to the list
             }
         } catch (SQLException e) {
@@ -120,7 +124,8 @@ public class deliveryPrepareController {
 
             // Set the order ID in the specifyDateForDeliveryWindow controller
             specifyDateForDeliveryWindow controller = loader.getController();
-            controller.setOrderId(selectedOrder.getOrder_ID()); // Pass the order ID
+// Set the order ID and type in the specifyDateForDeliveryWindow controller
+            controller.setOrderDetails(selectedOrder.getOrder_ID(), selectedOrder.getOrder_Type());
 
             // Create a new stage for the delivery date window
             Stage stage = new Stage();
@@ -129,16 +134,6 @@ public class deliveryPrepareController {
             stage.showAndWait();  // Show the new window
         } else {
             System.out.println("No order selected.");
-        }
-    }
-
-
-    @FXML
-    public void goOrder() {
-        try {
-            FXRouter.goTo("orderStock");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
