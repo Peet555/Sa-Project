@@ -12,7 +12,8 @@ public class Product {
      InputStream Product_Image;
      byte[] Product_Image_Byte;
 
-    public Product(String product_Name, int price, byte[] product_Image) {
+    public Product(String ID,String product_Name, int price, byte[] product_Image) {
+        Product_ID = ID;
         Product_Name = product_Name;
         Price = price;
         Product_Image_Byte = product_Image;

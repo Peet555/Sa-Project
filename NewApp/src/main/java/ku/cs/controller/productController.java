@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
@@ -31,10 +32,11 @@ public class productController {
 
     @FXML
     public Button orderHistoryButton ;
-
+    private Product product;
     @FXML
     public void initialize() throws IOException {
         addTypeProductItem(1);
+        String id = (String) FXRouter.getData();
 
         homeButton.setOnAction(event -> {
             try {
@@ -78,7 +80,11 @@ public class productController {
     }
 
     public void addTypeProductItem(int index) throws IOException {
-        VBox p = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/ku/cs/view/productItem.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/view/productItem.fxml"));
+        VBox p = fxmlLoader.load();
+        productItemController controller = fxmlLoader.getController();
+
+        //controller.productName.setText();
         vBox.getChildren().add(p);
     }
 

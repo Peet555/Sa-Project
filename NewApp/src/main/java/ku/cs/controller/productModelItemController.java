@@ -20,9 +20,9 @@ public class productModelItemController {
 
     public void setProductDetails(Product product) {
         productName.setText(product.getProduct_Name());
-        productPrice.setText(String.format("%.2f", product.getPrice()));
+        productPrice.setText(String.format("%d", product.getPrice()));
 
-        if (product.getImage() != null) {
+        if (product.getProduct_Image_Byte() != null) {
             InputStream imageStream = new ByteArrayInputStream(product.getProduct_Image_Byte());
             imageProduct.setImage(new Image(imageStream));
         }

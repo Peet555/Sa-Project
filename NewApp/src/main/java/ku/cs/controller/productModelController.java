@@ -41,7 +41,7 @@ public class productModelController {
 
     @FXML
     public void initialize() throws IOException {
-        loadProductsByType("typeName");
+        loadProductsByType((String) FXRouter.getData());
 
         // กดปุ่ม "Home" แล้วกลับไปหน้า Home Page
         homeButton.setOnAction(event -> {
@@ -93,7 +93,7 @@ public class productModelController {
                 controller.setProductDetails(product);
 
                 // Add event listeners for interaction
-                addEventListeners(productItemBox);
+                addEventListeners(productItemBox,product);
 
                 // Calculate row and column based on index
                 int row = i / 4;
@@ -107,7 +107,7 @@ public class productModelController {
             }
         }
     }
-    private void addEventListeners(HBox productItemBox) {
+    private void addEventListeners(HBox productItemBox,Product product) {
         productItemBox.setOnMousePressed(event -> {
             if (currentSelectedProduct != null) {
                 currentSelectedProduct.setStyle("");  // Clear previous selection
@@ -120,7 +120,7 @@ public class productModelController {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked on item");
                 try {
-                    FXRouter.goTo("productDetails");
+                    FXRouter.goTo("productDetails",product.getProduct_ID());
                 } catch (IOException e) {
                     System.err.println("Failed to go to product details: " + e.getMessage());
                 }
