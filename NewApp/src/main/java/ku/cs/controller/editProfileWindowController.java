@@ -7,6 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ku.cs.connect.EditCustomerConnect;
+
 import ku.cs.connect.LoginConnect;
 import ku.cs.models.Customer;
 import ku.cs.models.Product;
@@ -23,7 +24,9 @@ public class editProfileWindowController {
     private TextField nameField,phoneNumberField,emailField;
     @FXML
     private TextArea addressField;
+
     private EditCustomerConnect editCustomerConnect = new EditCustomerConnect();
+
 
 
 

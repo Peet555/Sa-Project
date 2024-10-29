@@ -15,7 +15,10 @@ module ku.cs {
     exports ku.cs.appsales;
 
     opens ku.cs.models to javafx.base;
+    exports ku.cs.models;
 
     opens ku.cs.controller to javafx.fxml;
     exports ku.cs.controller;
+
+
 }
