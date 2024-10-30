@@ -8,22 +8,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.LoginConnect;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class employeeWarehouseProfileController {
-    @FXML
-    private Label employeeWarehouseUserName; // username
 
     @FXML
-    private Label employeeWarehouseName; // name
+    private Label employeeName; // name
 
     @FXML
-    private Label employeeWarehousePhone; // phone
+    private Label employeePhone; // phone
 
     @FXML
-    private Label employeeWarehouseAddress; // address
+    private Label employeeAddress; // address
 
     @FXML
     private Button profileButton ; // profile
@@ -34,6 +38,7 @@ public class employeeWarehouseProfileController {
 
     @FXML
     public void initialize() throws IOException {
+        loadEmployeeData();
         // กำหนดการทำงานของปุ่มชำระเงิน
         editProfileButton.setOnAction(event -> {
             try {
@@ -59,6 +64,27 @@ public class employeeWarehouseProfileController {
             }
         });
 
+    }
+
+    private void loadEmployeeData() {
+        Connection connection = DatabaseConnect.getConnection();
+        String employeeId = LoginConnect.getCurrentUser().getID(); // ใช้ ID จาก currentUser ที่ล็อกอิน
+        String query = "SELECT Employee_Name, Employee_Address, Employee_Phone_number FROM employee WHERE Employee_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, employeeId); // ใช้ Employee_ID ของพนักงานที่ล็อกอินอยู่
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                employeeName.setText(resultSet.getString("Employee_Name"));
+                employeePhone.setText(resultSet.getString("Employee_Phone_number"));
+                employeeAddress.setText(resultSet.getString("Employee_Address"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to load employee data: " + e.getMessage());
+        } finally {
+            DatabaseConnect.closeConnection();
+        }
     }
 
 
