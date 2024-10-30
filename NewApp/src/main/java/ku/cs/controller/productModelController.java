@@ -41,6 +41,8 @@ public class productModelController {
 
     @FXML
     public void initialize() throws IOException {
+        gridPane.setHgap(100); // ระยะห่างระหว่างคอลัมน์
+        gridPane.setVgap(100);
         loadProductsByType((String) FXRouter.getData());
 
         // กดปุ่ม "Home" แล้วกลับไปหน้า Home Page
@@ -120,9 +122,12 @@ public class productModelController {
             if (event.getClickCount() == 2) {
                 System.out.println("Double clicked on item");
                 try {
-                    FXRouter.goTo("productDetails",product.getProduct_ID());
+                    System.out.println(product.getProduct_ID());
+                    String id = product.getProduct_ID();
+                    FXRouter.goTo("product",id);
                 } catch (IOException e) {
                     System.err.println("Failed to go to product details: " + e.getMessage());
+                    throw new RuntimeException(e) ;
                 }
             }
         });

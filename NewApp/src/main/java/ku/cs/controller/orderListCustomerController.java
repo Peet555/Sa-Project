@@ -4,17 +4,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class orderListCustomerController {
-
+    private static List<Product> productList = new ArrayList<>();
     @FXML
     public VBox vBox;
 
@@ -47,14 +54,12 @@ public class orderListCustomerController {
 
     @FXML
     public void initialize() throws IOException {
-        // จำนวนสินค้าที่จะ Mock ข้อมูล (เช่น 5 รายการ)
-        int itemCount = 5;
-
-        // เพิ่มรายการสินค้าแต่ละอันเข้าไปใน VBox
-        for (int i = 0; i < itemCount; i++) {
-            addProductItem(i);
+        Object[] object  = (Object[])FXRouter.getData();
+        if(object != null) {
+            Product product = (Product) object[0];
+            String quantity = (String) object[1];
+            addProductToOrderList(product);
         }
-
         // ตั้งค่า ScrollPane ให้สามารถเลื่อนดู VBox ได้
         // scrollPane.setContent(vBox);  // ใช้ได้ในกรณีที่มี ScrollPane
 
@@ -146,16 +151,50 @@ public class orderListCustomerController {
         stage.show();
     }
 
-    // Method สำหรับเพิ่มสินค้า Mock ลงใน VBox
-    private void addProductItem(int index) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderListCustomerItem.fxml"));
-        Node node = loader.load();
+    // GPT
+    // เมธอดเพื่อเพิ่มสินค้าในรายการ orderList
+    public void addProductToOrderList(Product product) {
+        productList.add(product);
+        loadProducts();
+        displayOrderList();  // แสดงรายการสินค้าใน vBox
+    }
 
-        // ส่ง VBox (vBox) ไปยัง orderListCustomerItemController
-        orderListCustomerItemController controller = loader.getController();
-        controller.setParentVBox(vBox);
+    // เมธอดเพื่อแสดงสินค้าทั้งหมดใน orderList
+    private void displayOrderList() {
+        vBox.getChildren().clear();
+        for (Product product : productList) {
+            // เพิ่มรายการสินค้าแต่ละชิ้นลงใน vBox
+            Label label = new Label(product.getProduct_Name() + " - $" + product.getPrice());
+            vBox.getChildren().add(label);
+        }
+    }
+    private void loadProducts() {
+        for (Product product : productList) {
+            try {
 
-        vBox.getChildren().add(node);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderListCustomerItem.fxml"));
+                VBox productItemBox = loader.load();
+
+                orderListCustomerItemController itemController = loader.getController();
+                itemController.productNameLabel.setText(product.getProduct_Name());
+                itemController.quantityLabel.setText(String.valueOf(product.getQuantity()));
+                itemController.priceLabel.setText(String.format("$%d", product.getPrice()));
+
+                // Convert byte array to Image and set to ImageView
+                ByteArrayInputStream bis = new ByteArrayInputStream(product.getProduct_Image_Byte());
+                Image image = new Image(bis);
+                itemController.productImageView.setImage(image);
+
+                // ส่ง parent VBox ให้กับ itemController เพื่อให้สามารถลบตัวเองได้
+                itemController.setParentVBox(vBox);
+
+                // เพิ่ม HBox ของสินค้าแต่ละรายการลงใน VBox หลัก
+                vBox.getChildren().add(productItemBox);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.err.println("Error loading product item: " + e.getMessage());
+            }
+        }
     }
 
 }
