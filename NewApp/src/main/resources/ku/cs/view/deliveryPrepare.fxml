@@ -65,7 +65,12 @@
             </TableView>
          </children>
       </VBox>
-      <Button fx:id="prepareButton" layoutX="894.0" layoutY="329.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #a3e9a4;" text="ระบุวันจัดส่ง">
+      <Button fx:id="prepareButton" layoutX="894.0" layoutY="329.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="109.0" style="-fx-background-radius: 50; -fx-background-color: #a3e9a4;" text="ระบุวันจัดส่ง">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="894.0" layoutY="385.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="109.0" style="-fx-background-radius: 50; -fx-background-color: #e1bee7;" text="สินค้าเข้าคลัง">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
