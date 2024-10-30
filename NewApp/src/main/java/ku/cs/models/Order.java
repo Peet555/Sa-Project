@@ -12,6 +12,9 @@ public class Order {
     private String Order_Type;
     private String Delivery_date;
 
+
+
+
     public Order(String Order_ID, String Employee_ID, String Customer_ID, int Order_Status,
                  Timestamp orderTimestamp, int Outstanding_Balance, String Order_Type, String Delivery_date) {
         this.Order_ID = Order_ID;
@@ -53,4 +56,9 @@ public class Order {
     public String getDelivery_date() {
         return Delivery_date;
     }
+    public String getOrderStatus() {
+        return OrderUtils.getOrderStatus(Order_Type, Order_Status);
+    }
+
+
 }

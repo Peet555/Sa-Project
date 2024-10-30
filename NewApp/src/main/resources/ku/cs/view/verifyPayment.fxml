@@ -56,7 +56,7 @@
                 <TableColumn fx:id="orderID" prefWidth="115.0" text="Order_ID" />
                   <TableColumn fx:id="Order_Type" prefWidth="88.0" text="Order_Type" />
                 <TableColumn fx:id="Invoice_ID" prefWidth="171.0" text="Invoice_ID" />
-                  <TableColumn fx:id="Status_Pay" prefWidth="135.0" text="Status_Pay" />
+                  <TableColumn fx:id="Status_Pay" prefWidth="135.0" text="Order_Status" />
                   <TableColumn fx:id="Invoice_Timestamp" prefWidth="244.0" text="Invoice_Timestamp" />
               </columns>
             </TableView>

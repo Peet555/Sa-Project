@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DatabaseConnect {
 
     // กำหนดข้อมูลการเชื่อมต่อฐานข้อมูล
-    private static final String URL = "jdbc:mysql://localhost:3306/sa";
+    private static final String URL = "jdbc:mysql://localhost:3306/sa2";
     private static final String USER = "root";
-    private static final String PASSWORD = "sa1234";
+    private static final String PASSWORD = "";
     private static Connection connection = null;
 
     // เมธอดสำหรับเริ่มการเชื่อมต่อ
