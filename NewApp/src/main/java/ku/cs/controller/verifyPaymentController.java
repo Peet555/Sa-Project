@@ -149,16 +149,14 @@ public class verifyPaymentController {
                 case 2:
                     return "รอชำระค่ามัดจำ";
                 case 3:
-                    return "ชำระค่ามัดจำแล้ว";
-                case 4:
                     return "รอสินค้าเข้าคลัง";
-                case 5:
+                case 4:
                     return "ชำระยอดคงเหลือ";
-                case 6:
+                case 5:
                     return "ชำระแล้ว";
-                case 7:
+                case 6:
                     return "กำลังจัดส่ง";
-                case 8:
+                case 7:
                     return "ได้รับของแล้ว";
                 default:
                     return "สถานะไม่ทราบ";

@@ -77,13 +77,17 @@ public class customerOrderHistoryItemController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/paymentOrderWindow.fxml"));
         Parent root = loader.load();
 
-        // สร้าง Stage สำหรับหน้าต่างใหม่
+        paymentOrderWindowController controller = loader.getController();
+        controller.setOrderID(Order_ID.getText());
+        controller.setOrderDetails(Order_Type.getText(), Integer.parseInt(Price.getText()));
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Payment Confirmation");
-        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
-        stage.showAndWait();  // แสดงหน้าต่าง
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
+
 
     // Method สำหรับเปิดหน้าต่าง paymentOrderWindow
     private void openConfirmReceiptProduct() throws IOException {

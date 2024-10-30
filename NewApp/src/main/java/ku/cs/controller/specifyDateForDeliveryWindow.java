@@ -51,7 +51,7 @@ public class specifyDateForDeliveryWindow {
                 statement.setDate(1, java.sql.Date.valueOf(selectedDate));
 
                 // Set the appropriate status based on the order type
-                int updatedStatus = orderType.equals("สั่งซื้อ") ? 4 : 7;
+                int updatedStatus = orderType.equals("สั่งซื้อ") ? 4 : 6;
                 statement.setInt(2, updatedStatus);
 
                 statement.setString(3, orderId); // Set the order ID

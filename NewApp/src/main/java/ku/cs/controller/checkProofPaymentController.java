@@ -26,9 +26,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class checkProofPaymentController {
 
@@ -174,20 +171,31 @@ public class checkProofPaymentController {
     }
 
     // Method to update the Invoice_Status
+// Method to update the Invoice_Status and Order_Status
     public void updateInvoiceStatus() {
-        String query = "UPDATE invoice SET Status_Pay = ? WHERE Invoice_ID = ?";
+        String updateInvoiceQuery = "UPDATE invoice SET Status_Pay = ? WHERE Invoice_ID = ?";
+        String updateOrderQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = (SELECT Order_ID FROM invoice WHERE Invoice_ID = ?)";
 
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, 3); // Set new status
-            preparedStatement.setString(2, invoiceID); // Use the current invoice ID
+        try (Connection connection = DatabaseConnect.getConnection()) {
+            // Update invoice status
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateInvoiceQuery)) {
+                preparedStatement.setInt(1, 3); // Set new status for invoice
+                preparedStatement.setString(2, invoiceID);
+                preparedStatement.executeUpdate();
+            }
 
-            int affectedRows = preparedStatement.executeUpdate();
-            System.out.println("Affected rows: " + affectedRows); // Print affected rows
+            // Update order status
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateOrderQuery)) {
+                preparedStatement.setInt(1, 3); // Assuming you want to set Order_Status to the same value
+                preparedStatement.setString(2, invoiceID);
+                int affectedRows = preparedStatement.executeUpdate();
+                System.out.println("Affected rows in order: " + affectedRows); // Print affected rows
+            }
         } catch (SQLException e) {
-            System.err.println("Error updating invoice status: " + e.getMessage());
+            System.err.println("Error updating invoice and order status: " + e.getMessage());
         }
     }
+
 
 
     private void openImageInNewWindow(Image image) {

@@ -18,12 +18,11 @@ public class OrderUtils {
                 switch (status) {
                     case 1: return "รอยืนยัน";
                     case 2: return "รอชำระค่ามัดจำ";
-                    case 3: return "ชำระค่ามัดจำแล้ว";
-                    case 4: return "รอสินค้าเข้าคลัง";
-                    case 5: return "ชำระยอดคงเหลือ";
-                    case 6: return "ชำระแล้ว";
-                    case 7: return "กำลังจัดส่ง";
-                    case 8: return "ได้รับของแล้ว";
+                    case 3: return "รอสินค้าเข้าคลัง";
+                    case 4: return "ชำระยอดคงเหลือ";
+                    case 5: return "ชำระแล้ว";
+                    case 6: return "กำลังจัดส่ง";
+                    case 7: return "ได้รับของแล้ว";
                     default: return "สถานะไม่ทราบ";
                 }
             default:
