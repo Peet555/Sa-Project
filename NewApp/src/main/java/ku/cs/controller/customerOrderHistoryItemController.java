@@ -94,11 +94,15 @@ public class customerOrderHistoryItemController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/confirmReceiptProduct.fxml"));
         Parent root = loader.load();
 
+        confirmReceiptProductController controller = loader.getController();
+        controller.setOrderData(Order_ID.getText(), Order_Type.getText()); // ส่ง Order_ID และ Order_Type
+
         // สร้าง Stage สำหรับหน้าต่างใหม่
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Order Receipt Confirmation");
-        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
+        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal
         stage.showAndWait();  // แสดงหน้าต่าง
     }
+
 }

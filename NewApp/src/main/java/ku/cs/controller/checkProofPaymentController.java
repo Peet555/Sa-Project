@@ -49,6 +49,7 @@ public class checkProofPaymentController {
     @FXML
     public ImageView proofPayment ;
 
+
     public void setInvoiceID(String invoiceID) {
         this.invoiceID = invoiceID;
         loadProductSales();
@@ -170,8 +171,7 @@ public class checkProofPaymentController {
         stage.showAndWait();
     }
 
-    // Method to update the Invoice_Status
-// Method to update the Invoice_Status and Order_Status
+    // Method to update the Invoice_Status and Order_Status
     public void updateInvoiceStatus() {
         String updateInvoiceQuery = "UPDATE invoice SET Status_Pay = ? WHERE Invoice_ID = ?";
         String updateOrderQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = (SELECT Order_ID FROM invoice WHERE Invoice_ID = ?)";
@@ -195,6 +195,7 @@ public class checkProofPaymentController {
             System.err.println("Error updating invoice and order status: " + e.getMessage());
         }
     }
+
 
 
 
