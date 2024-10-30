@@ -8,14 +8,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.LoginConnect;
+import ku.cs.models.Customer;
 import ku.cs.services.FXRouter;
-import java.io.IOException;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class profileController {
-
-    @FXML
-    public Label customerUserName; // username
 
     @FXML
     public Label customerName; // name
@@ -39,34 +43,34 @@ public class profileController {
     public Button orderHistoryButton; // order history
 
     @FXML
-    public Button profileButton ; // profile
+    public Button profileButton; // profile
 
     @FXML
-    public Button editProfileButton ; // edit profile
-
+    public Button editProfileButton; // edit profile
 
     @FXML
     public void initialize() throws IOException {
-            // กำหนดการทำงานของปุ่มชำระเงิน
+        loadCustomerData();
+        // ตั้งค่าปุ่มต่าง ๆ
         editProfileButton.setOnAction(event -> {
-                try {
-                    openEditProfileWindow();
-                } catch (IOException e) {
-                    System.err.println("Error opening payment window: " + e.getMessage());
-                }
-            });
-
+            try {
+                openEditProfileWindow();
+            } catch (IOException e) {
+                System.err.println("Error opening payment window: " + e.getMessage());
+            }
+        });
 
         homeButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("homePage"); // เปลี่ยนไปหน้า HomePage
+                FXRouter.goTo("homePage");
             } catch (IOException e) {
                 System.err.println("Cannot go to Homepage");
             }
         });
+
         profileButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("profile"); // เปลี่ยนไปหน้า HomePage
+                FXRouter.goTo("profile");
             } catch (IOException e) {
                 System.err.println("Cannot go to profile");
             }
@@ -74,7 +78,7 @@ public class profileController {
 
         cartButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("customerOrderList"); // เปลี่ยนไปหน้า Cart
+                FXRouter.goTo("customerOrderList");
             } catch (IOException e) {
                 System.err.println("Cannot go to cart");
             }
@@ -82,23 +86,74 @@ public class profileController {
 
         orderHistoryButton.setOnAction(event -> {
             try {
-                FXRouter.goTo("customerOrderHistory"); // เปลี่ยนไปหน้า Order History
+                FXRouter.goTo("customerOrderHistory");
             } catch (IOException e) {
                 System.err.println("Cannot go to order history");
             }
         });
-
     }
-    // Method สำหรับเปิดหน้าต่าง paymentOrderWindow
+
+    private void loadCustomerData() {
+        Connection connection = DatabaseConnect.getConnection();
+        String customerId = LoginConnect.getCurrentUser().getID(); // ใช้ ID จาก currentUser ที่ล็อกอิน
+        String query = "SELECT Name, Email, Customer_Address, Customer_Phone_number FROM customer WHERE Customer_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, customerId); // ใช้ Customer_ID ของผู้ใช้ที่ล็อกอินอยู่
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                customerName.setText(resultSet.getString("Name"));
+                customerEmail.setText(resultSet.getString("Email"));
+                customerAddress.setText(resultSet.getString("Customer_Address"));
+                customerPhone.setText(resultSet.getString("Customer_Phone_number"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to load customer data: " + e.getMessage());
+        } finally {
+            DatabaseConnect.closeConnection();
+        }
+    }
+
+    // Method สำหรับดึงข้อมูลลูกค้าและแสดงผล
+    private void loadCustomerProfile(String customerID) {
+        try (Connection connection = DatabaseConnect.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM customer WHERE Customer_ID = ?")) {
+            stmt.setString(1, customerID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Customer customer = new Customer(
+                        rs.getString("Customer_ID"),
+                        rs.getString("username"),
+                        rs.getString("Name"),
+                        rs.getString("Email"),
+                        rs.getString("customer_password"),
+                        rs.getString("Customer_Address"),
+                        rs.getString("Customer_Phone_number")
+                );
+
+                // กำหนดค่าให้ Label
+                customerName.setText(customer.getName());
+                customerEmail.setText(customer.getEmail());
+                customerPhone.setText(customer.getPhoneNumber());
+                customerAddress.setText(customer.getAddress());
+            } else {
+                System.out.println("Customer not found with ID: " + customerID);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error loading customer profile: " + e.getMessage());
+        }
+    }
+
     private void openEditProfileWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/editProfileWindow.fxml"));
         Parent root = loader.load();
 
-        // สร้าง Stage สำหรับหน้าต่างใหม่
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal (โฟกัสเฉพาะหน้าต่างนี้)
-        stage.showAndWait();  // แสดงหน้าต่าง
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 }
-
