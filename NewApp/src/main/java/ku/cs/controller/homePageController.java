@@ -27,6 +27,8 @@ public class homePageController {
 
     @FXML
     public void initialize() throws IOException {
+        gridPane.setHgap(100); // ระยะห่างระหว่างคอลัมน์
+        gridPane.setVgap(100);
         // จำนวนสินค้า
         int itemCount = 6;
         // จำนวนคอลัมน์ใน gridPane

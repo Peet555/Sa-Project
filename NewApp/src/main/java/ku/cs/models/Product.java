@@ -19,6 +19,14 @@ public class Product {
         Product_Image_Byte = product_Image;
     }
 
+    public Product(String product_Name, int price, int quantity, String description, byte[] product_Image_Byte) {
+        Product_Name = product_Name;
+        Price = price;
+        Quantity = quantity;
+        Description = description;
+        Product_Image_Byte = product_Image_Byte;
+    }
+
     public Product(String Product_ID, String Product_Name, int Quantity, int Price, String Type, String Description, InputStream Product_Image) {
         this.Product_ID = Product_ID;
         this.Product_Name = Product_Name;

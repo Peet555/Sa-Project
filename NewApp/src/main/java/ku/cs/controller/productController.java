@@ -3,14 +3,18 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.connect.ProductInfoConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 public class productController {
@@ -34,9 +38,14 @@ public class productController {
     public Button orderHistoryButton ;
     private Product product;
     @FXML
+
+    private ProductInfoConnect productInfoConnect;
     public void initialize() throws IOException {
-        addTypeProductItem(1);
         String id = (String) FXRouter.getData();
+        ProductInfoConnect productInfoConnect = new ProductInfoConnect();
+        product = productInfoConnect.productInfo(id);
+        addTypeProductItem(1);
+        System.out.println(product);
 
         homeButton.setOnAction(event -> {
             try {
@@ -49,7 +58,7 @@ public class productController {
         // เปลี่ยนจากการไปที่หน้าใหม่เป็นเปิด Modal ของ productQualityWindow
         buttonOrderList.setOnAction(event -> {
             try {
-                openProductQualityWindow();  // เรียกใช้ method เปิด Modal
+                openProductQualityWindow(product);  // เรียกใช้ method เปิด Modal
             } catch (IOException e) {
                 System.err.println("Cannot go to productQualityWindow");
             }
@@ -83,17 +92,24 @@ public class productController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ku/cs/view/productItem.fxml"));
         VBox p = fxmlLoader.load();
         productItemController controller = fxmlLoader.getController();
+        controller.productName.setText(product.getProduct_Name());
+        controller.productPrice.setText(String.valueOf(product.getPrice()));
+        controller.productQuantity.setText(String.valueOf(product.getQuantity()));
+        controller.productDetails.setText(product.getDescription());
+        InputStream imageStream = new ByteArrayInputStream(product.getProduct_Image_Byte());
+        controller.imageProduct.setImage(new Image(imageStream));
 
-        //controller.productName.setText();
         vBox.getChildren().add(p);
     }
 
     // Method เพื่อเปิดหน้าต่าง modal ที่เป็น ProductQualityWindow
-    private void openProductQualityWindow() throws IOException {
+    private void openProductQualityWindow(Product product) throws IOException {
         // โหลดหน้าต่าง Modal
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/productQualityWindow.fxml"));
         VBox vbox = loader.load();
-
+        // เข้าถึง Controller ของ productQualityWindow
+        productQualityWindowController controller = loader.getController();
+        controller.setProduct(product);  // ส่ง product ไปยัง Controller
         // สร้าง Stage ใหม่เพื่อแสดง Modal
         Stage modalStage = new Stage();
         modalStage.setTitle("Product Quality Window");
