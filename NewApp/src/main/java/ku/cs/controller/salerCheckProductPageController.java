@@ -126,7 +126,7 @@ public class salerCheckProductPageController {
         int orderStatus = statusUpdater.getOrderStatus(orderId);
 
         // ตรวจสอบสถานะ และปิดปุ่มยืนยันตามความเหมาะสม
-        if (orderStatus == 2) { // ปิดปุ่มถ้าสถานะเป็นรอชำระเงินหรือชำระเงินแล้ว
+        if (orderStatus >= 2) { // ปิดปุ่มถ้าสถานะเป็นรอชำระเงินหรือชำระเงินแล้ว
             confirmButton.setDisable(true);
         } else {
             confirmButton.setDisable(false);

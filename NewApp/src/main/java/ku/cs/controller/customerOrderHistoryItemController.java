@@ -8,11 +8,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.models.Order;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 
 public class customerOrderHistoryItemController {
+
+    @FXML
+    private Label Order_ID;
+    @FXML
+    private Label Order_Type;
+    @FXML
+    private Label Delivery_date;
+    @FXML
+    private Label Order_Status;
+    @FXML
+    private Label Price;
 
     @FXML
     public Button paymentButton;  // ปุ่มชำระเงิน
@@ -22,6 +34,14 @@ public class customerOrderHistoryItemController {
 
     @FXML
     private Label orderDetailsButton;  // ปุ่มดูรายละเอียด
+
+    public void setOrderData(Order order) {
+        Order_ID.setText(order.getOrder_ID());
+        Order_Type.setText(order.getOrder_Type());
+        Delivery_date.setText(order.getDelivery_date());
+        Order_Status.setText(order.getOrderStatus());
+        Price.setText(String.valueOf(order.getOutstanding_Balance()));
+    }
 
     @FXML
     public void initialize() {

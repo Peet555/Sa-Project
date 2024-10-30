@@ -19,6 +19,10 @@ public class paymentOrderWindowController {
     @FXML
     private Label fileName; // อ้างอิง Label ที่จะแสดงชื่อไฟล์
 
+    private File selectedFile;
+    private double totalPrice;
+    private double priceDeposit;
+
     @FXML
     public void initialize() {
         // ปิดการใช้งานปุ่มยืนยันการชำระเงินในตอนเริ่มต้น
