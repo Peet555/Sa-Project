@@ -9,48 +9,38 @@
       <Pane layoutX="334.0" layoutY="332.0" prefHeight="372.0" prefWidth="535.0" style="-fx-background-color: #d0f8ce; -fx-background-radius: 50;">
          <children>
             <Button fx:id="editProfileButton" layoutX="235.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Edit" />
-            <Label layoutX="55.0" layoutY="132.0" text="Name :">
+            <Label layoutX="53.0" layoutY="74.0" text="Name :">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="55.0" layoutY="73.0" text="Username :">
+            <Label fx:id="employeeName" layoutX="174.0" layoutY="74.0" text="employeeName">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="employeeUserName" layoutX="175.0" layoutY="73.0" text="employeeUserName">
+            <Label layoutX="51.0" layoutY="146.0" text="Phone :">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="employeeName" layoutX="176.0" layoutY="132.0" text="employeeName">
+            <Label fx:id="employeePhone" layoutX="171.0" layoutY="146.0" text="employeePhone">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="52.0" layoutY="190.0" text="Phone :">
+            <Label layoutX="38.0" layoutY="223.0" text="Address :">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="employeePhone" layoutX="173.0" layoutY="190.0" text="employeePhone">
+            <Label fx:id="employeeAddress" layoutX="166.0" layoutY="223.0" text="employeeAddress">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Label layoutX="387.0" layoutY="574.0" text="Address :">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="employeeAddress" layoutX="508.0" layoutY="574.0" text="employeeAddress">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <Button fx:id="profileButton" layoutX="1004.0" layoutY="117.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile" />
       <Pane layoutX="-4.0" layoutY="182.0" prefHeight="91.0" prefWidth="1206.0" style="-fx-background-color: #a3e9a4;">
          <children>
