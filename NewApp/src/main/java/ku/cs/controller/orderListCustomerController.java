@@ -199,7 +199,7 @@ public class orderListCustomerController {
                 System.out.println("Error: Order_ID too long");
                 return; // หยุดการทำงานถ้า Order_ID ยาวเกินไป
             }
-            pstmt.setString(1, order.getOrder_ID());
+            pstmt.setString(1, UUID.randomUUID().toString().substring(0,33));
             pstmt.setString(2, order.getEmployee_ID());
             pstmt.setString(3, order.getCustomer_ID());
             pstmt.setInt(4, order.getOrder_Status());
