@@ -28,8 +28,6 @@ public class salerCheckProductPageController {
     @FXML
     private Button confirmButton;
     @FXML
-    private Button denyButton;
-    @FXML
     private Button profileButton;
 
     @FXML
@@ -83,13 +81,6 @@ public class salerCheckProductPageController {
             }
         });
 
-        denyButton.setOnAction(event -> {
-            try {
-                openDeniedOrderWindow();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
 
         profileButton.setOnAction(event -> {
             try {

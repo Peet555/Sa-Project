@@ -234,14 +234,6 @@ public class checkProofPaymentController {
         }
     }
 
-    @FXML
-    public void cancleClick() {
-        try {
-            FXRouter.goTo("verifyPayment");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static class ProductSale {
         private String productID ;

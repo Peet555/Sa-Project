@@ -62,14 +62,6 @@ public class customerOrderHistoryItemController {
                 System.err.println("Error opening payment window: " + e.getMessage());
             }
         });
-        // กำหนดการทำงานเมื่อกดปุ่ม "ดูรายละเอียด"
-        orderDetailsButton.setOnMouseClicked(event -> {
-            try {
-                FXRouter.goTo("orderDetailsPage"); // เปลี่ยนไปหน้า orderDetailsPage
-            } catch (IOException e) {
-                System.err.println("Cannot go to order details page: " + e.getMessage());
-            }
-        });
     }
 
     // Method สำหรับเปิดหน้าต่าง paymentOrderWindow
