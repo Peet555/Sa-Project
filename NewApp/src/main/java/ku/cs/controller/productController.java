@@ -41,11 +41,17 @@ public class productController {
 
     private ProductInfoConnect productInfoConnect;
     public void initialize() throws IOException {
-        String id = (String) FXRouter.getData();
-        ProductInfoConnect productInfoConnect = new ProductInfoConnect();
-        product = productInfoConnect.productInfo(id);
-        addTypeProductItem(1);
-        System.out.println(product);
+        String id = (String) FXRouter.getData(); // รับ Product_ID
+        productInfoConnect = new ProductInfoConnect();
+
+        product = productInfoConnect.productInfo(id); // โหลดข้อมูลผลิตภัณฑ์
+
+        if (product != null) {
+            product.setProduct_ID(id); // ตั้ง Product_ID ใน product
+            addTypeProductItem(1);
+        } else {
+            System.out.println("Product not found for ID: " + id);
+        }
 
         homeButton.setOnAction(event -> {
             try {
@@ -99,8 +105,11 @@ public class productController {
         InputStream imageStream = new ByteArrayInputStream(product.getProduct_Image_Byte());
         controller.imageProduct.setImage(new Image(imageStream));
 
+        System.out.println("Product ID in Product Controller: " + product.getProduct_ID()); // แสดง Product_ID
+
         vBox.getChildren().add(p);
     }
+
 
     // Method เพื่อเปิดหน้าต่าง modal ที่เป็น ProductQualityWindow
     private void openProductQualityWindow(Product product) throws IOException {

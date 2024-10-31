@@ -28,7 +28,7 @@ public class ProductModelConnect {
                                 rs.getBytes("Product_Image")
                         );
                         products.add(product);
-                        System.out.println("Product loaded: " + product.getProduct_Name() + ", " + product.getPrice());
+                        System.out.println("Product loaded: " + product.getProduct_ID() + product.getProduct_Name() + ", " + product.getPrice());
                     }
                 }
             } catch (SQLException e) {

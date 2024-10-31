@@ -32,7 +32,7 @@ import java.util.UUID;
 public class orderListCustomerController {
 
     private List<Product> temporaryProductList = new ArrayList<>();
-
+    private String productId; // ตัวแปรเพื่อเก็บ Product_ID
     @FXML
     public VBox vBox;
 
@@ -64,6 +64,7 @@ public class orderListCustomerController {
         Object[] object = (Object[]) FXRouter.getData();
         if (object != null) {
             Product product = (Product) object[0];
+            productId = product.getProduct_ID(); // เก็บ Product_ID
             int quantity = Integer.parseInt((String) object[1]); // Get product quantity
             product.setQuantity(quantity); // Set the product quantity
             addProductToTemporaryList(product); // Add product to temporary list
@@ -122,6 +123,10 @@ public class orderListCustomerController {
                 System.err.println("Cannot go to order history");
             }
         });
+    }
+
+    public String getProductId() {
+        return productId; // Getter สำหรับ Product_ID
     }
 
     // เมธอดเพื่อสร้าง Order_ID

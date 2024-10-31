@@ -11,6 +11,7 @@ import java.io.InputStream;
 
 public class productModelItemController {
 
+    private String productId;
     @FXML
     public ImageView imageProduct;
     @FXML
@@ -19,6 +20,7 @@ public class productModelItemController {
     public Label productPrice;
 
     public void setProductDetails(Product product) {
+        this.productId = product.getProduct_ID(); // เก็บ Product_ID ที่นี่
         productName.setText(product.getProduct_Name());
         productPrice.setText(String.format("%d", product.getPrice()));
 
@@ -27,4 +29,5 @@ public class productModelItemController {
             imageProduct.setImage(new Image(imageStream));
         }
     }
+
 }

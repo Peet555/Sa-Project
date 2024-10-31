@@ -14,6 +14,13 @@ public class Product {
      byte[] Product_Image_Byte;
      private String orderID;
 
+     private String productId;
+     private String productName;
+     private int price;
+     private int quantity; // อาจต้องการสำหรับรายละเอียดผลิตภัณฑ์
+     private String description; // อาจต้องการสำหรับรายละเอียดผลิตภัณฑ์
+     private byte[] productImageByte;
+
 
     public Product(String ID,String product_Name, int price, byte[] product_Image) {
         this.Product_ID = ID;
@@ -40,8 +47,30 @@ public class Product {
         this.Product_Image = Product_Image;
     }
 
+    public Product(String productId, String productName, String type,int price, int quantity, String description) {
+        this.Product_ID = productId; // ตรวจสอบการตั้งค่านี้
+        this.Product_Name = productName;
+        this.Type = type;
+        this.Price = price;
+        this.Quantity = quantity;
+        this.Description = description;
+    }
+
+    public Product(String productId, String productName, int price, int quantity, String description, byte[] productImageByte) {
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
+        this.description = description;
+        this.productImageByte = productImageByte;
+    }
 
 
+
+
+    public void setProduct_ID(String product_ID) {
+        this.Product_ID = product_ID;
+    }
 
 
     // เพิ่ม getter และ setter ตามต้องการ
@@ -106,6 +135,8 @@ public class Product {
     public String getOrderID() {
         return orderID;
     }
+
+
     @Override
     public String toString() {
         return "Product{" +

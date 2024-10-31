@@ -40,9 +40,8 @@ public class productQualityWindowController {
     @FXML
     public void confirmOrder(ActionEvent event) {
         try {
-            // สร้าง orderID ชั่วคราว
             String orderID = generateOrderID(); // สร้าง orderID ชั่วคราว
-            // ส่งข้อมูลไปยัง orderListCustomerController
+            System.out.println("Sending Product ID: " + product.getProduct_ID()); // แสดง Product_ID ที่จะส่ง
             FXRouter.goTo("orderListPageCustomer", new Object[]{product, quantity.getText(), orderID});
             closeWindow();
         } catch (IOException e) {
@@ -50,5 +49,7 @@ public class productQualityWindowController {
             System.err.println("Cannot go to orderListPageCustomer");
         }
     }
+
+
 
 }
