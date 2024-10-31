@@ -3,6 +3,7 @@ package ku.cs.models;
 import java.io.InputStream;
 
 public class Product {
+
      String Product_ID;
      String Product_Name;
      String Type;
@@ -11,12 +12,14 @@ public class Product {
      String Description; // คำอธิบาย
      InputStream Product_Image;
      byte[] Product_Image_Byte;
+     private String orderID;
+
 
     public Product(String ID,String product_Name, int price, byte[] product_Image) {
-        Product_ID = ID;
-        Product_Name = product_Name;
-        Price = price;
-        Product_Image_Byte = product_Image;
+        this.Product_ID = ID;
+        this.Product_Name = product_Name;
+        this.Price = price;
+        this.Product_Image_Byte = product_Image;
     }
 
     public Product(String product_Name, int price, int quantity, String description, byte[] product_Image_Byte) {
@@ -36,6 +39,10 @@ public class Product {
         this.Description = Description;
         this.Product_Image = Product_Image;
     }
+
+
+
+
 
     // เพิ่ม getter และ setter ตามต้องการ
     public String getProduct_ID() {
@@ -93,6 +100,12 @@ public class Product {
         return Product_Image_Byte;
     }
 
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+    public String getOrderID() {
+        return orderID;
+    }
     @Override
     public String toString() {
         return "Product{" +

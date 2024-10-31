@@ -115,37 +115,6 @@ public class profileController {
         }
     }
 
-    // Method สำหรับดึงข้อมูลลูกค้าและแสดงผล
-    private void loadCustomerProfile(String customerID) {
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM customer WHERE Customer_ID = ?")) {
-            stmt.setString(1, customerID);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Customer customer = new Customer(
-                        rs.getString("Customer_ID"),
-                        rs.getString("username"),
-                        rs.getString("Name"),
-                        rs.getString("Email"),
-                        rs.getString("customer_password"),
-                        rs.getString("Customer_Address"),
-                        rs.getString("Customer_Phone_number")
-                );
-
-                // กำหนดค่าให้ Label
-                customerName.setText(customer.getName());
-                customerEmail.setText(customer.getEmail());
-                customerPhone.setText(customer.getPhoneNumber());
-                customerAddress.setText(customer.getAddress());
-            } else {
-                System.out.println("Customer not found with ID: " + customerID);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error loading customer profile: " + e.getMessage());
-        }
-    }
 
     private void openEditProfileWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/editProfileWindow.fxml"));

@@ -30,6 +30,9 @@ public class Order {
     public String getOrder_ID() {
         return Order_ID;
     }
+    public String setOrder_ID(String Order_ID) {
+        return Order_ID;
+    }
 
     public String getEmployee_ID() {
         return Employee_ID;
