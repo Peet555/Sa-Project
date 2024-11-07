@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import ku.cs.connect.DatabaseConnect;
 import ku.cs.connect.LoginConnect;
@@ -32,9 +33,24 @@ public class customerOrderHistoryController {
     @FXML
     public Button homeButton;
 
+    @FXML
+    private ComboBox<String> order_choice;
+
 
     @FXML
     public void initialize() {
+
+        // เพิ่มตัวเลือกใน ComboBox
+        order_choice.getItems().addAll("order รอดำเนินการ", "ประวัติการสั่งซื้อ");
+
+        // ตัวเลือกเริ่มต้น
+        order_choice.setValue("order รอดำเนินการ");
+
+        // เพิ่ม Listener เพื่อเปลี่ยนการแสดงผลตามการเลือกใน ComboBox
+        order_choice.setOnAction(event -> loadOrdersByStatus());
+        // เรียกใช้ครั้งแรกเมื่อเปิดหน้า
+        loadOrdersByStatus();
+
         List<Order> orders = fetchCustomerOrders();
         for (Order order : orders) {
             try {
@@ -77,6 +93,27 @@ public class customerOrderHistoryController {
 
     }
 
+    // Method สำหรับโหลดข้อมูลตามการเลือกใน ComboBox
+    private void loadOrdersByStatus() {
+        vBox.getChildren().clear(); // ล้างข้อมูลเดิมใน VBox
+        List<Order> orders = fetchCustomerOrders();
+
+        // ตรวจสอบประเภทของการเลือก (order รอดำเนินการ หรือ ประวัติการสั่งซื้อ)
+        String choice = order_choice.getValue();
+        for (Order order : orders) {
+            try {
+                // กรองสถานะตามการเลือก
+                if ("ประวัติการสั่งซื้อ".equals(choice) && (order.getOrder_Status() == 5 || order.getOrder_Status() == 7)) {
+                    addOrderHistoryItem(order);
+                } else if ("order รอดำเนินการ".equals(choice) && (order.getOrder_Status() != 5 && order.getOrder_Status() != 7)) {
+                    addOrderHistoryItem(order);
+                }
+            } catch (IOException e) {
+                System.err.println("Failed to add order history item: " + e.getMessage());
+            }
+        }
+    }
+    //เชื่อมลูกค้ากับ order
     private List<Order> fetchCustomerOrders() {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT Order_ID, Employee_ID, Customer_ID, Order_Status, Order_Timestamp, Outstanding_Balance, Order_Type, Delivery_date FROM `order` WHERE Customer_ID = ?";

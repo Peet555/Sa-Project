@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="106.0" prefWidth="667.0">
          <children>
@@ -37,7 +34,10 @@
          <children>
             <ButtonBar prefHeight="56.0" prefWidth="105.0">
                <buttons>
-                  <Button fx:id="homeButton" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Home" />
+                  <Button fx:id="homeButton" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Home">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Button>
                </buttons>
                <HBox.margin>
                   <Insets right="50.0" />
@@ -52,9 +52,12 @@
       <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <children>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
-              <buttons>
-                <Button fx:id="buttonOrderList" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="เพิ่มในรายการสินค้า" textFill="#0bab00" />
-              </buttons>
+               <buttons>
+                  <Button fx:id="buttonOrderList" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="เพิ่มในรายการสินค้า" textFill="#0bab00">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Button>
+               </buttons>
                <HBox.margin>
                   <Insets />
                </HBox.margin>

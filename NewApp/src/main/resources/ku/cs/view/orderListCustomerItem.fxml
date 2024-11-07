@@ -12,7 +12,7 @@
             <ImageView fx:id="productImageView" fitHeight="200.0" fitWidth="237.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="productNameLabel" layoutX="270.0" layoutY="14.0" text="ชื่อสินค้า">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Label fx:id="quantityLabel" layoutX="270.0" layoutY="57.0" text="จำนวน">
@@ -25,9 +25,25 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="priceLabel" layoutX="348.0" layoutY="164.0" />
+            <Label fx:id="priceLabel" layoutX="324.0" layoutY="159.0" text="จำนวนเงิน">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
             <Pane layoutX="-31.0" layoutY="197.0" prefHeight="5.0" prefWidth="1206.0" style="-fx-background-color: #b3e5fc;" />
-            <Button fx:id="deleteProduct" layoutX="1024.0" layoutY="88.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="ลบออกจากรายการ" />
+            <Button fx:id="deleteProduct" layoutX="1024.0" layoutY="88.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="ลบออกจากรายการ" textFill="RED">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Label layoutX="337.0" layoutY="57.0" text="ชิ้น">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="432.0" layoutY="159.0" text="บาท">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

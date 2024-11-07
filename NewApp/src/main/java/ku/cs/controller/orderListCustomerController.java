@@ -68,6 +68,7 @@ public class orderListCustomerController {
             int quantity = Integer.parseInt((String) object[1]); // Get product quantity
             product.setQuantity(quantity); // Set the product quantity
             addProductToTemporaryList(product); // Add product to temporary list
+            calculateTotalPrice();
         }
 
         displayOrderList(); // แสดงรายการสินค้าใน vBox
@@ -129,11 +130,12 @@ public class orderListCustomerController {
         return productId; // Getter สำหรับ Product_ID
     }
 
-    // เมธอดเพื่อสร้าง Order_ID
+    // เมธอดเพื่อสร้าง Order_ID แบบสุ่ม
     private String generateOrderId() {
-        orderCounter++; // เพิ่มลำดับทุกครั้งที่สร้าง Order_ID
-        return "ORD" + String.format("%04d", orderCounter); // ตัวอย่างผลลัพธ์: ORD0001
+        return "ORD" + UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase();
+        // ตัวอย่างผลลัพธ์: ORDABC12345
     }
+
 
     // Method สำหรับเปิดหน้าต่าง orderConfirmationWindowController
     private void openConfirmationWindow(String fxml, String title) {
@@ -199,7 +201,7 @@ public class orderListCustomerController {
                 System.out.println("Error: Order_ID too long");
                 return; // หยุดการทำงานถ้า Order_ID ยาวเกินไป
             }
-            pstmt.setString(1, UUID.randomUUID().toString().substring(0,33));
+            pstmt.setString(1, order.getOrder_ID());
             pstmt.setString(2, order.getEmployee_ID());
             pstmt.setString(3, order.getCustomer_ID());
             pstmt.setInt(4, order.getOrder_Status());
@@ -243,7 +245,7 @@ public class orderListCustomerController {
         for (Product product : OrderManager.getInstance().getTemporaryProductList()) {
             totalPrice += product.getPrice() * product.getQuantity();
         }
-        totalOrderPrice.setText(String.format("$%d", totalPrice)); // Update total price label
+        totalOrderPrice.setText(String.format("%d", totalPrice)); // Update total price label
         return totalPrice;
     }
 
@@ -258,7 +260,7 @@ public class orderListCustomerController {
 
                 itemController.productNameLabel.setText(product.getProduct_Name());
                 itemController.quantityLabel.setText(String.valueOf(product.getQuantity()));
-                itemController.priceLabel.setText(String.format("$%d", product.getPrice()));
+                itemController.priceLabel.setText(String.format("%d", product.getPrice()));
 
                 ByteArrayInputStream bis = new ByteArrayInputStream(product.getProduct_Image_Byte());
                 Image image = new Image(bis);

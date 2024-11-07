@@ -52,6 +52,7 @@ public class orderListCustomerItemController {
 
             // Remove this item from VBox
             parentVBox.getChildren().remove((Node) deleteProduct.getParent());
+
         });
     }
 

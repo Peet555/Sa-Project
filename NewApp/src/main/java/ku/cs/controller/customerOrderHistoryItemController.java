@@ -32,8 +32,6 @@ public class customerOrderHistoryItemController {
     @FXML
     public Button confirmReceiptProduct; // ปุ่มยืนยันการรับสินค้า
 
-    @FXML
-    private Label orderDetailsButton;  // ปุ่มดูรายละเอียด
 
     public void setOrderData(Order order) {
         Order_ID.setText(order.getOrder_ID());
@@ -96,5 +94,6 @@ public class customerOrderHistoryItemController {
         stage.initModality(Modality.APPLICATION_MODAL);  // หน้าต่างใหม่จะเป็นแบบ modal
         stage.showAndWait();  // แสดงหน้าต่าง
     }
+
 
 }

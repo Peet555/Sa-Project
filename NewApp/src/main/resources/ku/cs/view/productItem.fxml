@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productItemController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="319.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productItemController">
    <children>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="253.0" prefWidth="495.0">
          <children>
-            <ImageView fx:id="imageProduct" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imageProduct" fitHeight="317.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <children>
                   <VBox>
                      <children>
-                        <Label fx:id="productName" text="Product_name" />
+                        <Label fx:id="productName" text="Product_name">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
                      </children>
                      <padding>
                         <Insets left="20.0" top="10.0" />
@@ -29,16 +32,25 @@
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
                               </Label>
                               <Label fx:id="productPrice" text="product_price">
                                  <padding>
                                     <Insets left="5.0" />
                                  </padding>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
                               </Label>
                               <Label text="บาท">
                                  <padding>
                                     <Insets left="5.0" />
                                  </padding>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
                               </Label>
                            </children>
                         </HBox>
@@ -55,16 +67,25 @@
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
                               </Label>
                               <Label fx:id="productQuantity" text="product_Quantity">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
                               </Label>
                               <Label text="ชิ้น">
                                  <padding>
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
                               </Label>
                            </children>
                         </HBox>
@@ -81,11 +102,17 @@
                                  <padding>
                                     <Insets left="20.0" />
                                  </padding>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                               </Label>
                               <Label fx:id="productDetails" text="product_details">
                                  <padding>
                                     <Insets left="5.0" />
                                  </padding>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                               </Label>
                            </children>
                         </HBox>
