@@ -16,7 +16,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.InvoiceOrderConnect;
 import ku.cs.services.FXRouter;
+import ku.cs.connect.InvoiceOrderConnect.ProductSalesData;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,6 +32,8 @@ import java.sql.SQLException;
 public class checkProofPaymentController {
 
     private String invoiceID;
+
+    private byte[] paymentImageData; // ตัวแปรสำหรับเก็บ Payment_Image
     @FXML
     private TableView<ProductSale> paymentList ;
 
@@ -52,71 +56,30 @@ public class checkProofPaymentController {
 
     public void setInvoiceID(String invoiceID) {
         this.invoiceID = invoiceID;
-        loadProductSales();
+
+        // เรียกใช้ ProductSaleConnect เพื่อดึงข้อมูลสินค้าและ paymentImageData
+        ProductSalesData data = InvoiceOrderConnect.loadProductSales(invoiceID);
+
+        // ตั้งค่า productSales และ paymentImageData
+        paymentList.setItems(data.productSales);
+        paymentImageData = data.paymentImageData;
+
+        // โหลดรูปภาพการชำระเงิน
         loadProofPaymentImage();
-    }
 
-    private void loadProductSales() {
-        ObservableList<ProductSale> productSales = FXCollections.observableArrayList();
-        String query = "SELECT p.Product_ID, p.Product_Name, ol.Quantity_Order_Line, p.Price, " +
-                "(ol.Quantity_Order_Line * p.Price) AS TotalPrice " +
-                "FROM Order_Line ol " +
-                "JOIN Product p ON ol.Product_ID = p.Product_ID " +
-                "JOIN `order` o ON ol.Order_ID = o.Order_ID " +
-                "JOIN invoice i ON o.Order_ID = i.Order_ID " +
-                "WHERE i.Invoice_ID = ?";
-
-        int totalSumPrice = 0; // ตัวแปรเก็บผลรวมราคา
-
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, invoiceID);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    int quantity = resultSet.getInt("Quantity_Order_Line");
-                    int productPrice = resultSet.getInt("Price");
-                    int totalPrice = resultSet.getInt("TotalPrice");
-
-                    productSales.add(new ProductSale(
-                            resultSet.getString("Product_ID"),
-                            resultSet.getString("Product_Name"),
-                            quantity,
-                            productPrice,
-                            totalPrice
-                    ));
-
-                    totalSumPrice += totalPrice; // เพิ่มราคาของสินค้าลงในยอดรวม
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error loading product sales: " + e.getMessage());
-        }
-
-        paymentList.setItems(productSales);
-        sumPrice.setText(String.valueOf(totalSumPrice)); // แสดงยอดรวมใน Label sumPrice
+        // คำนวณราคารวม
+        int totalSumPrice = data.productSales.stream().mapToInt(ProductSale::getPrice).sum();
+        sumPrice.setText(String.valueOf(totalSumPrice));
     }
 
     private void loadProofPaymentImage() {
-        String query = "SELECT Payment_Image FROM invoice WHERE Invoice_ID = ?";
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, invoiceID);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    byte[] imageData = resultSet.getBytes("Payment_Image");
-                    if (imageData != null) {
-                        InputStream imageStream = new ByteArrayInputStream(imageData);
-                        Image image = new Image(imageStream);
-                        proofPayment.setImage(image); // แสดงรูปภาพใน ImageView
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error loading proof payment image: " + e.getMessage());
+        if (paymentImageData != null) {
+            InputStream imageStream = new ByteArrayInputStream(paymentImageData);
+            Image image = new Image(imageStream);
+            proofPayment.setImage(image);
         }
     }
+
 
 
     @FXML
