@@ -28,8 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import ku.cs.connect.OrderConnect;
 
 public class orderListCustomerController {
+
+    private OrderConnect orderConnect = new OrderConnect();
 
     private List<Product> temporaryProductList = new ArrayList<>();
     private String productId; // ตัวแปรเพื่อเก็บ Product_ID
@@ -140,7 +143,7 @@ public class orderListCustomerController {
     // Method สำหรับเปิดหน้าต่าง orderConfirmationWindowController
     private void openConfirmationWindow(String fxml, String title) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/" + fxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderConfirmationWindows.fxml"));
             VBox root = loader.load();
             Stage stage = new Stage();
             stage.setTitle(title);
@@ -172,68 +175,16 @@ public class orderListCustomerController {
     }
 
     private void saveOrder(String orderID, String actionType, List<Product> productList) {
-        // คำนวณ Order_Price
         int totalPrice = 0;
         for (Product product : productList) {
             totalPrice += product.getPrice() * product.getQuantity();
         }
 
-        // ดึง Customer_ID จาก currentUser
-        String customerId = LoginConnect.getCurrentUser().getID(); // สมมุติว่า `getId()` คืนค่า Customer_ID
-
-        // สร้าง Order object
+        String customerId = LoginConnect.getCurrentUser().getID();
         Order order = new Order(orderID, null, customerId, 1, new Timestamp(System.currentTimeMillis()), totalPrice, actionType, null);
 
-        // บันทึกลงฐานข้อมูล
-        saveOrderToDatabase(order);
-
-        // บันทึก Order Line
-        saveOrderLineToDatabase(orderID, productList); // บันทึกข้อมูล product ลงใน order_line
-    }
-
-
-    private void saveOrderToDatabase(Order order) {
-        String sql = "INSERT INTO `order` (Order_ID, Employee_ID, Customer_ID, Order_Status, Order_Timestamp, Outstanding_Balance, Order_Type) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection connection = DatabaseConnect.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            // ตรวจสอบและจำกัดขนาดของ Order_ID
-            if (order.getOrder_ID().length() > 30) { // สมมุติว่า Order_ID มีขนาดสูงสุด 50 ตัวอักษร
-                System.out.println("Error: Order_ID too long");
-                return; // หยุดการทำงานถ้า Order_ID ยาวเกินไป
-            }
-            pstmt.setString(1, order.getOrder_ID());
-            pstmt.setString(2, order.getEmployee_ID());
-            pstmt.setString(3, order.getCustomer_ID());
-            pstmt.setInt(4, order.getOrder_Status());
-            pstmt.setTimestamp(5, order.getOrder_Timestamp());
-            pstmt.setInt(6, order.getOutstanding_Balance());
-            pstmt.setString(7, order.getOrder_Type());
-
-            pstmt.executeUpdate();
-            System.out.println("Order saved to database.");
-        } catch (SQLException e) {
-            System.out.println("Error saving order to database: " + e.getMessage());
-        }
-    }
-
-    private void saveOrderLineToDatabase(String orderID, List<Product> productList) {
-        String sql = "INSERT INTO order_line (Product_ID, Order_ID, Quantity_Order_Line) VALUES (?, ?, ?)";
-
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-
-            for (Product product : productList) {
-                pstmt.setString(1, product.getProduct_ID()); // ดึง Product_ID จาก product
-                pstmt.setString(2, orderID); // ใช้ Order_ID ที่สร้างขึ้น
-                pstmt.setInt(3, product.getQuantity()); // ใช้ Quantity ที่กรอกมา
-                pstmt.addBatch(); // เพิ่มคำสั่ง SQL ใน batch
-            }
-
-            pstmt.executeBatch(); // ส่งคำสั่ง SQL ทั้งหมดใน batch
-            System.out.println("Order lines saved to database.");
-        } catch (SQLException e) {
-            System.out.println("Error saving order lines to database: " + e.getMessage());
-        }
+        orderConnect.saveOrderToDatabase(order); // บันทึกออเดอร์โดยใช้ OrderConnect
+        orderConnect.saveOrderLineToDatabase(orderID, productList); // บันทึก Order Line โดยใช้ OrderConnect
     }
 
 
