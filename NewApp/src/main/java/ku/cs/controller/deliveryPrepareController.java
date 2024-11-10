@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import ku.cs.models.Order;
 import ku.cs.services.FXRouter;
 import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.OrderDeliveryConnect;
+
 
 import java.io.IOException;
 import java.sql.*;
@@ -68,12 +70,14 @@ public class deliveryPrepareController {
         });
 
         // Load orders from the database into the delivery table
-        loadOrders();
+        orderList = OrderDeliveryConnect.loadOrders();
+        deliveryTable.setItems(orderList);
 
         // Button action to open confirmation window for prepare button
         prepareButton.setOnAction(event -> {
             try {
                 prepareDelivery();
+                refreshTable();
             } catch (IOException e) {
                 System.err.println("Error opening payment window: " + e.getMessage());
             }
@@ -90,38 +94,15 @@ public class deliveryPrepareController {
 
     }
 
-    private void loadOrders() {
-        orderList = FXCollections.observableArrayList(); // Initialize the ObservableList
-
-        Connection connection = DatabaseConnect.getConnection();
-        String sql = "SELECT Order_ID, Employee_ID, Customer_ID, Order_Status, Order_Timestamp, Outstanding_Balance, Order_Type, Delivery_date FROM `order`";
-
-        try (PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-
-            while (resultSet.next()) {
-                String orderId = resultSet.getString("Order_ID");
-                String employeeId = resultSet.getString("Employee_ID");
-                String customerId = resultSet.getString("Customer_ID");
-                int orderStatus = resultSet.getInt("Order_Status");
-                Timestamp orderTimestamp = resultSet.getTimestamp("Order_Timestamp");
-                int outstandingBalance = resultSet.getInt("Outstanding_Balance");
-                String orderType = resultSet.getString("Order_Type");
-                String deliveryDate = resultSet.getString("Delivery_date");
-
-                Order order = new Order(orderId, employeeId, customerId, orderStatus, orderTimestamp, outstandingBalance, orderType, deliveryDate);
-                orderList.add(order); // Add the order to the list
-            }
-        } catch (SQLException e) {
-            System.err.println("Error loading orders: " + e.getMessage());
-        }
-
-        deliveryTable.setItems(orderList); // Set the items of the table
+    private void refreshTable() {
+        orderList = OrderDeliveryConnect.loadOrders(); // โหลดข้อมูลใหม่จากฐานข้อมูล
+        deliveryTable.setItems(orderList); // อัปเดตข้อมูลในตาราง
     }
+
 
     // Method for opening delivery preparation window
     private void prepareDelivery() throws IOException {
-        Order selectedOrder = deliveryTable.getSelectionModel().getSelectedItem(); // Get the selected order
+        Order selectedOrder = deliveryTable.getSelectionModel().getSelectedItem();
         if (selectedOrder != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/specifyDateForDeliveryWindow.fxml"));
             Parent root = loader.load();
@@ -132,13 +113,14 @@ public class deliveryPrepareController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            stage.showAndWait(); // รอจนกว่าผู้ใช้จะปิดหน้าต่าง
+
+            refreshTable(); // โหลดข้อมูลใหม่หลังจากที่หน้าต่างปิดลง
         } else {
             System.out.println("No order selected.");
         }
     }
 
-    // New method for handling product into stock
     @FXML
     public void handleProductIntoStock() {
         Order selectedOrder = deliveryTable.getSelectionModel().getSelectedItem(); // Get the selected order
@@ -146,8 +128,11 @@ public class deliveryPrepareController {
             try {
                 // Update the Order_Status to 4 for the selected order
                 updateOrderStatus(selectedOrder.getOrder_ID());
+
                 // Reload the orders after update
-                loadOrders();
+                orderList = OrderDeliveryConnect.loadOrders();
+                deliveryTable.setItems(orderList); // Refresh the table view with updated data
+
             } catch (SQLException e) {
                 System.err.println("Error updating order status: " + e.getMessage());
             }
