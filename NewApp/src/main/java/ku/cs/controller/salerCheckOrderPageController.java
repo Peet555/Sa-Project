@@ -4,15 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import ku.cs.connect.orderProductConnect;
 import ku.cs.connect.sellerCheckOrderConnect;
+import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
@@ -31,6 +30,8 @@ public class salerCheckOrderPageController {
     private TableColumn<Order, String> orderTimestampColumn;
     @FXML
     private Button profileButton ;
+    @FXML
+    private ComboBox<String> statusComboBox;
 
     public void initialize() {
         // กำหนดค่าใน TableColumn โดยใช้ PropertyValueFactory และ String โดยตรง
@@ -44,7 +45,26 @@ public class salerCheckOrderPageController {
         ObservableList<Order> orders = dbConnect.getOrders();
         orderTable.setItems(orders);
 
-        // ตรวจจับการคลิกสองครั้งที่แถวใน TableView
+        // Listener สำหรับตรวจจับการเลือกค่าใน ComboBox
+        statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // กรองข้อมูลใน TableView ตามค่า Order_Status ที่เลือก
+                ObservableList<Order> filteredOrders = orders.filtered(order -> order.getOrderStatus().equals(newValue));
+                orderTable.setItems(filteredOrders);
+            } else {
+                // หากไม่มีค่าเลือก ให้แสดงข้อมูลทั้งหมด
+                orderTable.setItems(orders);
+            }
+        });
+
+        // เพิ่มค่าใน ComboBox
+        ObservableList<String> statusOptions = FXCollections.observableArrayList(
+                "รอยืนยัน", "รอชำระเงิน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ",
+                "ชำระเงินแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
+        );
+        statusComboBox.setItems(statusOptions);
+
+        // การคลิกสองครั้งที่แถวใน TableView
         orderTable.setRowFactory(tv -> {
             TableRow<Order> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -59,6 +79,7 @@ public class salerCheckOrderPageController {
             });
             return row;
         });
+
         profileButton.setOnAction(event -> {
             try {
                 FXRouter.goTo("employeeSellerProfile"); // เปลี่ยนไปหน้า HomePage
@@ -68,17 +89,38 @@ public class salerCheckOrderPageController {
         });
     }
 
+
+    private void setStatusComboBoxOptions(String orderType) {
+        if ("สั่งซื้อ".equals(orderType)) { // For Purchase orders
+            ObservableList<String> purchaseStatusOptions = FXCollections.observableArrayList(
+                    "รอยืนยัน", "รอชำระเงิน", "ชำระเงินแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
+            );
+            statusComboBox.setItems(purchaseStatusOptions);
+        } else if ("สั่งจอง".equals(orderType)) { // For Pre-Order/Reservation
+            ObservableList<String> preOrderStatusOptions = FXCollections.observableArrayList(
+                    "รอยืนยัน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ", "ชำระแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
+            );
+            statusComboBox.setItems(preOrderStatusOptions);
+        } else {
+            statusComboBox.setItems(FXCollections.observableArrayList()); // Clear options if unknown type
+        }
+    }
+
     // เมธอดเพื่อเปลี่ยนหน้าไปยัง salerCheckProductPageController
     private void changeToProductPage(String orderId) throws IOException {
+        // ดึงข้อมูลสินค้าของคำสั่งซื้อ
+        orderProductConnect productConnect = new orderProductConnect();
+        ObservableList<Product> products = productConnect.getProductsForOrder(orderId);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/salerCheckProductPage.fxml"));
         Parent productPage = loader.load();
 
+        // ส่งข้อมูลสินค้าไปยังหน้า salerCheckProductPageController
         salerCheckProductPageController controller = loader.getController();
-        controller.setOrderID(orderId);  // ส่ง Order_ID
+        controller.setOrderData(orderId, products);
 
         Stage stage = (Stage) orderTable.getScene().getWindow();
-        Scene scene = new Scene(productPage);
-        stage.setScene(scene);
+        stage.setScene(new Scene(productPage));
         stage.show();
     }
 

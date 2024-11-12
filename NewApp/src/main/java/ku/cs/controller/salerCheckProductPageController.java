@@ -45,17 +45,13 @@ public class salerCheckProductPageController {
 
     private String orderId;
 
-    public void setOrderID(String orderId) {
+    public void setOrderData(String orderId, ObservableList<Product> products) {
         this.orderId = orderId;
-        loadProducts();
+        // ใช้ข้อมูลสินค้าที่ได้รับมาแสดงในตารางโดยตรง
+        orderProductTable.setItems(products);
         checkOrderStatusAndDisableConfirmButton();
     }
 
-    private void loadProducts() {
-        orderProductConnect productConnect = new orderProductConnect();
-        ObservableList<Product> products = productConnect.getProductsForOrder(orderId);
-        orderProductTable.setItems(products);
-    }
 
     @FXML
     public void initialize() {
