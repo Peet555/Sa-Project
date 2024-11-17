@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="192.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.notiInvoiceCreatedWindowController">
+<AnchorPane prefHeight="192.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.notiInvoiceCreatedWindowController">
    <children>
       <Pane layoutX="-6.0" prefHeight="60.0" prefWidth="606.0" style="-fx-background-color: #a3e9a4;">
          <children>
@@ -17,6 +17,9 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="confirmButton" layoutX="252.0" layoutY="111.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" text="ยืนยัน" />
+      <Button fx:id="confirmButton" layoutX="252.0" layoutY="111.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #a3e9a4; -fx-background-radius: 20;" text="ยืนยัน">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
    </children>
 </AnchorPane>
