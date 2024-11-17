@@ -92,17 +92,19 @@ public class orderListCustomerController {
             }
         });
 
-// เมื่อกดปุ่ม "สั่งซื้อ"
         handleConfirmOrder.setOnAction(event -> {
             String orderID = generateOrderId(); // สร้าง Order_ID ใหม่
             saveOrder(orderID, "สั่งซื้อ", OrderManager.getInstance().getTemporaryProductList()); // บันทึกออเดอร์
+            openConfirmationWindow("สั่งซื้อเสร็จสิ้น", "สั่งซื้อสำเร็จ");
         });
 
-// เมื่อกดปุ่ม "สั่งจอง"
         handleConfirmPreOrder.setOnAction(event -> {
             String orderID = generateOrderId(); // สร้าง Order_ID ใหม่
             saveOrder(orderID, "สั่งจอง", OrderManager.getInstance().getTemporaryProductList()); // บันทึกออเดอร์
+            openConfirmationWindow("สั่งจองเสร็จสิ้น", "สั่งจองสำเร็จ");
         });
+
+
 
         profileButton.setOnAction(event -> {
             try {
@@ -140,20 +142,34 @@ public class orderListCustomerController {
     }
 
 
-    // Method สำหรับเปิดหน้าต่าง orderConfirmationWindowController
-    private void openConfirmationWindow(String fxml, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderConfirmationWindows.fxml"));
-            VBox root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            System.err.println("Cannot open confirmation window.");
-        }
+    private void openConfirmationWindow(String message, String title) {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.setTitle(title);
+
+        Label messageLabel = new Label(message);
+        messageLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: green;");
+
+        Button closeButton = new Button("ปิด");
+        closeButton.setOnAction(e -> {
+            dialogStage.close(); // ปิดหน้าต่างยืนยัน
+            try {
+                // เปลี่ยนกลับไปยังหน้า orderListCustomerController
+                FXRouter.goTo("customerOrderHistory");
+            } catch (IOException ex) {
+                System.err.println("Cannot navigate to orderListPageCustomer: " + ex.getMessage());
+            }
+        });
+
+        VBox vbox = new VBox(10, messageLabel, closeButton);
+        vbox.setStyle("-fx-padding: 20px; -fx-alignment: center;");
+
+        Scene scene = new Scene(vbox);
+        dialogStage.setScene(scene);
+        dialogStage.show();
     }
+
+
 
     // Method สำหรับเปิดหน้าต่าง preOrderConfirmationWindowController
     private void openPreOrderConfirmationWindow() throws IOException {

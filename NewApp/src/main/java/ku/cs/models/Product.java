@@ -18,6 +18,7 @@ public class Product {
      private String productName;
      private int price;
      private int quantity; // อาจต้องการสำหรับรายละเอียดผลิตภัณฑ์
+     private int orderedQuantity; // จำนวนที่สั่งในออเดอร์นี้
      private String description; // อาจต้องการสำหรับรายละเอียดผลิตภัณฑ์
      private byte[] productImageByte;
 
@@ -134,6 +135,13 @@ public class Product {
     }
     public String getOrderID() {
         return orderID;
+    }
+    public int getOrderedQuantity() {
+        return orderedQuantity;
+    }
+
+    public void setOrderedQuantity(int orderedQuantity) {
+        this.orderedQuantity = orderedQuantity;
     }
 
 

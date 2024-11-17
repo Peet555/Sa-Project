@@ -48,18 +48,20 @@ public class salerCheckOrderPageController {
         // Listener สำหรับตรวจจับการเลือกค่าใน ComboBox
         statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                // กรองข้อมูลใน TableView ตามค่า Order_Status ที่เลือก
-                ObservableList<Order> filteredOrders = orders.filtered(order -> order.getOrderStatus().equals(newValue));
-                orderTable.setItems(filteredOrders);
-            } else {
-                // หากไม่มีค่าเลือก ให้แสดงข้อมูลทั้งหมด
-                orderTable.setItems(orders);
+                if (newValue.equals("ทั้งหมด")) {
+                    // แสดงข้อมูลทั้งหมด
+                    orderTable.setItems(orders);
+                } else {
+                    // กรองข้อมูลใน TableView ตามค่า Order_Status ที่เลือก
+                    ObservableList<Order> filteredOrders = orders.filtered(order -> order.getOrderStatus().equals(newValue));
+                    orderTable.setItems(filteredOrders);
+                }
             }
         });
 
         // เพิ่มค่าใน ComboBox
         ObservableList<String> statusOptions = FXCollections.observableArrayList(
-                "รอยืนยัน", "รอชำระเงิน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ",
+                "ทั้งหมด","รอยืนยัน", "รอชำระเงิน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ",
                 "ชำระเงินแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
         );
         statusComboBox.setItems(statusOptions);

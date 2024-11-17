@@ -55,5 +55,10 @@ public class orderListCustomerItemController {
 
         });
     }
+    public void setOrderedQuantity(Product product) {
+        // ดึงค่าจาก quantityLabel และแปลงเป็นจำนวนเต็ม
+        int orderedQuantity = Integer.parseInt(quantityLabel.getText());
+        product.setOrderedQuantity(orderedQuantity); // ตั้งค่า orderedQuantity ใน Product
+    }
 
 }

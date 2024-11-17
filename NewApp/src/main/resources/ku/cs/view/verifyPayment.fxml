@@ -62,5 +62,6 @@
             </TableView>
          </children>
       </VBox>
+      <ComboBox fx:id="statusComboBox" layoutX="35.0" layoutY="245.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

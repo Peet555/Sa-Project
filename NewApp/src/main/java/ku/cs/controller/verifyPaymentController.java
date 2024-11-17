@@ -1,15 +1,13 @@
 package ku.cs.controller;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import ku.cs.connect.InvoiceDataConnect;
@@ -33,23 +31,49 @@ public class verifyPaymentController {
     private TableColumn<Invoice, String> Invoice_Timestamp;
     @FXML
     private Button profileButton;
+    @FXML
+    private ComboBox<String> statusComboBox;
 
+    private ObservableList<Invoice> invoices; // เก็บข้อมูลทั้งหมด
     @FXML
     public void initialize() {
+
         orderID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
         Invoice_ID.setCellValueFactory(new PropertyValueFactory<>("invoiceID"));
         Status_Pay.setCellValueFactory(new PropertyValueFactory<>("statusPay"));
         Invoice_Timestamp.setCellValueFactory(new PropertyValueFactory<>("invoiceTimestamp"));
 
-        // สร้างคอลัมน์ Order_Type โดยไม่ต้องมีฟิลด์ใน Invoice
+        // สร้างคอลัมน์ Order_Type โดยใช้ SimpleStringProperty
         Order_Type.setCellValueFactory(cellData -> {
-            String orderId = cellData.getValue().getOrderID();
-            String orderType = InvoiceDataConnect.getOrderType(orderId);
+            String orderType = cellData.getValue().getOrderType();
             return new SimpleStringProperty(orderType);
         });
 
-        ObservableList<Invoice> invoices = InvoiceDataConnect.loadInvoicesFromDatabase();
+        // โหลดข้อมูล (สมมติว่า InvoiceDataConnect.loadInvoicesFromDatabase() ดึงข้อมูลทั้งหมดแล้ว)
+        invoices = FXCollections.observableArrayList(InvoiceDataConnect.loadInvoicesFromDatabase());
         Invoice_Table.setItems(invoices);
+
+        // ตั้งค่า ComboBox
+        ObservableList<String> statusOptions = FXCollections.observableArrayList(
+                "ทั้งหมด","รอชำระเงิน", "รอชำระค่ามัดจำ", "ชำระเงินแล้ว", "ชำระยอดคงเหลือ"
+        );
+        statusComboBox.setItems(statusOptions);
+
+        // Listener สำหรับกรองข้อมูล
+        statusComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                if (newValue.equals("ทั้งหมด")) {
+                    // แสดงข้อมูลทั้งหมด
+                    Invoice_Table.setItems(invoices);
+                } else {
+                    // กรองข้อมูลตามค่า Status_Pay ที่เลือก
+                    ObservableList<Invoice> filteredInvoices = invoices.filtered(
+                            invoice -> invoice.getStatusPay().equals(newValue)
+                    );
+                    Invoice_Table.setItems(filteredInvoices);
+                }
+            }
+        });
 
         // ตั้งค่าการคลิกที่แถว
         Invoice_Table.setRowFactory(tv -> {

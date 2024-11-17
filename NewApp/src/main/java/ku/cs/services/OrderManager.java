@@ -25,10 +25,16 @@ public class OrderManager {
     }
 
     public void addProduct(Product product) {
-        temporaryProductList.add(product);
+        // ตรวจสอบว่าสินค้าอยู่ใน Temporary Product List หรือไม่
+        if (!temporaryProductList.contains(product)) {
+            temporaryProductList.add(product);
+        }
     }
+
 
     public void removeProduct(Product product) {
         temporaryProductList.remove(product);
     }
+
+
 }
