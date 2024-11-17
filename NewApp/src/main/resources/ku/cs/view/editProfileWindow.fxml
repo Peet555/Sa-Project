@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="436.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.editProfileWindowController">
+<AnchorPane prefHeight="436.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.editProfileWindowController">
    <children>
       <Pane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #a3e9a4;">
          <children>
@@ -31,8 +31,14 @@
       </Label>
       <TextField fx:id="phoneNumberField" layoutX="218.0" layoutY="149.0" prefHeight="27.0" prefWidth="219.0" />
       <TextArea fx:id="addressField" layoutX="217.0" layoutY="257.0" prefHeight="138.0" prefWidth="219.0" />
-      <Button fx:id="confirmButton" layoutX="229.0" layoutY="409.0" mnemonicParsing="false" text="ยืนยัน" />
-      <Button fx:id="cancelButton" layoutX="377.0" layoutY="409.0" mnemonicParsing="false" text="ยกเลิก" />
+      <Button fx:id="confirmButton" layoutX="229.0" layoutY="409.0" mnemonicParsing="false" style="-fx-background-color: #a3e9a4; -fx-background-radius: 20;" text="ยืนยัน">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button fx:id="cancelButton" layoutX="377.0" layoutY="409.0" mnemonicParsing="false" style="-fx-background-color: fc4646; -fx-background-radius: 20;" text="ยกเลิก">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
       <Label layoutX="133.0" layoutY="97.0" text="Name :">
          <font>
             <Font size="18.0" />
