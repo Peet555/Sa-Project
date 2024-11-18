@@ -43,7 +43,7 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="profileButton" layoutX="1004.0" layoutY="117.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile" />
+      <Button fx:id="profileButton" layoutX="1004.0" layoutY="117.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE" />
       <Pane layoutX="-4.0" layoutY="183.0" prefHeight="85.0" prefWidth="1206.0" style="-fx-background-color: #a3e9a4;">
          <children>
             <Button layoutX="147.0" layoutY="25.0" mnemonicParsing="false" onAction="#goCheckOrder" prefHeight="41.0" prefWidth="114.0" style="-fx-background-radius: 50; -fx-background-color: #6de2ff;" text="ตรวจสอบ Order" />

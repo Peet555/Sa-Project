@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.verifyPaymentController">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.verifyPaymentController">
    <children>
       <VBox prefHeight="228.0" prefWidth="1210.0">
          <children>
             <ImageView fx:id="logo" fitHeight="95.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile">
+            <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE">
                <VBox.margin>
                   <Insets left="1000.0" />
                </VBox.margin>

@@ -54,11 +54,11 @@
          </children></Pane>
       <Pane layoutY="159.0" prefHeight="86.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
-            <Button fx:id="homeButton" layoutX="93.0" layoutY="31.0" mnemonicParsing="false" text="HOME" />
+            <Button fx:id="homeButton" layoutX="93.0" layoutY="31.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="HOME" textFill="WHITE" />
          </children>
       </Pane>
-      <Button fx:id="cartButton" layoutX="952.0" layoutY="126.0" mnemonicParsing="false" text="Shopping Cart" />
-      <Button fx:id="profileButton" layoutX="871.0" layoutY="126.0" mnemonicParsing="false" text="Profile" />
-      <Button fx:id="orderHistoryButton" layoutX="1068.0" layoutY="126.0" mnemonicParsing="false" text="Order History" />
+      <Button fx:id="cartButton" layoutX="952.0" layoutY="126.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Shopping Cart" textFill="WHITE" />
+      <Button fx:id="profileButton" layoutX="871.0" layoutY="126.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE" />
+      <Button fx:id="orderHistoryButton" layoutX="1068.0" layoutY="126.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Order History" textFill="WHITE" />
    </children>
 </AnchorPane>

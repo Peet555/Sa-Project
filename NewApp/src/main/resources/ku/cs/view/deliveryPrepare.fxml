@@ -16,7 +16,7 @@
       <VBox layoutY="19.0" prefHeight="229.0" prefWidth="1220.0">
          <children>
             <ImageView fx:id="logo" fitHeight="95.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile">
+            <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE">
                <VBox.margin>
                   <Insets left="1000.0" />
                </VBox.margin>
