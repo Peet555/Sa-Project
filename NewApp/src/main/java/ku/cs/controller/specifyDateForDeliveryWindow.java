@@ -1,6 +1,7 @@
 package ku.cs.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
@@ -56,12 +57,25 @@ public class specifyDateForDeliveryWindow {
 
                 statement.setString(3, orderId); // Set the order ID
                 statement.executeUpdate(); // Execute the update
+
+                // Show success message
+                showConfirmationMessage();
+
             } catch (SQLException e) {
                 System.err.println("Error saving delivery date and updating status: " + e.getMessage());
             }
         } else {
             System.out.println("No date selected.");
         }
+    }
+
+    // Method to show a confirmation message
+    private void showConfirmationMessage() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("การดำเนินการสำเร็จ");
+        alert.setHeaderText(null);
+        alert.setContentText("ระบุวันจัดส่งเรียบร้อย");
+        alert.showAndWait();
     }
 
     // Method to close the window

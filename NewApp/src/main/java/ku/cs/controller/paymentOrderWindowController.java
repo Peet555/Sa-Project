@@ -1,6 +1,7 @@
 package ku.cs.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
@@ -44,6 +45,7 @@ public class paymentOrderWindowController {
         confirmPaymentButton.setOnAction(event -> {
             try {
                 savePaymentProofToDatabase();
+                showConfirmationAlert();
                 closeWindow();
             } catch (IOException | SQLException e) {
                 System.err.println("Error saving payment proof: " + e.getMessage());
@@ -104,5 +106,13 @@ public class paymentOrderWindowController {
     private void closeWindow() {
         Stage stage = (Stage) confirmPaymentButton.getScene().getWindow();
         stage.close();
+    }
+
+    private void showConfirmationAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("ยืนยันการชำระเงิน");
+        alert.setHeaderText(null);
+        alert.setContentText("ชำระเงินเสร็จสิ้น โปรดรอการตรวจสอบ");
+        alert.showAndWait();
     }
 }

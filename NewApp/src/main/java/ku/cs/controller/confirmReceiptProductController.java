@@ -81,9 +81,18 @@ public class confirmReceiptProductController {
             invoiceStatement.executeUpdate();
 
             System.out.println("Order status and invoice status updated successfully.");
-
+            showSuccessAlert();
         } catch (SQLException e) {
             System.err.println("Failed to update order status: " + e.getMessage());
         }
+    }
+
+    // เมธอดสำหรับแสดง Alert
+    private void showSuccessAlert() {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        alert.setTitle("สำเร็จ");
+        alert.setHeaderText(null);
+        alert.setContentText("ยืนยันการรับสินค้าสำเร็จ");
+        alert.showAndWait();
     }
 }

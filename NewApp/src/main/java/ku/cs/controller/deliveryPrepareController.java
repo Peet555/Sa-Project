@@ -133,6 +133,9 @@ public class deliveryPrepareController {
                 orderList = OrderDeliveryConnect.loadOrders();
                 deliveryTable.setItems(orderList); // Refresh the table view with updated data
 
+                // Show confirmation alert
+                showConfirmationMessage("ระบุสินค้าเข้าคลังเรียบร้อย");
+
             } catch (SQLException e) {
                 System.err.println("Error updating order status: " + e.getMessage());
             }
@@ -140,6 +143,16 @@ public class deliveryPrepareController {
             System.out.println("No order selected.");
         }
     }
+
+    // Method to show confirmation alert
+    private void showConfirmationMessage(String message) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        alert.setTitle("ยืนยันการทำงาน");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
 
     // Method to update order status
