@@ -11,24 +11,24 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productModelController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.productModelController">
     <children>
         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="106.0" prefWidth="667.0">
             <children>
                 <Pane prefHeight="100.0" prefWidth="306.0" HBox.hgrow="ALWAYS" />
                 <ImageView fitHeight="153.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fitHeight="150.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="profileButton" mnemonicParsing="false" text="Profile">
+            <Button fx:id="profileButton" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE">
                <HBox.margin>
                   <Insets right="40.0" top="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="cartButton" mnemonicParsing="false" text="Shopping Cart">
+            <Button fx:id="cartButton" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Shopping Cart" textFill="WHITE">
                <HBox.margin>
                   <Insets right="30.0" top="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="orderHistoryButton" mnemonicParsing="false" text="Order History">
+            <Button fx:id="orderHistoryButton" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Order History" textFill="WHITE">
                <HBox.margin>
                   <Insets right="20.0" top="50.0" />
                </HBox.margin>
@@ -39,7 +39,7 @@
             <children>
                 <ButtonBar prefHeight="56.0" prefWidth="105.0">
                     <buttons>
-                        <Button fx:id="homeButton" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Home" />
+                        <Button fx:id="homeButton" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #0d5e25;" text="Home" textFill="WHITE" />
                     </buttons>
                     <HBox.margin>
                         <Insets right="50.0" />

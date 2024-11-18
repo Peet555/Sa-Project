@@ -31,7 +31,7 @@
          </content>
       </ScrollPane>
       <Button fx:id="confirmButton" layoutX="1033.0" layoutY="329.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #a3e9a4; -fx-background-radius: 20;" text="ยืนยันคำสั่งซื้อ" />
-      <Button fx:id="backButton" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" text="ย้อนกลับ" />
-      <Button fx:id="profileButton" layoutX="1045.0" layoutY="91.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" text="Profile" />
+      <Button fx:id="backButton" layoutX="60.0" layoutY="274.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="ย้อนกลับ" textFill="WHITE" />
+      <Button fx:id="profileButton" layoutX="1045.0" layoutY="91.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE" />
    </children>
 </AnchorPane>

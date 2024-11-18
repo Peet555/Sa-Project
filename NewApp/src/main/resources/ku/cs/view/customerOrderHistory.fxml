@@ -12,20 +12,20 @@
    <children>
       <Pane layoutY="187.0" prefHeight="86.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
-            <Button fx:id="homeButton" layoutX="44.0" layoutY="31.0" mnemonicParsing="false" style="-fx-background-radius: 50;" text="Home">
+            <Button fx:id="homeButton" layoutX="44.0" layoutY="31.0" mnemonicParsing="false" style="-fx-background-radius: 50; -fx-background-color: #0d5e25;" text="Home" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font></Button>
          </children>
       </Pane>
-      <Button fx:id="cartButton" layoutX="942.0" layoutY="116.0" mnemonicParsing="false" text="Shopping Cart" />
-      <Button fx:id="profileButton" layoutX="861.0" layoutY="116.0" mnemonicParsing="false" text="Profile" />
+      <Button fx:id="cartButton" layoutX="942.0" layoutY="116.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Shopping Cart" textFill="WHITE" />
+      <Button fx:id="profileButton" layoutX="861.0" layoutY="116.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE" />
       <ScrollPane fx:id="scrollPane" layoutX="175.0" layoutY="273.0" prefHeight="501.0" prefWidth="1025.0">
          <content>
             <VBox fx:id="vBox" prefHeight="530.0" prefWidth="1198.0" />
          </content>
       </ScrollPane>
-      <Button fx:id="orderHistoryButton" layoutX="1058.0" layoutY="116.0" mnemonicParsing="false" text="Order History" />
+      <Button fx:id="orderHistoryButton" layoutX="1058.0" layoutY="116.0" mnemonicParsing="false" style="-fx-background-color: #0d5e25;" text="Order History" textFill="#fcfcfc" />
       <ComboBox fx:id="order_choice" layoutX="21.0" layoutY="312.0" prefHeight="25.0" prefWidth="135.0" />
    </children>
 </AnchorPane>
