@@ -1,6 +1,7 @@
 package ku.cs.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import ku.cs.services.FXRouter;
@@ -30,6 +31,9 @@ public class confirmCheckPaymentWindowController {
             checkProofPaymentController.updateInvoiceStatus();
         }
 
+        // Show success message
+        showConfirmationMessage();
+
         // Navigate to the verify payment page
         try {
             FXRouter.goTo("verifyPayment");
@@ -38,6 +42,15 @@ public class confirmCheckPaymentWindowController {
         }
 
         closeWindow(); // Close the confirmation window
+    }
+
+    // Method to show a confirmation message
+    private void showConfirmationMessage() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("การดำเนินการสำเร็จ");
+        alert.setHeaderText(null);
+        alert.setContentText("ยืนยันการชำระเงินแล้ว");
+        alert.showAndWait();
     }
 
 

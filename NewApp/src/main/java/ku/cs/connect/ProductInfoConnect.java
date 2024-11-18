@@ -37,4 +37,21 @@ public class ProductInfoConnect {
         return null;
     }
 
+    public boolean updateProductQuantity(String productId, int quantityToReduce) {
+        String query = "UPDATE product SET Quantity = Quantity - ? WHERE Product_ID = ? AND Quantity >= ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, quantityToReduce);
+            ps.setString(2, productId);
+            ps.setInt(3, quantityToReduce); // ตรวจสอบว่ามีจำนวนสินค้าเพียงพอ
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0; // คืนค่าความสำเร็จ
+        } catch (SQLException e) {
+            System.out.println("Error updating product quantity: " + e.getMessage());
+            return false;
+        }
+    }
+
+
 }
