@@ -1,6 +1,7 @@
 package ku.cs.connect;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -111,6 +112,70 @@ public boolean updateRefuseOrder(String orderId) throws SQLException {
     return false;
 }
 
+    // เมธอดสำหรับอัปเดตสถานะคำสั่งซื้อและสถานะการชำระเงิน
+    public static void updateOrderAndInvoiceStatus(String orderId, int newOrderStatus, int newStatusPay) throws SQLException {
+        String updateOrderQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
+        String updateInvoiceQuery = "UPDATE invoice SET Status_Pay = ? WHERE Order_ID = ?";
+
+        try (Connection connection = DatabaseConnect.getConnection();
+             PreparedStatement orderStatement = connection.prepareStatement(updateOrderQuery);
+             PreparedStatement invoiceStatement = connection.prepareStatement(updateInvoiceQuery)) {
+
+            // อัปเดต Order_Status
+            orderStatement.setInt(1, newOrderStatus);
+            orderStatement.setString(2, orderId);
+            orderStatement.executeUpdate();
+
+            // อัปเดต Status_Pay ในตาราง invoice
+            invoiceStatement.setInt(1, newStatusPay);
+            invoiceStatement.setString(2, orderId);
+            invoiceStatement.executeUpdate();
+
+            System.out.println("Order and invoice status updated successfully.");
+        }
+    }
+
+    public void UpdateProductIntoStock(String orderId) throws SQLException {
+        Connection connection = DatabaseConnect.getConnection();
+
+        // Update Order_Status in the orders table
+        String updateOrderSql = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
+        try (PreparedStatement updateOrderStmt = connection.prepareStatement(updateOrderSql)) {
+            updateOrderStmt.setInt(1, 4); // Set Order_Status to 4
+            updateOrderStmt.setString(2, orderId);
+            updateOrderStmt.executeUpdate();
+        }
+
+        // Update Status_Pay in the invoice table
+        String updateInvoiceSql = "UPDATE invoice SET Status_Pay = ? WHERE Order_ID = ?";
+        try (PreparedStatement updateInvoiceStmt = connection.prepareStatement(updateInvoiceSql)) {
+            updateInvoiceStmt.setInt(1, 4); // Set Status_Pay to 4
+            updateInvoiceStmt.setString(2, orderId);
+            updateInvoiceStmt.executeUpdate();
+        }
+
+        System.out.println("Updated product into stock successfully for Order ID: " + orderId);
+    }
+
+    public boolean updateDeliveryDateAndStatus(String orderId, LocalDate deliveryDate, int orderStatus) {
+        String sql = "UPDATE `order` SET Delivery_date = ?, Order_Status = ? WHERE Order_ID = ?";
+
+        try (Connection connection = DatabaseConnect.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // กำหนดค่าพารามิเตอร์สำหรับอัปเดต
+            statement.setDate(1, java.sql.Date.valueOf(deliveryDate));
+            statement.setInt(2, orderStatus);
+            statement.setString(3, orderId);
+
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0; // คืนค่า true ถ้ามีการอัปเดตสำเร็จ
+
+        } catch (SQLException e) {
+            System.err.println("Error updating delivery date and status: " + e.getMessage());
+            return false;
+        }
+    }
 
 
 }

@@ -6,13 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.InvoiceDataConnect;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class paymentOrderWindowController {
@@ -29,14 +26,13 @@ public class paymentOrderWindowController {
     @FXML
     private Label priceDepositLabel;
 
-    private String orderType;
-    private int orderPrice;
-
     @FXML
     private Label fileName;
 
     private File selectedFile;
     private String orderID; // รับค่า Order_ID จาก controller ก่อนหน้า
+    private String orderType;
+    private int orderPrice;
 
     public void initialize() {
         confirmPaymentButton.setDisable(true);
@@ -44,7 +40,7 @@ public class paymentOrderWindowController {
         attachPaymentButton.setOnAction(event -> openFileChooser());
         confirmPaymentButton.setOnAction(event -> {
             try {
-                savePaymentProofToDatabase();
+                InvoiceDataConnect.savePaymentProof(orderID, selectedFile);
                 showConfirmationAlert();
                 closeWindow();
             } catch (IOException | SQLException e) {
@@ -86,20 +82,6 @@ public class paymentOrderWindowController {
         } else {
             fileName.setText("ไม่มีไฟล์ถูกเลือก");
             confirmPaymentButton.setDisable(true);
-        }
-    }
-
-    private void savePaymentProofToDatabase() throws IOException, SQLException {
-        if (selectedFile == null || orderID == null) return;
-
-        String query = "UPDATE invoice SET Payment_Image = ? WHERE Order_ID = ?";
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             FileInputStream inputStream = new FileInputStream(selectedFile)) {
-
-            statement.setBinaryStream(1, inputStream, (int) selectedFile.length());
-            statement.setString(2, orderID);
-            statement.executeUpdate();
         }
     }
 

@@ -1,13 +1,11 @@
 package ku.cs.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import ku.cs.connect.DatabaseConnect;
-import ku.cs.models.Order;
+import ku.cs.connect.OrderStatusUpdateConnect;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class confirmReceiptProductController {
@@ -63,24 +61,9 @@ public class confirmReceiptProductController {
             return; // ถ้าไม่ตรงตามประเภทใดๆ ไม่ต้องทำอะไร
         }
 
-        String updateOrderQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
-        String updateInvoiceQuery = "UPDATE invoice SET Status_Pay = ? WHERE Order_ID = ?";
-
-        try (Connection connection = DatabaseConnect.getConnection();
-             PreparedStatement orderStatement = connection.prepareStatement(updateOrderQuery);
-             PreparedStatement invoiceStatement = connection.prepareStatement(updateInvoiceQuery)) {
-
-            // อัปเดต Order_Status
-            orderStatement.setInt(1, newOrderStatus);
-            orderStatement.setString(2, orderId);
-            orderStatement.executeUpdate();
-
-            // อัปเดต Status_Pay ในตาราง invoice
-            invoiceStatement.setInt(1, newStatusPay);
-            invoiceStatement.setString(2, orderId);
-            invoiceStatement.executeUpdate();
-
-            System.out.println("Order status and invoice status updated successfully.");
+        try {
+            // เรียกใช้งาน OrderStatusUpdateConnect
+            OrderStatusUpdateConnect.updateOrderAndInvoiceStatus(orderId, newOrderStatus, newStatusPay);
             showSuccessAlert();
         } catch (SQLException e) {
             System.err.println("Failed to update order status: " + e.getMessage());
@@ -89,7 +72,7 @@ public class confirmReceiptProductController {
 
     // เมธอดสำหรับแสดง Alert
     private void showSuccessAlert() {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("สำเร็จ");
         alert.setHeaderText(null);
         alert.setContentText("ยืนยันการรับสินค้าสำเร็จ");

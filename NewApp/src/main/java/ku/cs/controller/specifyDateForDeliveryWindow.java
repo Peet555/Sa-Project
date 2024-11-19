@@ -7,11 +7,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.DateCell;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.OrderStatusUpdateConnect;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class specifyDateForDeliveryWindow {
@@ -23,6 +20,8 @@ public class specifyDateForDeliveryWindow {
 
     private String orderId; // To hold the order ID passed from deliveryPrepareController
     private String orderType; // เพื่อเก็บประเภทของคำสั่งซื้อ
+
+    private final OrderStatusUpdateConnect orderStatusUpdateConnect = new OrderStatusUpdateConnect();
 
     // Method to set the order ID and type
     public void setOrderDetails(String orderId, String orderType) {
@@ -49,25 +48,14 @@ public class specifyDateForDeliveryWindow {
     private void saveDeliveryDate() {
         LocalDate selectedDate = specifyDate.getValue();
         if (selectedDate != null) {
-            String sql = "UPDATE `order` SET Delivery_date = ?, Order_Status = ? WHERE Order_ID = ?";
-            try (Connection connection = DatabaseConnect.getConnection();
-                 PreparedStatement statement = connection.prepareStatement(sql)) {
+            int updatedStatus = orderType.equals("สั่งซื้อ") ? 4 : 6; // กำหนดสถานะใหม่ตามประเภทคำสั่งซื้อ
+            boolean isSuccess = orderStatusUpdateConnect.updateDeliveryDateAndStatus(orderId, selectedDate, updatedStatus);
 
-                // Set the delivery date
-                statement.setDate(1, java.sql.Date.valueOf(selectedDate));
-
-                // Set the appropriate status based on the order type
-                int updatedStatus = orderType.equals("สั่งซื้อ") ? 4 : 6;
-                statement.setInt(2, updatedStatus);
-
-                statement.setString(3, orderId); // Set the order ID
-                statement.executeUpdate(); // Execute the update
-
+            if (isSuccess) {
                 // Show success message
                 showConfirmationMessage();
-
-            } catch (SQLException e) {
-                System.err.println("Error saving delivery date and updating status: " + e.getMessage());
+            } else {
+                System.err.println("Failed to update delivery date and order status.");
             }
         } else {
             System.out.println("No date selected.");
