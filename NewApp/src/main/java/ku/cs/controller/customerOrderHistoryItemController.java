@@ -39,11 +39,19 @@ public class customerOrderHistoryItemController {
         Delivery_date.setText(order.getDelivery_date());
         Order_Status.setText(order.getOrderStatus());
         Price.setText(String.valueOf(order.getOutstanding_Balance()));
+        if (order.getOrder_Status() == 0) {
+            paymentButton.setVisible(false);
+            confirmReceiptProduct.setVisible(false);
+        } else {
+            paymentButton.setVisible(true);
+            confirmReceiptProduct.setVisible(true);
+        }
     }
 
     @FXML
     public void initialize() {
         // กำหนดการทำงานของปุ่มชำระเงิน
+
         paymentButton.setOnAction(event -> {
             try {
                 openPaymentWindow();
