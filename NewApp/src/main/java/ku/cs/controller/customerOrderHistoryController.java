@@ -50,6 +50,7 @@ public class customerOrderHistoryController {
         // เพิ่ม Listener เพื่อเปลี่ยนการแสดงผลตามการเลือกใน ComboBox
         order_choice.setOnAction(event -> loadOrdersByStatus());
         // เรียกใช้ครั้งแรกเมื่อเปิดหน้า
+
         loadOrdersByStatus();
 
         List<Order> orders = CustomerOrderConnect.fetchCustomerOrders(LoginConnect.getCurrentUser().getID());

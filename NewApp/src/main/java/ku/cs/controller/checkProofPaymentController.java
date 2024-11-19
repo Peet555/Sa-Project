@@ -136,28 +136,43 @@ public class checkProofPaymentController {
 
     // Method to update the Invoice_Status and Order_Status
     public void updateInvoiceStatus() {
+        String selectOrderTypeQuery = "SELECT Order_Type, Status_Pay FROM invoice JOIN `order` ON invoice.Order_ID = `order`.Order_ID WHERE Invoice_ID = ?";
         String updateInvoiceQuery = "UPDATE invoice SET Status_Pay = ? WHERE Invoice_ID = ?";
-        String updateOrderQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = (SELECT Order_ID FROM invoice WHERE Invoice_ID = ?)";
 
         try (Connection connection = DatabaseConnect.getConnection()) {
-            // Update invoice status
-            try (PreparedStatement preparedStatement = connection.prepareStatement(updateInvoiceQuery)) {
-                preparedStatement.setInt(1, 3); // Set new status for invoice
-                preparedStatement.setString(2, invoiceID);
-                preparedStatement.executeUpdate();
-            }
+            // ตรวจสอบ Order_Type และ Status_Pay
+            try (PreparedStatement selectStatement = connection.prepareStatement(selectOrderTypeQuery)) {
+                selectStatement.setString(1, invoiceID);
+                try (ResultSet resultSet = selectStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        String orderType = resultSet.getString("Order_Type");
+                        int statusPay = resultSet.getInt("Status_Pay");
 
-            // Update order status
-            try (PreparedStatement preparedStatement = connection.prepareStatement(updateOrderQuery)) {
-                preparedStatement.setInt(1, 3); // Assuming you want to set Order_Status to the same value
-                preparedStatement.setString(2, invoiceID);
-                int affectedRows = preparedStatement.executeUpdate();
-                System.out.println("Affected rows in order: " + affectedRows); // Print affected rows
+                        // เงื่อนไข: ถ้า Order_Type = "สั่งจอง" และ Status_Pay = 4
+                        if ("สั่งจอง".equals(orderType) && statusPay == 4) {
+                            // อัปเดต Status_Pay เป็น 5
+                            try (PreparedStatement updateStatement = connection.prepareStatement(updateInvoiceQuery)) {
+                                updateStatement.setInt(1, 5); // ตั้งค่า Status_Pay เป็น 5
+                                updateStatement.setString(2, invoiceID);
+                                int rowsUpdated = updateStatement.executeUpdate();
+
+                                if (rowsUpdated > 0) {
+                                    System.out.println("อัปเดตสถานะการชำระเงินสำเร็จ");
+                                } else {
+                                    System.out.println("ไม่พบข้อมูลสำหรับอัปเดต");
+                                }
+                            }
+                        } else {
+                            System.out.println("ไม่สามารถอัปเดตสถานะได้เนื่องจากเงื่อนไขไม่ตรง");
+                        }
+                    }
+                }
             }
         } catch (SQLException e) {
-            System.err.println("Error updating invoice and order status: " + e.getMessage());
+            System.err.println("เกิดข้อผิดพลาดในการอัปเดตสถานะ: " + e.getMessage());
         }
     }
+
 
 
 

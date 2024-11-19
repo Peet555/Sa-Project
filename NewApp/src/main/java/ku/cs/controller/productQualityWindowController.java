@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import ku.cs.connect.ProductInfoConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
@@ -40,16 +41,30 @@ public class productQualityWindowController {
     @FXML
     public void confirmOrder(ActionEvent event) {
         try {
-            String orderID = generateOrderID(); // สร้าง orderID ชั่วคราว
-            System.out.println("Sending Product ID: " + product.getProduct_ID()); // แสดง Product_ID ที่จะส่ง
-            FXRouter.goTo("orderListPageCustomer", new Object[]{product, quantity.getText(), orderID});
-            closeWindow();
+            int quantityToReduce = Integer.parseInt(quantity.getText());
+            ProductInfoConnect productInfoConnect = new ProductInfoConnect();
+
+            // ลดจำนวนสินค้าในฐานข้อมูล
+            boolean isUpdated = productInfoConnect.updateProductQuantity(product.getProduct_ID(), quantityToReduce);
+
+            if (isUpdated) {
+                System.out.println("Quantity updated successfully!");
+
+                // สร้าง orderID และส่งข้อมูลไปหน้าอื่น
+                String orderID = generateOrderID();
+                FXRouter.goTo("orderListPageCustomer", new Object[]{product, quantity.getText(), orderID});
+                closeWindow();
+            } else {
+                System.out.println("Failed to update quantity or insufficient stock.");
+                // แสดงข้อความแจ้งเตือนเมื่อจำนวนสินค้าไม่พอ
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid quantity entered: " + quantity.getText());
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Cannot go to orderListPageCustomer");
         }
     }
-
 
 
 }
