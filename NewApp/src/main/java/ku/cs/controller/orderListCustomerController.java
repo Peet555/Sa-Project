@@ -76,6 +76,9 @@ public class orderListCustomerController {
 
         displayOrderList(); // แสดงรายการสินค้าใน vBox
 
+        // ตรวจสอบสถานะของปุ่ม
+        updateOrderButtonState();
+
         homeButton.setOnAction(event -> {
             try {
                 FXRouter.goTo("homePage"); // เปลี่ยนไปหน้า HomePage
@@ -139,6 +142,19 @@ public class orderListCustomerController {
     private String generateOrderId() {
         return "ORD" + UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase();
         // ตัวอย่างผลลัพธ์: ORDABC12345
+    }
+
+    // เมธอดสำหรับตรวจสอบสถานะของปุ่ม
+    private void updateOrderButtonState() {
+        boolean hasItems = !vBox.getChildren().isEmpty();
+        handleConfirmOrder.setDisable(!hasItems);
+        handleConfirmPreOrder.setDisable(!hasItems);
+
+        if (!hasItems) {
+            cannotClickOrderButton.setText("กรุณาเพิ่มสินค้าก่อนกดสั่งซื้อหรือสั่งจอง");
+        } else {
+            cannotClickOrderButton.setText("");
+        }
     }
 
 
@@ -218,7 +234,7 @@ public class orderListCustomerController {
 
     private void displayOrderList() {
         vBox.getChildren().clear();
-        List<Product> temporaryProductList = OrderManager.getInstance().getTemporaryProductList(); // Retrieve from OrderManager
+        List<Product> temporaryProductList = OrderManager.getInstance().getTemporaryProductList();
         for (Product product : temporaryProductList) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/orderListCustomerItem.fxml"));
@@ -239,6 +255,9 @@ public class orderListCustomerController {
                 System.err.println("Error loading product item: " + e.getMessage());
             }
         }
+
+        // ตรวจสอบสถานะปุ่มหลังจากแสดงรายการสินค้า
+        updateOrderButtonState();
     }
 
 }
