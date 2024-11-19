@@ -93,7 +93,7 @@ public class profileController {
         });
     }
 
-    private void loadCustomerData() {
+    public void loadCustomerData() {
         Connection connection = DatabaseConnect.getConnection();
         String customerId = LoginConnect.getCurrentUser().getID(); // ใช้ ID จาก currentUser ที่ล็อกอิน
         String query = "SELECT Name, Email, Customer_Address, Customer_Phone_number FROM customer WHERE Customer_ID = ?";
@@ -119,10 +119,12 @@ public class profileController {
     private void openEditProfileWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/editProfileWindow.fxml"));
         Parent root = loader.load();
-
+        editProfileWindowController controller = loader.getController();
+        controller.setProfileController(this);
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
+
 }

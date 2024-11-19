@@ -1,5 +1,6 @@
 package ku.cs.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -7,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import ku.cs.services.FXRouter;
+import ku.cs.services.RootService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -116,5 +118,8 @@ public class homePageController {
 
         // เพิ่ม item ลงใน gridPane ที่ตำแหน่ง row, col
         gridPane.add(p, col, row);
+    }
+    public void logout(ActionEvent actionEvent) throws IOException {
+        FXRouter.goTo("root");
     }
 }
