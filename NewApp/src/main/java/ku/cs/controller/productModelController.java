@@ -3,22 +3,14 @@ package ku.cs.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import ku.cs.connect.DatabaseConnect;
 import ku.cs.connect.ProductModelConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
 
 public class productModelController {
 

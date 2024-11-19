@@ -177,5 +177,24 @@ public boolean updateRefuseOrder(String orderId) throws SQLException {
         }
     }
 
+    public boolean updateOrderAndAssignEmployee(String orderId, String employeeId) {
+        String sql = "UPDATE `order` SET Employee_ID = ?, Order_Status = 2 WHERE Order_ID = ?";
+
+        try (Connection conn = DatabaseConnect.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // ตั้งค่า Employee_ID และ Order_ID
+            pstmt.setString(1, employeeId);
+            pstmt.setString(2, orderId);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            return rowsUpdated > 0; // ตรวจสอบว่ามีการอัปเดตหรือไม่
+        } catch (SQLException e) {
+            System.out.println("Error updating order with Employee_ID: " + e.getMessage());
+            return false;
+        }
+    }
+
+
 
 }

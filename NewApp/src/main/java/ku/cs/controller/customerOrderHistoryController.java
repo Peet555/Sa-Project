@@ -7,14 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import ku.cs.connect.CustomerOrderConnect;
-import ku.cs.connect.DatabaseConnect;
 import ku.cs.connect.LoginConnect;
 import ku.cs.models.Order;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class customerOrderHistoryController {
