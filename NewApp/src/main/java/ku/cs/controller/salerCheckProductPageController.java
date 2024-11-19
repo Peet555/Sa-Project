@@ -115,8 +115,16 @@ public class salerCheckProductPageController {
         stage.setScene(new Scene(confirmOrderWindow));
         stage.showAndWait();
 
-        confirmOrder(orderId); // เรียกใช้ฟังก์ชันเพื่อเปลี่ยนสถานะและสร้างข้อมูลในตาราง invoice
+        OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
+        boolean success = statusUpdater.updateOrderAndCreateInvoice(orderId);
+
+        if (success) {
+            System.out.println("Order confirmed and invoice created successfully.");
+        } else {
+            System.out.println("Failed to confirm order and create invoice.");
+        }
     }
+
 
     private void openConfirmOrderWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/confirmOrderAcceptWindow.fxml"));
