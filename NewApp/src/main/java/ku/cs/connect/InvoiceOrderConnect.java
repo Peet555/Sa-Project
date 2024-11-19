@@ -63,4 +63,61 @@ public class InvoiceOrderConnect {
 
         return new ProductSalesData(productSales, paymentImageData);
     }
+
+    public static boolean updateInvoiceStatus(String invoiceID) {
+        String selectOrderTypeQuery = "SELECT o.Order_ID, Order_Type, Status_Pay " +
+                "FROM invoice i " +
+                "JOIN `order` o ON i.Order_ID = o.Order_ID " +
+                "WHERE i.Invoice_ID = ?";
+        String updateInvoiceQuery = "UPDATE invoice SET Status_Pay = ? WHERE Invoice_ID = ?";
+        String updateOrderStatusQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
+
+        try (Connection connection = DatabaseConnect.getConnection()) {
+            try (PreparedStatement selectStatement = connection.prepareStatement(selectOrderTypeQuery)) {
+                selectStatement.setString(1, invoiceID);
+                try (ResultSet resultSet = selectStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        String orderType = resultSet.getString("Order_Type");
+                        int statusPay = resultSet.getInt("Status_Pay");
+                        String orderID = resultSet.getString("Order_ID");
+
+                        int newStatusPay = -1;
+                        if ("สั่งจอง".equals(orderType) && statusPay == 4) {
+                            newStatusPay = 5; // สั่งจอง -> ชำระค่ามัดจำแล้ว
+                        } else if ("สั่งซื้อ".equals(orderType) && statusPay == 2) {
+                            newStatusPay = 3; // สั่งซื้อ -> ชำระเงินแล้ว
+                        } else if ("สั่งจอง".equals(orderType) && statusPay == 2) {
+                            newStatusPay = 3; // สั่งจอง -> ชำระแล้ว
+                        }
+
+                        if (newStatusPay != -1) {
+                            // อัปเดต Status_Pay ในตาราง Invoice
+                            try (PreparedStatement updateInvoiceStatement = connection.prepareStatement(updateInvoiceQuery)) {
+                                updateInvoiceStatement.setInt(1, newStatusPay);
+                                updateInvoiceStatement.setString(2, invoiceID);
+                                updateInvoiceStatement.executeUpdate();
+                            }
+
+                            // อัปเดต Order_Status ในตาราง Order
+                            try (PreparedStatement updateOrderStatement = connection.prepareStatement(updateOrderStatusQuery)) {
+                                updateOrderStatement.setInt(1, newStatusPay);
+                                updateOrderStatement.setString(2, orderID);
+                                updateOrderStatement.executeUpdate();
+                                System.out.println("อัปเดตสถานะของ Order สำเร็จ");
+                            }
+                            return true; // อัปเดตสำเร็จ
+                        } else {
+                            System.out.println("ไม่สามารถอัปเดตสถานะได้เนื่องจากเงื่อนไขไม่ตรง");
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("เกิดข้อผิดพลาดในการอัปเดตสถานะ: " + e.getMessage());
+        }
+        return false; // อัปเดตล้มเหลว
+    }
+
+
+
 }

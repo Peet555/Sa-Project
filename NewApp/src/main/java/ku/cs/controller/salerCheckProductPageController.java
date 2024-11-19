@@ -105,8 +105,17 @@ public class salerCheckProductPageController {
         stage.setScene(new Scene(confirmOrderWindow));
         stage.showAndWait();
 
-        confirmOrder(orderId); // เรียกใช้ฟังก์ชันเพื่อเปลี่ยนสถานะและสร้างข้อมูลในตาราง invoice
+        // เรียกใช้ OrderStatusUpdateConnect เพื่ออัปเดตสถานะและสร้างข้อมูล invoice
+        OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
+        boolean success = statusUpdater.updateOrderAndCreateInvoice(orderId);
+
+        if (success) {
+            System.out.println("Order confirmed and invoice created successfully.");
+        } else {
+            System.out.println("Failed to confirm order and create invoice.");
+        }
     }
+
 
     private void checkOrderStatusAndDisableConfirmButton() {
         OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
@@ -128,60 +137,6 @@ public class salerCheckProductPageController {
         stage.showAndWait();
     }
 
-    public void confirmOrder(String orderId) {
-        Connection connection = DatabaseConnect.getConnection();
-        try {
-            connection.setAutoCommit(false);
-
-            // อัปเดต Order_Status ในตาราง order
-            String updateOrderStatusQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
-            PreparedStatement updateStmt = connection.prepareStatement(updateOrderStatusQuery);
-            updateStmt.setInt(1, 2); // เปลี่ยนสถานะเป็นรอชำระเงิน
-            updateStmt.setString(2, orderId);
-            updateStmt.executeUpdate();
-
-            // คำนวณ Invoice_Price โดย join ตาราง product กับ Order_Line
-            String totalQuery = "SELECT SUM(p.Price * ol.Quantity_Order_Line) AS total " +
-                    "FROM Order_Line ol " +
-                    "JOIN product p ON ol.Product_ID = p.Product_ID " +
-                    "WHERE ol.Order_ID = ?";
-            PreparedStatement totalStmt = connection.prepareStatement(totalQuery);
-            totalStmt.setString(1, orderId);
-            ResultSet rs = totalStmt.executeQuery();
-            int invoicePrice = 0;
-            if (rs.next()) {
-                invoicePrice = rs.getInt("total");
-            } else {
-                System.out.println("No order line items found for Order_ID: " + orderId);
-                return;
-            }
-
-            // สร้างข้อมูลในตาราง invoice
-            String insertInvoiceQuery = "INSERT INTO invoice (Invoice_ID, Order_ID, Invoice_Price, Invoice_Timestamp, Status_pay) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement insertStmt = connection.prepareStatement(insertInvoiceQuery);
-            insertStmt.setString(1, UUID.randomUUID().toString().replace("-", "")); // ใช้ UUID สำหรับ Invoice_ID
-            insertStmt.setString(2, orderId);
-            insertStmt.setDouble(3, invoicePrice);
-            insertStmt.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now())); // ใช้เวลาปัจจุบัน
-            insertStmt.setInt(5, 2); // เปลี่ยน Status_pay เป็นรอชำระเงิน
-            insertStmt.executeUpdate();
-
-            connection.commit(); // คอมมิทการเปลี่ยนแปลง
-        } catch (SQLException e) {
-            System.err.println("Error updating order and creating invoice: " + e.getMessage());
-            try {
-                connection.rollback(); // ทำการ Rollback ถ้ามีข้อผิดพลาด
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     @FXML
     public void goVerifyPayment() {

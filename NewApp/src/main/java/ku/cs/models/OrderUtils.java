@@ -20,7 +20,7 @@ public class OrderUtils {
                     case 2: return "รอชำระค่ามัดจำ";
                     case 3: return "รอสินค้าเข้าคลัง";
                     case 4: return "ชำระยอดคงเหลือ";
-                    case 5: return "ชำระแล้ว";
+                    case 5: return "ชำระเงินแล้ว";
                     case 6: return "กำลังจัดส่ง";
                     case 7: return "ได้รับของแล้ว";
                     default: return "สถานะไม่ทราบ";

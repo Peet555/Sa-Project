@@ -10,13 +10,14 @@ public class Invoice {
 
     private String orderType;
 
-    public Invoice(String invoiceID, String orderID, int invoicePrice, String invoiceTimestamp, String statusPay, byte[] paymentImage) {
+    public Invoice(String invoiceID, String orderID, int invoicePrice, String invoiceTimestamp, String statusPay, byte[] paymentImage, String orderType) {
         this.invoiceID = invoiceID;
         this.orderID = orderID;
         this.invoicePrice = invoicePrice;
         this.invoiceTimestamp = invoiceTimestamp;
         this.statusPay = statusPay;
         this.paymentImage = paymentImage;
+        this.orderType = orderType;
     }
 
     public String getInvoiceID() {
@@ -49,4 +50,5 @@ public class Invoice {
     public String getOrderType() {
         return orderType;
     }
+
 }

@@ -134,45 +134,14 @@ public class checkProofPaymentController {
         stage.showAndWait();
     }
 
-    // Method to update the Invoice_Status and Order_Status
     public void updateInvoiceStatus() {
-        String selectOrderTypeQuery = "SELECT Order_Type, Status_Pay FROM invoice JOIN `order` ON invoice.Order_ID = `order`.Order_ID WHERE Invoice_ID = ?";
-        String updateInvoiceQuery = "UPDATE invoice SET Status_Pay = ? WHERE Invoice_ID = ?";
-
-        try (Connection connection = DatabaseConnect.getConnection()) {
-            // ตรวจสอบ Order_Type และ Status_Pay
-            try (PreparedStatement selectStatement = connection.prepareStatement(selectOrderTypeQuery)) {
-                selectStatement.setString(1, invoiceID);
-                try (ResultSet resultSet = selectStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        String orderType = resultSet.getString("Order_Type");
-                        int statusPay = resultSet.getInt("Status_Pay");
-
-                        // เงื่อนไข: ถ้า Order_Type = "สั่งจอง" และ Status_Pay = 4
-                        if ("สั่งจอง".equals(orderType) && statusPay == 4) {
-                            // อัปเดต Status_Pay เป็น 5
-                            try (PreparedStatement updateStatement = connection.prepareStatement(updateInvoiceQuery)) {
-                                updateStatement.setInt(1, 5); // ตั้งค่า Status_Pay เป็น 5
-                                updateStatement.setString(2, invoiceID);
-                                int rowsUpdated = updateStatement.executeUpdate();
-
-                                if (rowsUpdated > 0) {
-                                    System.out.println("อัปเดตสถานะการชำระเงินสำเร็จ");
-                                } else {
-                                    System.out.println("ไม่พบข้อมูลสำหรับอัปเดต");
-                                }
-                            }
-                        } else {
-                            System.out.println("ไม่สามารถอัปเดตสถานะได้เนื่องจากเงื่อนไขไม่ตรง");
-                        }
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("เกิดข้อผิดพลาดในการอัปเดตสถานะ: " + e.getMessage());
+        boolean isUpdated = InvoiceOrderConnect.updateInvoiceStatus(invoiceID);
+        if (isUpdated) {
+            System.out.println("สถานะใบแจ้งหนี้และออร์เดอร์ได้รับการอัปเดตสำเร็จ");
+        } else {
+            System.out.println("ไม่สามารถอัปเดตสถานะใบแจ้งหนี้และออร์เดอร์ได้");
         }
     }
-
 
 
 

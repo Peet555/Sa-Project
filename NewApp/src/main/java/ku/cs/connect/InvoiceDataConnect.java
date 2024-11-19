@@ -31,7 +31,8 @@ public class InvoiceDataConnect {
                         resultSet.getInt("Invoice_Price"),
                         resultSet.getString("Invoice_Timestamp"),
                         convertStatusToString(orderType, resultSet.getInt("Status_pay")),
-                        resultSet.getBytes("Payment_Image")
+                        resultSet.getBytes("Payment_Image"),
+                        resultSet.getString("Order_Type")
                 ));
             }
 
@@ -69,7 +70,7 @@ public class InvoiceDataConnect {
                 case 2: return "รอชำระค่ามัดจำ";
                 case 3: return "รอสินค้าเข้าคลัง";
                 case 4: return "ชำระยอดคงเหลือ";
-                case 5: return "ชำระแล้ว";
+                case 5: return "ชำระเงินแล้ว";
                 case 6: return "กำลังจัดส่ง";
                 case 7: return "ได้รับของแล้ว";
                 default: return "สถานะไม่ทราบ";
