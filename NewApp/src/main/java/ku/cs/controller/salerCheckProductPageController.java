@@ -82,7 +82,7 @@ public class salerCheckProductPageController {
         refuseButton.setOnAction(event -> {
             try {
                 openRefuseOrderWindow();
-            } catch (IOException e) {
+            } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
         });
@@ -106,7 +106,7 @@ public class salerCheckProductPageController {
         stage.show();
     }
 
-    private void openRefuseOrderWindow() throws IOException {
+    private void openRefuseOrderWindow() throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/refuseOrderWindow.fxml"));
         Parent confirmOrderWindow = loader.load();
         RefuseOrderWindow controller = loader.getController();
@@ -116,7 +116,7 @@ public class salerCheckProductPageController {
         stage.showAndWait();
 
         OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
-        boolean success = statusUpdater.updateOrderAndCreateInvoice(orderId);
+        boolean success = statusUpdater.updateRefuseOrder(orderId);
 
         if (success) {
             System.out.println("Order confirmed and invoice created successfully.");

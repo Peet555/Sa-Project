@@ -95,7 +95,21 @@ public class OrderStatusUpdateConnect {
             return false;
         }
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+public boolean updateRefuseOrder(String orderId) throws SQLException {
+    try (Connection connection = DatabaseConnect.getConnection()) {
+        connection.setAutoCommit(false);
 
+        // อัปเดตสถานะ Order
+        String updateOrderStatusQuery = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
+        try (PreparedStatement updateStmt = connection.prepareStatement(updateOrderStatusQuery)) {
+            updateStmt.setInt(1, 0); // เปลี่ยนสถานะเป็นรอชำระเงิน
+            updateStmt.setString(0, orderId);
+            updateStmt.executeUpdate();
+        }
+    }
+    return false;
+}
 
 
 
