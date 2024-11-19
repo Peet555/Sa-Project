@@ -27,14 +27,15 @@ public class editProfileWindowController {
 
     private EditCustomerConnect editCustomerConnect = new EditCustomerConnect();
 
-
+    private profileController pprofileController ;
 
 
     public void initialize() {
         confirmButton.setOnAction(event -> {
             User user = LoginConnect.getCurrentUser();
             if(user != null){
-                editCustomerConnect.editProfileCustomer(nameField.getText(),phoneNumberField.getText(),emailField.getText(),addressField.getText(), user.getID());
+                editCustomerConnect.editProfileCustomer(nameField.getText(),phoneNumberField.getText(),addressField.getText(),emailField.getText(), user.getID());
+                pprofileController.loadCustomerData();
                 closeWindow();
             }
         });
@@ -50,5 +51,8 @@ public class editProfileWindowController {
         stage.close();
     }
 
+    public void setProfileController(ku.cs.controller.profileController profileController) {
+        this.pprofileController = profileController;
+    }
 
 }

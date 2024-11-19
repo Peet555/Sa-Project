@@ -1,5 +1,6 @@
 package ku.cs.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,7 @@ import ku.cs.connect.orderProductConnect;
 import ku.cs.connect.sellerCheckOrderConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
+import ku.cs.services.RootService;
 
 import java.io.IOException;
 
@@ -124,6 +126,10 @@ public class salerCheckOrderPageController {
         Stage stage = (Stage) orderTable.getScene().getWindow();
         stage.setScene(new Scene(productPage));
         stage.show();
+    }
+
+    public void logout(ActionEvent actionEvent) throws IOException {
+        FXRouter.goTo("root");
     }
 
 

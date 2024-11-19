@@ -2,6 +2,7 @@ package ku.cs.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import ku.cs.connect.stockConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
+import ku.cs.services.RootService;
 
 import java.io.IOException;
 
@@ -97,7 +99,9 @@ public class stockController {
             }
         }
     }
-
+    public void logout(ActionEvent actionEvent) throws IOException {
+        FXRouter.goTo("root");
+    }
 
 
 }

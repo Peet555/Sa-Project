@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckOrderPageController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.salerCheckOrderPageController">
    <children>
       <Pane layoutY="178.0" prefHeight="82.0" prefWidth="1200.0" style="-fx-background-color: #a3e9a4;">
          <children>
@@ -31,6 +31,7 @@
          </content>
       </ScrollPane>
       <Button fx:id="profileButton" layoutX="1024.0" layoutY="106.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: #0d5e25;" text="Profile" textFill="WHITE" />
+      <Button layoutX="1104.0" layoutY="106.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="60.0" style="-fx-background-color: #ff0000;" text="Logout" textFill="WHITE" />
       <ComboBox fx:id="statusComboBox" layoutX="101.0" layoutY="274.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
