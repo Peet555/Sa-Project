@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.DateCell;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import ku.cs.connect.DatabaseConnect;
 
 import java.sql.Connection;
@@ -30,6 +32,9 @@ public class specifyDateForDeliveryWindow {
 
     @FXML
     public void initialize() {
+        // Set the DatePicker to disable past dates
+        specifyDate.setDayCellFactory(getDayCellFactory());
+
         confirmButton.setOnAction(event -> {
             saveDeliveryDate();
             closeWindow();
@@ -67,6 +72,22 @@ public class specifyDateForDeliveryWindow {
         } else {
             System.out.println("No date selected.");
         }
+    }
+
+    // Method to get DayCellFactory to disable past dates
+    private Callback<DatePicker, DateCell> getDayCellFactory() {
+        return datePicker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                // Disable past dates
+                if (date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #d3d3d3;"); // Optional: Change background for disabled dates
+                }
+            }
+        };
     }
 
     // Method to show a confirmation message
