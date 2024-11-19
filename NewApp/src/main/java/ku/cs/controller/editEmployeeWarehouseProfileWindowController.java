@@ -17,13 +17,14 @@ public class editEmployeeWarehouseProfileWindowController {
     @FXML
     private TextArea addressField;
     private EditEmployeeConnect editEmployeeConnect = new EditEmployeeConnect();
-
+    private employeeWarehouseProfileController profile = new employeeWarehouseProfileController();
 
     public void initialize() {
         confirmButton.setOnAction(event -> {
             User user = LoginConnect.getCurrentUser();
             if(user != null){
                 editEmployeeConnect.editProfileEmployee(nameField.getText(),phoneNumberField.getText(),addressField.getText(), user.getID());
+                profile.loadEmployeeData();
                 closeWindow();
             }
         });
@@ -36,5 +37,9 @@ public class editEmployeeWarehouseProfileWindowController {
     private void closeWindow() {
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         stage.close();
+    }
+
+    public void setProfile(employeeWarehouseProfileController profile) {
+        this.profile = profile;
     }
 }

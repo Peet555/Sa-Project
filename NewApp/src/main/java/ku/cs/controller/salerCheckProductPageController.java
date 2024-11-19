@@ -29,6 +29,8 @@ public class salerCheckProductPageController {
     private Button confirmButton;
     @FXML
     private Button profileButton;
+    @FXML
+    private Button refuseButton;
 
     @FXML
     private TableView<Product> orderProductTable;
@@ -77,6 +79,14 @@ public class salerCheckProductPageController {
             }
         });
 
+        refuseButton.setOnAction(event -> {
+            try {
+                openRefuseOrderWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
 
         profileButton.setOnAction(event -> {
             try {
@@ -94,6 +104,18 @@ public class salerCheckProductPageController {
         Scene scene = new Scene(orderPage);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void openRefuseOrderWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/refuseOrderWindow.fxml"));
+        Parent confirmOrderWindow = loader.load();
+        RefuseOrderWindow controller = loader.getController();
+        controller.setOrderId(orderId);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(confirmOrderWindow));
+        stage.showAndWait();
+
+        confirmOrder(orderId); // เรียกใช้ฟังก์ชันเพื่อเปลี่ยนสถานะและสร้างข้อมูลในตาราง invoice
     }
 
     private void openConfirmOrderWindow() throws IOException {

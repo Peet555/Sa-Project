@@ -9,7 +9,9 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.EmployeeProfileConnect;
 import ku.cs.connect.LoginConnect;
+import ku.cs.models.Employee;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
@@ -66,25 +68,12 @@ public class employeeWarehouseProfileController {
 
     }
 
-    private void loadEmployeeData() {
-        Connection connection = DatabaseConnect.getConnection();
-        String employeeId = LoginConnect.getCurrentUser().getID(); // ใช้ ID จาก currentUser ที่ล็อกอิน
-        String query = "SELECT Employee_Name, Employee_Address, Employee_Phone_number FROM employee WHERE Employee_ID = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, employeeId); // ใช้ Employee_ID ของพนักงานที่ล็อกอินอยู่
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                employeeName.setText(resultSet.getString("Employee_Name"));
-                employeePhone.setText(resultSet.getString("Employee_Phone_number"));
-                employeeAddress.setText(resultSet.getString("Employee_Address"));
-            }
-        } catch (SQLException e) {
-            System.err.println("Failed to load employee data: " + e.getMessage());
-        } finally {
-            DatabaseConnect.closeConnection();
-        }
+    public void loadEmployeeData() {
+        EmployeeProfileConnect employeeProfileConnect = new EmployeeProfileConnect();
+        Employee employee = employeeProfileConnect.employeeProfile();
+        employeeName.setText(employee.getName());
+        employeePhone.setText(employee.getPhoneNumber());
+        employeeAddress.setText(employee.getAddress());
     }
 
 
@@ -92,7 +81,8 @@ public class employeeWarehouseProfileController {
     private void openEditEmployeeProfileWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ku/cs/view/editEmployeeWarehouseProfileWindow.fxml"));
         Parent root = loader.load();
-
+        editEmployeeWarehouseProfileWindowController controller = loader.getController();
+        controller.setProfile(this);
         // สร้าง Stage สำหรับหน้าต่างใหม่
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

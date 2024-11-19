@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="192.0" prefWidth="577.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controller.RefuseOrderWindow">
+   <children>
+      <Pane layoutX="-6.0" prefHeight="60.0" prefWidth="606.0" style="-fx-background-color: #a3e9a4;">
+         <children>
+            <Label layoutX="175.0" layoutY="13.0" text="ต้องการปฏิเสธคำสั่งซื้อหรือไม่">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="confirmButton" layoutX="173.0" layoutY="111.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="96.0" style="-fx-background-color: #a3e9a4;" text="ยืนยัน">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="cancelButton" layoutX="342.0" layoutY="111.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="86.0" style="-fx-background-color: fc4646;" text="ยกเลิก">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

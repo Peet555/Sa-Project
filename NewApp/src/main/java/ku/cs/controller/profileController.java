@@ -8,16 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ku.cs.connect.DatabaseConnect;
-import ku.cs.connect.LoginConnect;
+import ku.cs.connect.CustomerProfileConnect;
 import ku.cs.models.Customer;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class profileController {
 
@@ -94,25 +89,13 @@ public class profileController {
     }
 
     public void loadCustomerData() {
-        Connection connection = DatabaseConnect.getConnection();
-        String customerId = LoginConnect.getCurrentUser().getID(); // ใช้ ID จาก currentUser ที่ล็อกอิน
-        String query = "SELECT Name, Email, Customer_Address, Customer_Phone_number FROM customer WHERE Customer_ID = ?";
+        CustomerProfileConnect connect = new CustomerProfileConnect();
+        Customer customer = connect.profile();
+        customerName.setText(customer.getName());
+        customerEmail.setText(customer.getEmail());
+        customerAddress.setText(customer.getAddress());
+        customerPhone.setText(customer.getPhoneNumber());
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, customerId); // ใช้ Customer_ID ของผู้ใช้ที่ล็อกอินอยู่
-
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                customerName.setText(resultSet.getString("Name"));
-                customerEmail.setText(resultSet.getString("Email"));
-                customerAddress.setText(resultSet.getString("Customer_Address"));
-                customerPhone.setText(resultSet.getString("Customer_Phone_number"));
-            }
-        } catch (SQLException e) {
-            System.err.println("Failed to load customer data: " + e.getMessage());
-        } finally {
-            DatabaseConnect.closeConnection();
-        }
     }
 
 

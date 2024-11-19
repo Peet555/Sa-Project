@@ -63,7 +63,7 @@ public class salerCheckOrderPageController {
 
         // เพิ่มค่าใน ComboBox
         ObservableList<String> statusOptions = FXCollections.observableArrayList(
-                "ทั้งหมด","รอยืนยัน", "รอชำระเงิน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ",
+                "ทั้งหมด","คำสั่งซื้อถูกปฏิเสธ","รอยืนยัน", "รอชำระเงิน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ",
                 "ชำระเงินแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
         );
         statusComboBox.setItems(statusOptions);
@@ -97,12 +97,12 @@ public class salerCheckOrderPageController {
     private void setStatusComboBoxOptions(String orderType) {
         if ("สั่งซื้อ".equals(orderType)) { // For Purchase orders
             ObservableList<String> purchaseStatusOptions = FXCollections.observableArrayList(
-                    "รอยืนยัน", "รอชำระเงิน", "ชำระเงินแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
+                    "คำสั่งซื้อถูกปฏิเสธ","รอยืนยัน", "รอชำระเงิน", "ชำระเงินแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
             );
             statusComboBox.setItems(purchaseStatusOptions);
         } else if ("สั่งจอง".equals(orderType)) { // For Pre-Order/Reservation
             ObservableList<String> preOrderStatusOptions = FXCollections.observableArrayList(
-                    "รอยืนยัน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ", "ชำระแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
+                    "คำสั่งซื้อถูกปฏิเสธ","รอยืนยัน", "รอชำระค่ามัดจำ", "รอสินค้าเข้าคลัง", "ชำระยอดคงเหลือ", "ชำระแล้ว", "กำลังจัดส่ง", "ได้รับของแล้ว"
             );
             statusComboBox.setItems(preOrderStatusOptions);
         } else {

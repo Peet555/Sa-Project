@@ -7,6 +7,7 @@ public class OrderUtils {
         switch (orderType) {
             case "สั่งซื้อ": // Purchase Order
                 switch (status) {
+                    case 0: return "คำสั่งซื้อถูกปฏิเสธ";
                     case 1: return "รอยืนยัน";
                     case 2: return "รอชำระเงิน";
                     case 3: return "ชำระเงินแล้ว";
@@ -16,6 +17,7 @@ public class OrderUtils {
                 }
             case "สั่งจอง": // Reservation Order
                 switch (status) {
+                    case 0: return "คำสั่งซื้อถูกปฏิเสธ";
                     case 1: return "รอยืนยัน";
                     case 2: return "รอชำระค่ามัดจำ";
                     case 3: return "รอสินค้าเข้าคลัง";
