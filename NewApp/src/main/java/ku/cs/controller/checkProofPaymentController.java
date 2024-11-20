@@ -57,7 +57,7 @@ public class checkProofPaymentController {
     public void setInvoiceID(String invoiceID) {
         this.invoiceID = invoiceID;
 
-        // เรียกใช้ ProductSaleConnect เพื่อดึงข้อมูลสินค้าและ paymentImageData
+        // ดึงข้อมูลสินค้าและ paymentImageData
         ProductSalesData data = InvoiceOrderConnect.loadProductSales(invoiceID);
 
         // ตั้งค่า productSales และ paymentImageData
