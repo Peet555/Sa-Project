@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ku.cs.connect.stockEditProductConnect;
+import ku.cs.connect.stockConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
@@ -107,7 +107,7 @@ public class stockEditProductController {
         }
 
         // Update the database
-        stockEditProductConnect.updateProduct(selectedProduct);
+        stockConnect.updateProduct(selectedProduct);
 
         // Return to product list
         try {

@@ -5,14 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ku.cs.models.Product;
 
 public class ProductModelConnect {
 
-    public List<Product> loadProductsByType(String typeName) {
+    public List<Product> loadProducts(String typeName) {
             List<Product> products = new ArrayList<>();
             String query = "SELECT Product_ID,Product_Name,Price,product_Image  FROM product WHERE Type = ?";
 
