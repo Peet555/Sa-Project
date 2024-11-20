@@ -9,9 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import ku.cs.connect.stockAddProductConnect;
-import ku.cs.services.FXRouter;
 
+import ku.cs.services.FXRouter;
+import ku.cs.connect.stockConnect;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class stockAddProductController {
     @FXML
     public Hyperlink upload;
 
-    private stockAddProductConnect stockConnect = new stockAddProductConnect();
+    private stockConnect stockConnect = new stockConnect();
     private byte[] imageBytes; // เก็บข้อมูลภาพในรูปแบบ byte array
 
     @FXML
