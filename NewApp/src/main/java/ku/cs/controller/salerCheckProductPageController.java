@@ -10,16 +10,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import ku.cs.connect.DatabaseConnect;
+import ku.cs.connect.LoginConnect;
 import ku.cs.connect.OrderStatusUpdateConnect;
-import ku.cs.connect.orderProductConnect;
 import ku.cs.models.Product;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.UUID;
+
 
 public class salerCheckProductPageController {
 
@@ -139,9 +137,16 @@ public class salerCheckProductPageController {
         OrderStatusUpdateConnect statusUpdater = new OrderStatusUpdateConnect();
         boolean success = statusUpdater.updateOrderAndCreateInvoice(orderId);
 
+        // รับ Employee_ID ของผู้ใช้ปัจจุบัน
+        String employeeId = LoginConnect.getCurrentUser().getID();
+        boolean successID = statusUpdater.updateOrderAndAssignEmployee(orderId, employeeId);
+
         if (success) {
             System.out.println("Order confirmed and invoice created successfully.");
-        } else {
+        }
+        else if (successID) {
+            System.out.println("Failed to confirm order and create invoice.");
+        }else {
             System.out.println("Failed to confirm order and create invoice.");
         }
     }

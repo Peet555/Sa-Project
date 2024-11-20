@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ku.cs.models.Invoice;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,6 +64,20 @@ public class InvoiceDataConnect {
         }
 
         return orderType;
+    }
+
+    public static void savePaymentProof(String orderID, File paymentFile) throws IOException, SQLException {
+        if (paymentFile == null || orderID == null) return;
+
+        String query = "UPDATE invoice SET Payment_Image = ? WHERE Order_ID = ?";
+        try (Connection connection = DatabaseConnect.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             FileInputStream inputStream = new FileInputStream(paymentFile)) {
+
+            statement.setBinaryStream(1, inputStream, (int) paymentFile.length());
+            statement.setString(2, orderID);
+            statement.executeUpdate();
+        }
     }
 
     private static String convertStatusToString(String orderType, int status) {

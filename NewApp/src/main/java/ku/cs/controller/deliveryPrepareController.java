@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import ku.cs.connect.OrderStatusUpdateConnect;
 import ku.cs.models.Order;
 import ku.cs.services.FXRouter;
 import ku.cs.connect.DatabaseConnect;
@@ -126,8 +127,9 @@ public class deliveryPrepareController {
         Order selectedOrder = deliveryTable.getSelectionModel().getSelectedItem(); // Get the selected order
         if (selectedOrder != null) {
             try {
-                // Update the Order_Status to 4 for the selected order
-                updateOrderStatus(selectedOrder.getOrder_ID());
+                // เรียกใช้ UpdateProductIntoStock จาก OrderStatusUpdateConnect
+                OrderStatusUpdateConnect connect = new OrderStatusUpdateConnect();
+                connect.UpdateProductIntoStock(selectedOrder.getOrder_ID());
 
                 // Reload the orders after update
                 orderList = OrderDeliveryConnect.loadOrders();
@@ -144,6 +146,7 @@ public class deliveryPrepareController {
         }
     }
 
+
     // Method to show confirmation alert
     private void showConfirmationMessage(String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
@@ -152,31 +155,6 @@ public class deliveryPrepareController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-
-
-    // Method to update order status
-    private void updateOrderStatus(String orderId) throws SQLException {
-        Connection connection = DatabaseConnect.getConnection();
-
-        // Update Order_Status in the orders table
-        String updateOrderSql = "UPDATE `order` SET Order_Status = ? WHERE Order_ID = ?";
-        try (PreparedStatement updateOrderStmt = connection.prepareStatement(updateOrderSql)) {
-            updateOrderStmt.setInt(1, 4); // Set Order_Status to 4
-            updateOrderStmt.setString(2, orderId);
-            updateOrderStmt.executeUpdate();
-        }
-
-        // Update Status_Pay in the invoice table
-        String updateInvoiceSql = "UPDATE invoice SET Status_Pay = ? WHERE Order_ID = ?";
-        try (PreparedStatement updateInvoiceStmt = connection.prepareStatement(updateInvoiceSql)) {
-            updateInvoiceStmt.setInt(1, 4); // Set Status_Pay to 4
-            updateInvoiceStmt.setString(2, orderId);
-            updateInvoiceStmt.executeUpdate();
-        }
-    }
-
-
 
 
     @FXML

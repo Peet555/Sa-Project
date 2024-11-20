@@ -2,16 +2,16 @@ package ku.cs.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import ku.cs.connect.DatabaseConnect;
+
 import ku.cs.connect.LoginConnect;
 import ku.cs.models.Order;
 import ku.cs.models.Product;
@@ -20,13 +20,10 @@ import ku.cs.services.OrderManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 import java.util.UUID;
 import ku.cs.connect.OrderConnect;
 
