@@ -80,6 +80,24 @@ public class InvoiceDataConnect {
         }
     }
 
+    public static boolean isPaymentImageExists(String orderID) {
+        String query = "SELECT Payment_Image FROM invoice WHERE Order_ID = ? AND Payment_Image IS NOT NULL";
+
+        try (Connection connection = DatabaseConnect.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, orderID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next(); // Return true if a row exists
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking Payment_Image: " + e.getMessage());
+        }
+
+        return false; // Return false if no image or an error occurs
+    }
+
+
     private static String convertStatusToString(String orderType, int status) {
         if ("สั่งจอง".equals(orderType)) {
             switch (status) {

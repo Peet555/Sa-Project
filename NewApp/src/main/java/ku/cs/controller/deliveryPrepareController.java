@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -51,6 +52,10 @@ public class deliveryPrepareController {
     private ObservableList<Order> orderList;
 
     @FXML
+    private ComboBox<String> statusFilterComboBox;
+
+
+    @FXML
     public void initialize() {
         // Setting cell value factories for table columns
         Order_ID.setCellValueFactory(new PropertyValueFactory<>("Order_ID"));
@@ -73,6 +78,15 @@ public class deliveryPrepareController {
         // Load orders from the database into the delivery table
         orderList = OrderDeliveryConnect.loadOrders();
         deliveryTable.setItems(orderList);
+        // ตั้งค่า ComboBox
+        statusFilterComboBox.setItems(FXCollections.observableArrayList("ทั้งหมด", "รอชำระเงิน", "รอสินค้าเข้าคลัง","ชำระยอดคงเหลือ","ชำระเงินแล้ว","กำลังจัดส่ง","ได้รับของแล้ว"));
+        statusFilterComboBox.setValue("ทั้งหมด"); // ค่าเริ่มต้น
+
+        // Listener สำหรับการเลือกตัวเลือกใน ComboBox
+        statusFilterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            filterOrdersByStatus(newValue);
+        });
+
 
         // Button action to open confirmation window for prepare button
         prepareButton.setOnAction(event -> {
@@ -94,6 +108,21 @@ public class deliveryPrepareController {
         });
 
     }
+
+    private void filterOrdersByStatus(String status) {
+        if ("ทั้งหมด".equals(status)) {
+            deliveryTable.setItems(orderList); // แสดงข้อมูลทั้งหมด
+        } else {
+            ObservableList<Order> filteredOrders = FXCollections.observableArrayList();
+            for (Order order : orderList) {
+                if (order.getOrderStatus().equals(status)) {
+                    filteredOrders.add(order);
+                }
+            }
+            deliveryTable.setItems(filteredOrders); // แสดงข้อมูลที่กรอง
+        }
+    }
+
 
     private void refreshTable() {
         orderList = OrderDeliveryConnect.loadOrders(); // โหลดข้อมูลใหม่จากฐานข้อมูล

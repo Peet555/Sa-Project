@@ -110,7 +110,7 @@ public class checkProofPaymentController {
         }
     }
 
-    @FXML
+
     public void confirmCheck(){
         try {
             openConfirmWindow();
@@ -135,15 +135,25 @@ public class checkProofPaymentController {
     }
 
     public void updateInvoiceStatus() {
-        boolean isUpdated = InvoiceOrderConnect.updateInvoiceStatus(invoiceID);
+        // Update the invoice and order status
+        boolean isUpdated = InvoiceOrderConnect.updateInvoiceAndOrderStatus(invoiceID);
         if (isUpdated) {
             System.out.println("สถานะใบแจ้งหนี้และออร์เดอร์ได้รับการอัปเดตสำเร็จ");
+
+            // Check if Order_Type is "สั่งจอง" and Order_Status is 2 before clearing the payment image
+            boolean shouldClearPaymentImage = InvoiceOrderConnect.checkOrderTypeAndStatus(invoiceID);
+            if (shouldClearPaymentImage) {
+                boolean isImageCleared = InvoiceOrderConnect.clearPaymentImage(invoiceID);
+                if (isImageCleared) {
+                    System.out.println("Payment image has been cleared successfully.");
+                } else {
+                    System.out.println("Failed to clear the payment image.");
+                }
+            }
         } else {
             System.out.println("ไม่สามารถอัปเดตสถานะใบแจ้งหนี้และออร์เดอร์ได้");
         }
     }
-
-
 
 
     private void openImageInNewWindow(Image image) {

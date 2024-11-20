@@ -39,7 +39,7 @@ public class customerOrderHistoryController {
     public void initialize() {
 
         // เพิ่มตัวเลือกใน ComboBox
-        order_choice.getItems().addAll("order รอดำเนินการ", "ประวัติการสั่งซื้อ");
+        order_choice.getItems().addAll("order รอดำเนินการ", "ประวัติการสั่งซื้อ","คำสั่งซื้อถูกปฏิเสธ");
 
         // ตัวเลือกเริ่มต้น
         order_choice.setValue("order รอดำเนินการ");
@@ -93,23 +93,39 @@ public class customerOrderHistoryController {
 
     // Method สำหรับโหลดข้อมูลตามการเลือกใน ComboBox
     private void loadOrdersByStatus() {
-        vBox.getChildren().clear();
+        vBox.getChildren().clear(); // ล้างข้อมูลเก่าใน VBox
         List<Order> orders = CustomerOrderConnect.fetchCustomerOrders(LoginConnect.getCurrentUser().getID());
 
+        // อ่านค่าที่เลือกใน ComboBox
         String choice = order_choice.getValue();
+
         for (Order order : orders) {
             try {
-                if ("ประวัติการสั่งซื้อ".equals(choice) && (order.getOrder_Status() == 5 || order.getOrder_Status() == 7)) {
-                    addOrderHistoryItem(order);
-                } else if ("order รอดำเนินการ".equals(choice) && (order.getOrder_Status() != 5 && order.getOrder_Status() != 7)) {
-                    addOrderHistoryItem(order);
+                // กรองข้อมูลตามตัวเลือกใน ComboBox
+                if ("ประวัติการสั่งซื้อ".equals(choice)) {
+                    // เงื่อนไขสำหรับสถานะที่เป็นประวัติการสั่งซื้อ
+                    if (("สั่งซื้อ".equals(order.getOrder_Type()) && order.getOrder_Status() == 5) ||
+                            ("สั่งจอง".equals(order.getOrder_Type()) && order.getOrder_Status() == 7)) {
+                        addOrderHistoryItem(order);
+                    }
+                } else if ("order รอดำเนินการ".equals(choice)) {
+                    // เงื่อนไขสำหรับสถานะที่ยังอยู่ระหว่างดำเนินการ
+                    if (!(("สั่งซื้อ".equals(order.getOrder_Type()) && order.getOrder_Status() == 5) ||
+                            ("สั่งจอง".equals(order.getOrder_Type()) && order.getOrder_Status() == 7) ||
+                            order.getOrder_Status() == 0)) {
+                        addOrderHistoryItem(order);
+                    }
+                } else if ("คำสั่งซื้อถูกปฏิเสธ".equals(choice)) {
+                    // เงื่อนไขสำหรับสถานะที่ถูกปฏิเสธ
+                    if (order.getOrder_Status() == 0) {
+                        addOrderHistoryItem(order);
+                    }
                 }
             } catch (IOException e) {
                 System.err.println("Failed to add order history item: " + e.getMessage());
             }
         }
     }
-
 
     // Method สำหรับเพิ่ม customerOrderHistoryItem ลงใน VBox
     private void addOrderHistoryItem(Order order) throws IOException {

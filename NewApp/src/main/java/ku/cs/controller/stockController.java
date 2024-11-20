@@ -35,6 +35,7 @@ public class stockController {
     @FXML
     public Button profileButton;
 
+
     @FXML
     public void initialize() {
         Product_ID.setCellValueFactory(new PropertyValueFactory<>("Product_ID"));
